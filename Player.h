@@ -5,7 +5,7 @@
 struct Player;
 
 // ‰Šú‰»‚ğ‚·‚é
-Player Player_Initialize( int y, int img );
+Player *Player_Initialize( int y, int img );
 
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );
