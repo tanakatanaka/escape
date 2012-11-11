@@ -2,18 +2,18 @@
 
 #define DEF_PLAYER_H
 
-struct Player_t;
+struct Player;
 
 // ‰Šú‰»‚ğ‚·‚é
-Player_t Player_Initialize( int y, int img );
+Player Player_Initialize( int y, int img );
 
 // “®‚«‚ğŒvZ‚·‚é
-void Player_Update( Player_t *Player );
+void Player_Update( Player *Player );
 
 // •`‰æ‚·‚é
-void Player_Draw( Player_t *Player );
+void Player_Draw( Player *Player );
 
 // I—¹ˆ—‚ğ‚·‚é
-void Player_Finalize( Player_t *Player );
+void Player_Finalize( Player *Player );
 
 #endif

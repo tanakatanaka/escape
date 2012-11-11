@@ -2,23 +2,24 @@
 #include "Keyboard.h"
 #include "Player.h"
 
-typedef struct
+struct Player
 {
     int Image;
     int y;
-} Player_t;
+} 
 
 // ‰Šú‰»‚ğ‚·‚é
-Player_t Player_Initialize( int y, int img )
+Player Player_Initialize( int y, int img )
 {
-	Player_t *self;
+	Player *self;
+	self = (Player *)malloc(sizeof(Player));
     Player->Image = img;    //‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
     Player->y     = y;        //yÀ•WŠi”[
-	return self
+	return *self;
 }
 
 // “®‚«‚ğŒvZ‚·‚é
-void Player_Update( Player_t *Player )
+void Player_Update( Player *Player )
 {
     if( Keyboard_Get( KEY_INPUT_UP   ) > 0 )
 	{//ã‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
@@ -31,11 +32,12 @@ void Player_Update( Player_t *Player )
 }
 
 // •`‰æ‚·‚é
-void Player_Draw( Player_t Player ){
+void Player_Draw( Player Player ){
     DrawGraph( 0, Player.y, Player.Image, TRUE );
 }
 
 // I—¹ˆ—‚ğ‚·‚é
-void Player_Finalize( Player_t Player ){
+void Player_Finalize( Player Player )
+{
     DeleteGraph( Player.Image );
 }

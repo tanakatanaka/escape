@@ -7,7 +7,7 @@ static const int NUM = 2;        //プレイヤーの数
 
 struct Game
 {
-	Player_t *player[2];
+	Player *player[2];
 
 };
 
@@ -17,10 +17,10 @@ Game Game_Initialize()
 	Game *self;
 	int gazo = LoadGraph("画像/キャラクタ01.png");
 	self = (Game *)malloc(sizeof(Game));
-	self->player[0] = PlayerMgr_Initialize(10, gazo);
-	self->player[1] = PlayerMgr_Initialize(50, gazo);
+	self->player[0] = Player_Initialize(10, gazo);
+	self->player[1] = Player_Initialize(50, gazo);
 
-	return self;
+	return *self;
 }
 
 
