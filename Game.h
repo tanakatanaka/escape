@@ -2,20 +2,18 @@
 
 #define DEF_Game_H
 
-typedef struct{
-    
-} Game_t;
+struct Game_t;
 
 // ‰Šú‰»‚ğ‚·‚é
-void Game_Initialize( Game_t *Game);
+Game_t Game_Initialize();
 
 // “®‚«‚ğŒvZ‚·‚é
 void Game_Update( Game_t *Game );
 
 // •`‰æ‚·‚é
-void Game_Draw( Game_t Game );
+void Game_Draw( Game_t *Game );
 
 // I—¹ˆ—‚ğ‚·‚é
-void Game_Finalize( Game_t Game );
+void Game_Finalize( Game_t *Game );
 
 #endif

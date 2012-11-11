@@ -2,18 +2,30 @@
 #include "Keyboard.h"
 #include "Player.h"
 
+typedef struct
+{
+    int Image;
+    int y;
+} Player_t;
+
 // ‰Šú‰»‚ð‚·‚é
-void Player_Initialize( Player_t *Player, int y, int img ){
+Player_t Player_Initialize( int y, int img )
+{
+	Player_t *self;
     Player->Image = img;    //‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
     Player->y     = y;        //yÀ•WŠi”[
+	return self
 }
 
 // “®‚«‚ðŒvŽZ‚·‚é
-void Player_Update( Player_t *Player ){
-    if( Keyboard_Get( KEY_INPUT_UP   ) > 0 ){//ã‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
+void Player_Update( Player_t *Player )
+{
+    if( Keyboard_Get( KEY_INPUT_UP   ) > 0 )
+	{//ã‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
         Player->y--;
     }
-    if( Keyboard_Get( KEY_INPUT_DOWN ) > 0 ){//‰º‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
+    if( Keyboard_Get( KEY_INPUT_DOWN ) > 0 )
+	{//‰º‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
         Player->y++;
     }
 }
