@@ -28,11 +28,7 @@ Game *Game_Initialize()
 void Game_Update(Game *self)
 {
 	Keyboard_Update();    //キーボードの更新
-	
-	for( int i=0; i<NUM; i++ )
-	{
-        
-    }
+	 Room_Update( self->room );
 }
 
 // 描画する
