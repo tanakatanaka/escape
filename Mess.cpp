@@ -27,8 +27,8 @@ Mess *Mess_Initialize()
 	Mess *self;
 	self = (Mess *)malloc(sizeof(Mess));
 	
-	strcpy("はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
-	"にぬねのはひふへほまみむめもやゆよらりるれろわをん",self->g_message);
+	strcpy(self->g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
+	"にぬねのはひふへほまみむめもやゆよらりるれろわをん");
 	
 
 	self->g_currentCursor = 0;
