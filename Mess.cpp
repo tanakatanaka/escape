@@ -1,3 +1,4 @@
+#include "string.h"
 #include "DxLib.h"
 #include "Keyboard.h"
 #include "Mess.h"
@@ -25,9 +26,11 @@ Mess *Mess_Initialize()
 {
 	Mess *self;
 	self = (Mess *)malloc(sizeof(Mess));
-	self->g_message[MESSAGE_MAX_LENGTH * MESSAGE_MAX_LINE] = 
-	"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
-	"にぬねのはひふへほまみむめもやゆよらりるれろわをん";
+	
+	strcpy("はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
+	"にぬねのはひふへほまみむめもやゆよらりるれろわをん",self->g_message);
+	
+
 	self->g_currentCursor = 0;
 	self->g_currentLineCursor = 0;
 
