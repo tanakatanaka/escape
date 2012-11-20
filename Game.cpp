@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Camera.h"
 #include "Console.h"
+#include "Mess.h"
 
 static const int NUM = 2;        //プレイヤーの数
 
@@ -12,6 +13,7 @@ struct Game
 	Room *room;
 	Camera *camera;
 	Console *console;
+	Mess *mess;
 
 };
 
@@ -24,6 +26,7 @@ Game *Game_Initialize()
 	self->camera = Camera_Initialize( );
 	self->room = Room_Initialize();
 	self->console = Console_Initialize( );
+	self->mess = Mess_Initialize( );
 	return self;
 }
 
@@ -35,6 +38,9 @@ void Game_Update(Game *self)
 	Keyboard_Update();    //キーボードの更新
 	Room_Update( self->room );
 	Console_Update( self->console );
+	Mess_Update( self->mess );
+
+
 }
 
 // 描画する
@@ -42,6 +48,7 @@ void Game_Draw(Game *self)
 {
 	 Room_Draw(self->room);
 	 Console_Draw( self->console );
+	 Mess_Draw(self->mess);
      
 }
 

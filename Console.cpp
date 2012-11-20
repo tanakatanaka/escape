@@ -2,6 +2,9 @@
 #include "Keyboard.h"
 #include "Console.h"
 
+
+
+
 struct Console
 {
 	int cr ;
@@ -29,6 +32,7 @@ Console *Console_Initialize()
 	}
  }
 
+ 
 // “®‚«‚ğŒvZ‚·‚é
 void Console_Update( Console *self )
 {
@@ -37,6 +41,7 @@ void Console_Update( Console *self )
 	if(self->win_s % 2 == 1)
 	{
 		//KeyInputSingleCharString( 0 , 420 , 30 , self->bag , TRUE ) ;
+		
 	}
 
 	self->win_count++;
@@ -48,12 +53,6 @@ void Console_Draw( Console *self)
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
 	if(self->win_s % 2 == 0){DrawBox( 0, 420 , 640 , 480, self->cr, TRUE) ;}
 	else{DrawBox( 0, 380 , 640 , 480, self->cr, TRUE) ;}
-	
-	drawMessage();
-		
-	Sleep( 100 );
-	ScreenFlip();
-	
 }
 
 // I—¹ˆ—‚ğ‚·‚é
