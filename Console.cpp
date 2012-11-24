@@ -10,6 +10,7 @@ struct Console
 	int cr ;
 	int win_s;
 	int win_count;
+	char bag [20];
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
@@ -40,7 +41,7 @@ void Console_Update( Console *self )
 
 	if(self->win_s % 2 == 1)
 	{
-		//KeyInputSingleCharString( 0 , 420 , 30 , self->bag , TRUE ) ;
+		KeyInputSingleCharString( 0 , 420 , 30 , self->bag , TRUE ) ;
 		
 	}
 

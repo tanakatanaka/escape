@@ -21,7 +21,6 @@ struct Game
 Game *Game_Initialize()
 {
 	Game *self;
-	int gazo = LoadGraph("画像/キャラクタ01.png");
 	self = (Game *)malloc(sizeof(Game));
 	self->camera = Camera_Initialize( );
 	self->room = Room_Initialize();
@@ -38,7 +37,7 @@ void Game_Update(Game *self)
 	Keyboard_Update();    //キーボードの更新
 	Room_Update( self->room );
 	Console_Update( self->console );
-	Mess_Update( self->mess );
+	//Mess_Update( self->mess );
 
 
 }
@@ -48,7 +47,7 @@ void Game_Draw(Game *self)
 {
 	 Room_Draw(self->room);
 	 Console_Draw( self->console );
-	 Mess_Draw(self->mess);
+	 //Mess_Draw(self->mess);
      
 }
 
