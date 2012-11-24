@@ -17,12 +17,13 @@ struct Script
 	char script[SCRIPT_MAX_LINE][SCRIPT_MAX_STRING_LENGTH];
 };
 
+void splitString(const char* src, char* dest[], const char* delim, int splitNum);
+
 // ‰Šú‰»‚ğ‚·‚é
 Script *Script_Initialize( )
 {
 	Script *self;
 	self = (Script *)malloc(sizeof(Script));
-	
 
 	return self;
 }
