@@ -1,5 +1,4 @@
 #include "DxLib.h"
-#include "Keyboard.h"
 #include "Room.h"
 
 struct Room

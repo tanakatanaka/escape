@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Console.h"
 #include "Mess.h"
+#include "Script.h"
 
 static const int NUM = 2;        //ƒvƒŒƒCƒ„[‚Ì”
 
@@ -14,6 +15,7 @@ struct Game
 	Camera *camera;
 	Console *console;
 	Mess *mess;
+	Script *script;
 
 };
 
@@ -26,6 +28,7 @@ Game *Game_Initialize()
 	self->room = Room_Initialize();
 	self->console = Console_Initialize( );
 	self->mess = Mess_Initialize( );
+	self->script = Script_Initialize( );
 	return self;
 }
 
@@ -38,6 +41,7 @@ void Game_Update(Game *self)
 	Room_Update( self->room );
 	Console_Update( self->console );
 	//Mess_Update( self->mess );
+	Script_Draw( self->script );
 
 
 }
@@ -48,6 +52,7 @@ void Game_Draw(Game *self)
 	 Room_Draw(self->room);
 	 Console_Draw( self->console );
 	 //Mess_Draw(self->mess);
+	 Script_Draw( self->script );
      
 }
 

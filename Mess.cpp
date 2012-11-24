@@ -1,6 +1,5 @@
 #include "string.h"
 #include "DxLib.h"
-#include "Keyboard.h"
 #include "Mess.h"
 
 //メッセージのフォントの大きさ

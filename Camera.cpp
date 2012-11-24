@@ -1,5 +1,4 @@
 #include "DxLib.h"
-#include "Keyboard.h"
 #include "Camera.h"
 #include <stdio.h>
 
