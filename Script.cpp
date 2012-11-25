@@ -24,7 +24,6 @@ Script *Script_Initialize( )
 {
 	Script *self;
 	self = (Script *)malloc(sizeof(Script));
-
 	return self;
 }
 
@@ -268,13 +267,11 @@ int decodeScript(const char* scriptMessage, Script *script)
 // 動きを計算する
 void Script_Update( Script *self )
 {
-	int i;
 	int line;
-   
-
-	loadScript( "tex/script.txt", self );
 
 	printf("\nスクリプト開始\n\n");
+	loadScript( "tex/script.txt", self );
+
 
 	for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 }

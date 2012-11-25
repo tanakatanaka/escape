@@ -29,11 +29,8 @@ Game *Game_Initialize()
 	self->console = Console_Initialize( );
 	self->mess = Mess_Initialize( );
 	self->script = Script_Initialize( );
-
 	AllocConsole();
-	freopen("CONOUT$", "w", stdout); 
-	freopen("CONIN$", "r", stdin);
-
+	
 	return self;
 }
 
@@ -41,6 +38,11 @@ Game *Game_Initialize()
 // 動きを計算する
 void Game_Update(Game *self)
 {
+	freopen("CONOUT$", "w", stdout); 
+	freopen("CONIN$", "r", stdin);
+	printf("\nスクリプト開始\n\n");
+
+
 	Camera_Update(self->camera);
 	Keyboard_Update();    //キーボードの更新
 	Room_Update( self->room );
