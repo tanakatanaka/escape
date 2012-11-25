@@ -40,15 +40,13 @@ void Game_Update(Game *self)
 {
 	freopen("CONOUT$", "w", stdout); 
 	freopen("CONIN$", "r", stdin);
-	printf("\nスクリプト開始\n\n");
-
 
 	Camera_Update(self->camera);
 	Keyboard_Update();    //キーボードの更新
 	Room_Update( self->room );
 	Console_Update( self->console );
 	//Mess_Update( self->mess );
-	Script_Draw( self->script );
+	Script_Update( self->script );
 
 
 }
