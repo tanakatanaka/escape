@@ -257,11 +257,9 @@ int decodeScript(const char* scriptMessage, Script *script)
 
 	}else if( strncmp(message[0], "@@label", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 		//ラベルの場合はなにもしない
-	}else {
-		printf("スクリプトエラー(%d行目)\n", script->currentLine + 1);
-		printf("hey hey \n");
-		return 0;
 	}
+	
+
 	return 1;
 }
 
