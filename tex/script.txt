@@ -1,37 +1,5 @@
 	@@message こんにちは
 	@@message ノベルゲーム用スクリプトエンジンのテストです
 
-	@@message まずは条件分岐です
 
-	@@message あなたの年齢を教えてください
-
-	@@select 20歳未満@@UNDER 20歳以上@@UPPER
-
-@@label UNDER
-	@@message あなたは20歳未満なのですね!
-	@@goto NEXT
-
-@@label UPPER
-	@@message あなたは20歳以上なのですね!
-	@@goto NEXT
-
-@@label NEXT
-
-	@@message 画像human.pngを表示しますか
-
-	@@select はい@@YES いいえ@@NO
-
-@@label YES
-	@@message といっても本当に画像が表示されるわけではないのですが・・・
-	@@drawgraph 50 100 human.png
-	@@goto NEXT2
-
-@@label NO
-	@@goto NEXT2
-
-@@label NEXT2
-
-	@@message まだまだこのスクリプトエンジンは改良の余地があります
-	@@message 例えば，フラグの値によって条件を分岐したり，などです
-	@@message その辺りは読者の方がご自身で実装してみてください
-	@@message がんばればできます
+	
