@@ -14,15 +14,15 @@ struct Game
 // ‰Šú‰»‚ð‚·‚é
 Game *Game_Initialize()
 {
-	Game *self;
-	self = (Game *)malloc(sizeof(Game));
-	self->console = Console_Initialize( );
-	self->script = Script_Initialize( );
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout); 
 	freopen("CONIN$", "r", stdin);
 
-
+	Game *self;
+	self = (Game *)malloc(sizeof(Game));
+	self->console = Console_Initialize( );
+	self->script = Script_Initialize( );
+	
 	return self;
 }
 
@@ -30,16 +30,17 @@ Game *Game_Initialize()
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
-	Console_Update( self->console );
 	Script_Update( self->script );
+	Console_Update( self->console );
+	
 }
 
 // •`‰æ‚·‚é
 void Game_Draw(Game *self)
 {
-	 
-	 Console_Draw( self->console );
 	 Script_Draw( self->script );
+	 Console_Draw( self->console );
+	 
      
 }
 

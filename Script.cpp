@@ -24,7 +24,9 @@ struct Script
 	char script[SCRIPT_MAX_LINE][SCRIPT_MAX_STRING_LENGTH];
 };
 
+int loadScript(const char* filename, Script *script);
 void splitString(const char* src, char* dest[], const char* delim, int splitNum);
+
 
 // 初期化をする
 Script *Script_Initialize( )
@@ -35,6 +37,10 @@ Script *Script_Initialize( )
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
 	
+	
+	printf("\nスクリプト開始\n\n");
+	loadScript( "tex/script.txt", self );
+	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	
 	return self;
 }
@@ -50,11 +56,11 @@ int loadScript(const char* filename, Script *script)
 	//スクリプトファイル
 	FILE* fp;
 
-	//スクリプト情報を初期化
-	memset( script , 0, sizeof(Script) );
-
 	//スクリプトファイルを開く
 	fp = fopen(filename, "r");
+
+
+	
 	if( fp == NULL ) {
 		//ファイル読み込みに失敗
 		printf("スクリプト %s を読み込めませんでした\n", filename);
@@ -278,15 +284,11 @@ int decodeScript(const char* scriptMessage, Script *script)
 // 動きを計算する
 void Script_Update( Script *self )
 {
-	int line;
-
 	Camera_Update(self->camera);
 	Room_Update( self->room );
 	//Mess_Update( self->mess );
 
-	printf("\nスクリプト開始\n\n");
-	loadScript( "tex/script.txt", self );
-	for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
+	
 	
 
 }
