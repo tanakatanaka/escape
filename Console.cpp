@@ -3,7 +3,6 @@
 
 
 
-
 struct Console
 {
 	int cr ;

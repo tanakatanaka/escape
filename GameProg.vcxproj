@@ -96,7 +96,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Script.cpp" />
-    <ClCompile Include="Two.cpp" />
+    <ClCompile Include="Twod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -107,7 +107,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Script.h" />
-    <ClInclude Include="Two.h" />
+    <ClInclude Include="Twod.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

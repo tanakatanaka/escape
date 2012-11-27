@@ -2,6 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Script.h"
+#include "Room.h"
+#include "Camera.h"
+#include "Mess.h"
+#include "Twod.h"
 
 
 //スクリプトは最大1000行まで読み込む
@@ -11,6 +15,9 @@
 
 struct Script
 {
+	Room *room;
+    Camera *camera;
+    Mess *mess;
     int maxLineNumber;			//スクリプト行数
 	int currentLine;			//現在何行目を実行しているか
 	const char* filename;		//ファイル名
@@ -24,6 +31,11 @@ Script *Script_Initialize( )
 {
 	Script *self;
 	self = (Script *)malloc(sizeof(Script));
+	self->camera = Camera_Initialize( );
+	self->room = Room_Initialize();
+	self->mess = Mess_Initialize( );
+	
+	
 	return self;
 }
 
@@ -268,16 +280,21 @@ void Script_Update( Script *self )
 {
 	int line;
 
+	Camera_Update(self->camera);
+	Room_Update( self->room );
+	//Mess_Update( self->mess );
+
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
-
-
 	for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
+	
+
 }
 
 // 描画する
-void Script_Draw( Script *self){
-   
+void Script_Draw( Script *self)
+{
+	Room_Draw(self->room);   
 }
 
 // 終了処理をする
