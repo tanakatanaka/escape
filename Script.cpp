@@ -59,9 +59,9 @@ int loadScript(const char* filename, Script *script)
 
 	//スクリプトファイルを開く
 	fp = fopen(filename, "r");
-	　
-	
-	if( fp == NULL ) {
+
+	if(fp == NULL )
+	{
 		//ファイル読み込みに失敗
 		printf("スクリプト %s を読み込めませんでした\n", filename);
 		return -1;
