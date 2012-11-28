@@ -18,6 +18,7 @@ struct Script
 	Room *room;
     Camera *camera;
     Mess *mess;
+	int load_flag;
     int maxLineNumber;			//スクリプト行数
 	int currentLine;			//現在何行目を実行しているか
 	const char* filename;		//ファイル名
@@ -38,10 +39,10 @@ Script *Script_Initialize( )
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
 	
+	self->load_flag = 1;
 	
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
-	for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	return self;
 }
 
@@ -291,7 +292,15 @@ void Script_Update( Script *self )
 	Room_Update( self->room );
 	//Mess_Update( self->mess );
 
-	
+	if(self->load_flag == 1 && decodeScript( self->script[ self->currentLine ], self ) != 0)
+	{
+		self->currentLine++;
+		self->load_flag = 0;	
+	}
+
+	if(CheckHitKey(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
+
+	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	
 
 }
