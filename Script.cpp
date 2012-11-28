@@ -25,8 +25,8 @@ struct Script
 };
 
 int loadScript(const char* filename, Script *script);
+int decodeScript(const char* scriptMessage, Script *script);
 void splitString(const char* src, char* dest[], const char* delim, int splitNum);
-
 
 // 初期化をする
 Script *Script_Initialize( )
@@ -41,8 +41,7 @@ Script *Script_Initialize( )
 	
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
-	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
-	
+	for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	return self;
 }
 
@@ -104,9 +103,7 @@ int loadScript(const char* filename, Script *script)
 		}
 		else 
 		{
-			printf("\gogogo \n\n");
 			//書き込み
-			printf("\nc= %c\n",c);
 			script->script[ script->currentLine ][ pos ] = c;
 			//文字書き込み位置をずらす
 			pos++;
