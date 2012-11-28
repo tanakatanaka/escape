@@ -32,7 +32,8 @@ void splitString(const char* src, char* dest[], const char* delim, int splitNum)
 Script *Script_Initialize( )
 {
 	Script *self;
-	self = (Script *)malloc(sizeof(Script));
+	self = (Script *)calloc(sizeof(Script), 1);
+
 	self->camera = Camera_Initialize( );
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
@@ -58,8 +59,7 @@ int loadScript(const char* filename, Script *script)
 
 	//スクリプトファイルを開く
 	fp = fopen(filename, "r");
-
-
+	　
 	
 	if( fp == NULL ) {
 		//ファイル読み込みに失敗
@@ -69,7 +69,6 @@ int loadScript(const char* filename, Script *script)
 
 	//script書き込み時に使用
 	pos = 0;
-
 	for( ;; ) {
 		//一文字読み込み
 		c = fgetc( fp );
@@ -81,31 +80,39 @@ int loadScript(const char* filename, Script *script)
 		while( (c == ' ' || c == '\t') && pos == 0 && !feof( fp ) ) {
 			c = fgetc( fp );
 		}
-
 		if( pos >= SCRIPT_MAX_STRING_LENGTH - 1 ) {
 			//1行の文字数が多すぎる
 			printf("error: 文字数が多すぎます (%d行目)", script->currentLine );
 			return -1;
 		}
-
 		//改行文字が出てきた場合，次の行へ移動
-		if( c == '\n' ) {
+		if( c == '\n' ) 
+		{
 			//空行は読み飛ばす
-			if( pos == 0 ) {
+			if( pos == 0 ) 
+			{
 				continue;
 			}
+			
 			//\0を文字列の最後に付ける
 			script->script[ script->currentLine ][ pos ] = '\0';
 			//次の行に移動
 			script->currentLine++;
 			//書き込み位置を0にする
 			pos = 0;
-		}else {
+			
+		}
+		else 
+		{
+			printf("\gogogo \n\n");
 			//書き込み
+			printf("\nc= %c\n",c);
 			script->script[ script->currentLine ][ pos ] = c;
 			//文字書き込み位置をずらす
 			pos++;
+			
 		}
+		
 	}
 	//最大行数
 	script->maxLineNumber = script->currentLine;
@@ -113,7 +120,6 @@ int loadScript(const char* filename, Script *script)
 	script->currentLine = 0;
 	//スクリプトファイル名を設定
 	script->filename = filename;
-
 	return 0;
 }
 
