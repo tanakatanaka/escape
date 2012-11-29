@@ -30,7 +30,6 @@ Console *Console_Initialize()
 		self->win_count = 0;
 	}
  }
-
  
 // “®‚«‚ðŒvŽZ‚·‚é
 void Console_Update( Console *self )
@@ -39,7 +38,7 @@ void Console_Update( Console *self )
 
 	if(self->win_s % 2 == 1)
 	{
-		KeyInputSingleCharString( 0 , 420 , 30 , self->bag , TRUE ) ;
+		//KeyInputSingleCharString( 0 , 420 , 30 , self->bag , TRUE ) ;
 		
 	}
 

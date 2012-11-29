@@ -18,6 +18,7 @@ struct Script
 	Room *room;
     Camera *camera;
     Mess *mess;
+	Twod *twod;
 	int load_flag;
     int maxLineNumber;			//スクリプト行数
 	int currentLine;			//現在何行目を実行しているか
@@ -38,7 +39,8 @@ Script *Script_Initialize( )
 	self->camera = Camera_Initialize( );
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
-	
+	self->twod = Twod_Initialize( );
+
 	self->load_flag = 1;
 	
 	printf("\nスクリプト開始\n\n");
@@ -194,7 +196,7 @@ void printElements(char* elem[])
 
 //スクリプト文を解読する
 //戻り値 1: 成功  0: 失敗
-int decodeScript(const char* scriptMessage, Script *script)
+int decodeScript(const char* scriptMessage, Script *self)
 {
 	int i, selectNum, choice, line;
 	//分割されたスクリプト文
@@ -223,14 +225,21 @@ int decodeScript(const char* scriptMessage, Script *script)
 	//--- 条件分岐
 
 	//message[0] が @@message の時は，メッセージ命令が来たと判断
-	if( strncmp(message[0], "@@message", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
+	if( strncmp(message[0], "@@message", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
+	{
 		printf("メッセージ : %s\n", message[1] );
-
-	}else if( strncmp(message[0], "@@drawgraph", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
+	}
+	else if( strncmp(message[0], "@@drawgraph", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
+	{
 		printf("画像 %s 表示 -- x座標 : %d, y座標 : %d\n", 
 			message[3], atoi( message[1] ), atoi( message[2] ) );
+	}
+	else if(strncmp(message[0], "@@drawtest", SCRIPT_MAX_STRING_LENGTH) == 0 )
+	{
+		Get_twod(self->twod, 8);
+	}
 
-	}else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
+	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 
 		for(i = 0; message[i + 1] != NULL; i++ ) {
 			//条件を条件文章とジャンプラベルとに分ける
@@ -255,27 +264,27 @@ int decodeScript(const char* scriptMessage, Script *script)
 		}
 
 		//ラベルが何行目にあるかを取得
-		line = searchScriptLabel( select[choice - 1][1] , script );
+		line = searchScriptLabel( select[choice - 1][1] , self );
 		//指定したラベルが見つからなかった
 		if( line == -1 ) {
 			printf("スクリプトエラー:条件分岐の指定ラベルが間違っています(%d行目)\n",
-				script->currentLine + 1 );
+				self->currentLine + 1 );
 			return 0;
 		}
 		//読み取り中の行番号をラベルの行に移動
-		script->currentLine = line;
+		self->currentLine = line;
 
 	}else if( strncmp(message[0], "@@goto", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 		//ラベルが何行目にあるかを取得
-		line = searchScriptLabel( message[1], script );
+		line = searchScriptLabel( message[1], self );
 		//指定したラベルが見つからなかった
 		if( line == -1 ) {
 			printf("スクリプトエラー:指定したラベルが見つかりませんでした(%d行目)\n",
-				script->currentLine + 1);
+				self->currentLine + 1);
 			return 0;
 		}
 		//読み取り中の行番号をラベルの行に移動
-		script->currentLine = line;
+		self->currentLine = line;
 
 	}else if( strncmp(message[0], "@@label", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 		//ラベルの場合はなにもしない
@@ -291,6 +300,7 @@ void Script_Update( Script *self )
 	Camera_Update(self->camera);
 	Room_Update( self->room );
 	//Mess_Update( self->mess );
+	Twod_Update( self->twod );
 
 	if(self->load_flag == 1 && decodeScript( self->script[ self->currentLine ], self ) != 0)
 	{
@@ -308,7 +318,8 @@ void Script_Update( Script *self )
 // 描画する
 void Script_Draw( Script *self)
 {
-	Room_Draw(self->room);   
+	Room_Draw(self->room);
+	Twod_Draw( self->twod );
 }
 
 // 終了処理をする
