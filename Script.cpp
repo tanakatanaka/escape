@@ -223,7 +223,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 	//--- 文字列をメッセージとして表示する
 	//@@select 条件1の場合@@LABEL1 条件2の場合@@LABEL2 条件3の場合@@LABEL3
 	//--- 条件分岐
-
+	
 	//message[0] が @@message の時は，メッセージ命令が来たと判断
 	if( strncmp(message[0], "@@message", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
 	{
