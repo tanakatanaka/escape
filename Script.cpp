@@ -236,7 +236,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 	}
 	else if(strncmp(message[0], "@@drawtest", SCRIPT_MAX_STRING_LENGTH) == 0 )
 	{
-		Get_twod(self->twod, 8);
+		Set_tags(self->twod, 'a', 10, 10);
 	}
 
 	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {

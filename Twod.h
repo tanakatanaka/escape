@@ -6,8 +6,8 @@ struct Twod;
 
 // ‰Šú‰»‚ğ‚·‚é
 Twod *Twod_Initialize();
-//test
-void Get_twod(Twod *self, int i);
+//‰æ‘œ‚ğ•`‰æƒ‚[ƒh‚É‚·‚é
+void Set_tags(Twod *self, char tag, int x, int y);
 // “®‚«‚ğŒvZ‚·‚é
 void Twod_Update( Twod *Twod );
 // •`‰æ‚·‚é
