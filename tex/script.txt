@@ -1,6 +1,7 @@
 	@@message こんにちは
 	@@message ノベルゲーム用スクリプトエンジンのテストです
 	@@drawtest
+	@@drawerase
 @@label
 
 	

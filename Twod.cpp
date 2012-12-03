@@ -1,53 +1,60 @@
 #include "DxLib.h"
 #include "Twod.h"
 
-//”z—ñ‚ÍÅ‘å1˜g‚Ü‚Å
-#define MAX 1
+
+struct Image
+{
+	int	x;
+	int y;
+	int id;
+	char tag[100];
+
+};
 
 struct Twod
 {
-	int window[MAX];
-	char tag[MAX];
-	int x[MAX];
-	int y[MAX];
-	int on[MAX];
-	
-
-}; 
+	Image image[100];
+	int dx[100];
+};
 
 // ‰Šú‰»‚ğ‚·‚é
-Twod *Twod_Initialize(  )
+Twod *Twod_Initialize()
 {
 	Twod *self;
 	self = (Twod *)malloc(sizeof(Twod));
-	self->window[0] = LoadGraph( "‰æ‘œ/test.jpg" );
-	self->tag[0] = 'a';
-	self->x[0] = 0;
-	self->y[0] = 0;
-	printf("\nhajime = %c\n",self->tag[0]);
+	for(int i = 0; i < 100;i++)
+	{
+		self->image[i].id  = -1;
+	}
+	self->dx[0] = LoadGraph( "‰æ‘œ/test.jpg" ) ;
 	return self;
 }
 
-
-void Set_tags(Twod *self, char tag, int x, int y)
+void twod_add_image(Twod *self, int x, int y, int id, const char *tag)
 {
-	printf("\nowari = %c\n",tag);
-	for(int i = 0; i++ ; i > MAX)
+	for (int i=0; i < 100; i++)
 	{
-		if(self->tag[i] == tag)
+		if(self->image[i].id < 0)
 		{
-			self->x[i] = x;
-			self->y[i] = y;
-			self->on[i] = 1;
+			self->image[i].id = id;
+			self->image[i].x = x;
+			self->image[i].y = y;
+			strcpy(self->image[i].tag, tag);
+			break;
 		}
 	}
 }
 
-void All_drawg(Twod *self)
+void twod_erase_image(Twod *self, const char *tag)
 {
-	
-	if(self->on[0] == 1){DrawGraph( self->x[0], self->y[0], self->window[0], TRUE ) ;}
-	
+	for (int i=0; i < 100; i++)
+	{
+		if (strcmp(self->image[i].tag, tag) == 0)
+		{
+			self->image[i].id = -1;
+			break;
+		}
+	}
 }
 
 
@@ -60,7 +67,13 @@ void Twod_Update( Twod *self )
 // •`‰æ‚·‚é
 void Twod_Draw( Twod *self)
 {
-	All_drawg(self);
+	for (int i=0; i < 100; i++)
+	{
+		if(self->image[i].id != -1)
+		{
+			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].id], TRUE );
+		}
+	}
 }
 
 // I—¹ˆ—‚ğ‚·‚é
