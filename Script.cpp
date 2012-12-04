@@ -324,6 +324,7 @@ void Script_Draw( Script *self)
 {
 	Room_Draw(self->room);
 	Twod_Draw( self->twod );
+	Mess_Draw(self->mess);
 }
 
 // I—¹ˆ—‚ğ‚·‚é

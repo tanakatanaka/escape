@@ -64,6 +64,19 @@ void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 	}
 }
 
+void mess_erase_word(Mess *self, const char *tag)
+{
+	for (int i=0; i < 100; i++)
+	{
+		if (strcmp(self->word[i].tag, tag) == 0)
+		{
+			self->word[i].on_off = -1;
+			break;
+		}
+	}
+}
+
+
 //code が日本語であるか判定する
 //戻り値 1:日本語 0:日本語ではない
 int isJapaneseCharacter(unsigned char code)

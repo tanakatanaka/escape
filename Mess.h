@@ -6,7 +6,10 @@ struct Mess;
 
 // ‰Šú‰»‚ğ‚·‚é
 Mess *Mess_Initialize();
-
+//Œ¾—t‚ğ’Ç‰Á
+void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag);
+//Œ¾—t‚ğíœ
+void mess_erase_word(Mess *self, const char *tag);
 // “®‚«‚ğŒvZ‚·‚é
 void Mess_Update( Mess *Mess );
 
