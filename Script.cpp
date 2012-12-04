@@ -236,13 +236,11 @@ int decodeScript(const char* scriptMessage, Script *self)
 	}
 	else if(strncmp(message[0], "@@drawtest", SCRIPT_MAX_STRING_LENGTH) == 0 )
 	{
-		printf("\ngagaga\n");
-		twod_add_image(self->twod, 0, 0, 0, "zeppeli");
+		twod_add_image(self->twod, atoi( message[1] ), atoi( message[2] ), atoi( message[3] ),  message[4] );
 	}
 	else if(strncmp(message[0], "@@drawerase", SCRIPT_MAX_STRING_LENGTH) == 0 )
 	{
-		printf("\ngagaga\n");
-		twod_erase_image(self->twod, "zeppeli");
+		twod_erase_image(self->twod, message[1] );
 	}
 
 	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {

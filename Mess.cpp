@@ -13,11 +13,19 @@
 //メッセージボックスのY座標
 #define MESSAGE_BOX_Y_POS 340
 
-struct Mess
+struct Word
 {
    char g_message[MESSAGE_MAX_LENGTH * MESSAGE_MAX_LINE];
    int g_currentCursor;
    int g_currentLineCursor;
+   int on_off;
+   char tag[100];
+};
+
+struct Mess
+{	
+	Word word[100];
+
 };
 
 // 初期化をする
@@ -26,14 +34,34 @@ Mess *Mess_Initialize()
 	Mess *self;
 	self = (Mess *)malloc(sizeof(Mess));
 	
+	for(int i = 0; i < 100;i++)
+	{
+		self->word[i].on_off = -1;
+	}
+
+	/*
 	strcpy(self->g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
 	"にぬねのはひふへほまみむめもやゆよらりるれろわをん");
 	
-
 	self->g_currentCursor = 0;
 	self->g_currentLineCursor = 0;
-
+	*/
 	return self;
+}
+void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
+{
+	for(int i = 0; i < 100;i++)
+	{
+		if(self->word[i].on_off < 0)
+		{
+			self->word[i].on_off = 1;
+			self->word[i].g_currentCursor = x;
+			self->word[i].g_currentLineCursor = y;
+			strcpy(self->word[i].g_message, word);
+			strcpy(self->word[i].tag, tag);
+			break;
+		}
+	}
 }
 
 //code が日本語であるか判定する
@@ -97,7 +125,7 @@ void writeSubstring(char* message, int start, int len, int posX, int posY, int c
 	DrawString(posX, posY, g_messageBuffer[ bufferLine ], color );
 }
 
-void drawMessage(Mess *self)
+void drawMessage(Word *self)
 {
 	int i;
 	int g_whiteColor = GetColor(255,255,255);//白
@@ -142,8 +170,14 @@ void Mess_Update( Mess *self )
 // 描画する
 void Mess_Draw( Mess *self)
 {
-	drawMessage(self);
-	Sleep( 100 );
+	for (int i=0; i < 100; i++)
+	{
+		if(self->word[i].on_off != -1)
+		{
+			drawMessage(&self->word[i]);
+			Sleep( 100 );
+		}
+	}
 	
 }
 
