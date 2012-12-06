@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include <string>
 #include "Console.h"
 #include "Pad.h"
 
@@ -8,7 +9,7 @@ struct Console
 {
 	int cr ;
 	int win_s;
-	char d_bag;
+	std::string d_bag;
 	int green;
 }; 
 
@@ -16,11 +17,10 @@ struct Console
 Console *Console_Initialize()
 {
 	Console *self;
-	self = (Console *)malloc(sizeof(Console));
+	self =  new Console();
 	self->cr = GetColor( 0 , 0 , 200 ) ;
 	self->win_s = 0;
 	self->green = GetColor( 0, 255, 0 );
-	self->d_bag += 'a';
 	return self;
 }
 
@@ -58,6 +58,8 @@ void Console_Update( Console *self )
 		{
 			//バックスペース入力があった場合
 			//最後の文字を消去
+			self->d_bag.erase(self->d_bag.size() - 1);
+
 		}
 		else
 		{
@@ -80,7 +82,7 @@ void Console_Draw( Console *self)
 	else
 	{
 		DrawBox( 0, 380 , 640 , 480, self->cr, TRUE) ;
-		DrawFormatString( 10, 10, self->green, "%s", self->d_bag); // 文字を描画する
+		DrawFormatString( 10, 10, self->green, "%s", self->d_bag.c_str()); // 文字を描画する
 	}
 }
 
