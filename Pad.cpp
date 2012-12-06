@@ -1,28 +1,30 @@
 #include "DxLib.h"
 #include "Pad.h"
 
-struct Pad
-{
-   
-}; 
-
-// 初期化をする
-Pad *Pad_Initialize( )
-{
-	Pad *self;
-	self = (Pad *)malloc(sizeof(Pad));
-	return self;
-}
+static int m_Key[256];    // キーの入力状態格納用変数
 
 // 動きを計算する
-void Pad_Update( Pad *self )
+void Pad_Update(  )
 {
+	char tmpKey[256];            // 現在のキーの入力状態を格納する
+    GetHitKeyStateAll  ( tmpKey );// 全てのキーの入力状態を得る
     
+	for( int i=0; i < 256; i++ )
+	{ 
+        if( tmpKey[i] != 0 )
+		{    // i番のキーコードに対応するキーが押されていたら
+            m_Key[i]++;            // 加算
+        }
+		else 
+		{                // 押されていなければ
+            m_Key[i] = 0;            // 0にする
+        }
+    }
 }
 
-
-// 終了処理をする
-void Pad_Finalize( Pad *self )
+// KeyCodeのキーの入力状態を取得する
+int Pad_Get( int KeyCode )
 {
-    
+    return m_Key[ KeyCode ];
 }
+

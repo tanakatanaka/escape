@@ -1,13 +1,11 @@
 #include "DxLib.h"
 #include "Game.h"
-#include "Console.h"
 #include "Script.h"
 
 static const int NUM = 2;        //ƒvƒŒƒCƒ„[‚Ì”
 
 struct Game
 {
-	Console *console;
 	Script *script;
 };
 
@@ -20,7 +18,6 @@ Game *Game_Initialize()
 
 	Game *self;
 	self = (Game *)malloc(sizeof(Game));
-	self->console = Console_Initialize( );
 	self->script = Script_Initialize( );
 	
 	return self;
@@ -31,7 +28,7 @@ Game *Game_Initialize()
 void Game_Update(Game *self)
 {
 	Script_Update( self->script );
-	Console_Update( self->console );
+	
 	
 }
 
@@ -39,7 +36,7 @@ void Game_Update(Game *self)
 void Game_Draw(Game *self)
 {
 	 Script_Draw( self->script );
-	 Console_Draw( self->console );
+	 
 	 
      
 }

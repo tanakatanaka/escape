@@ -4,8 +4,11 @@
 #include "Script.h"
 #include "Room.h"
 #include "Camera.h"
+#include "Room.h"
 #include "Mess.h"
 #include "Twod.h"
+#include "Pad.h"
+#include "Console.h"
 
 
 //スクリプトは最大1000行まで読み込む
@@ -19,6 +22,7 @@ struct Script
     Camera *camera;
     Mess *mess;
 	Twod *twod;
+	Console *console;
 	int load_flag;
     int maxLineNumber;			//スクリプト行数
 	int currentLine;			//現在何行目を実行しているか
@@ -40,7 +44,7 @@ Script *Script_Initialize( )
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
-
+	self->console = Console_Initialize( );
 	self->load_flag = 1;
 	
 	printf("\nスクリプト開始\n\n");
@@ -301,10 +305,13 @@ int decodeScript(const char* scriptMessage, Script *self)
 // 動きを計算する
 void Script_Update( Script *self )
 {
+	Pad_Update(  );
 	Camera_Update(self->camera);
 	Room_Update( self->room );
+	Console_Update( self->console );
 	//Mess_Update( self->mess );
 	Twod_Update( self->twod );
+	
 
 	if(self->load_flag == 1 && decodeScript( self->script[ self->currentLine ], self ) != 0)
 	{
@@ -312,7 +319,7 @@ void Script_Update( Script *self )
 		self->load_flag = 0;	
 	}
 
-	if(CheckHitKey(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
+	if(Pad_Get(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
 
 	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	
@@ -323,8 +330,10 @@ void Script_Update( Script *self )
 void Script_Draw( Script *self)
 {
 	Room_Draw(self->room);
+	Console_Draw( self->console );
 	Twod_Draw( self->twod );
 	Mess_Draw(self->mess);
+	
 }
 
 // 終了処理をする

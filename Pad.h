@@ -4,14 +4,9 @@
 
 struct Pad;
 
-// ‰Šú‰»‚ğ‚·‚é
-Pad *Pad_Initialize( );
-
 // “®‚«‚ğŒvZ‚·‚é
-void Pad_Update( Pad *Pad );
+void Pad_Update(  );
 
-
-// I—¹ˆ—‚ğ‚·‚é
-void Pad_Finalize( Pad *Pad );
+int Pad_Get( int KeyCode );
 
 #endif
