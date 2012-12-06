@@ -1,7 +1,8 @@
 #include "DxLib.h"
 #include "Pad.h"
 
-static int m_Key[256];    // キーの入力状態格納用変数
+static char m_Key[256];    // キーの入力状態格納用変数
+static char old_Key[256];    //一つ前のキーの入力状態格納用変数
 
 // 動きを計算する
 void Pad_Update(  )
@@ -15,11 +16,17 @@ void Pad_Update(  )
 		{    // i番のキーコードに対応するキーが押されていたら
             m_Key[i]++;            // 加算
         }
+		else if( old_Key[i] == 1 && tmpKey[i] == 0)
+		{
+			 m_Key[i] = -1;
+		}
 		else 
 		{                // 押されていなければ
             m_Key[i] = 0;            // 0にする
         }
-    }
+
+		old_Key[i] = tmpKey[i];
+	}
 }
 
 // KeyCodeのキーの入力状態を取得する

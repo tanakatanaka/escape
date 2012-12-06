@@ -26,13 +26,11 @@ Console *Console_Initialize()
 
 static int get_chara()
 {
-	int key = KEY_INPUT_A;
 	for (int i = 0; i < 26; i++)
   	{
-	    if (Pad_Get( key+1 ) == -1)
+	    if (Pad_Get( KEY_INPUT_A + i ) == -1)
 	    {
-			printf("\nmoji:%c\n",key);
-	    	return key + i;
+			return 'a' + i;
 	    }
 	}
   return -1;
@@ -54,7 +52,7 @@ void Console_Update( Console *self )
 		{
 			//入力がない場合
 		}
-		else if(Pad_Get( KEY_INPUT_BACK ))
+		else if(Pad_Get( KEY_INPUT_BACK ) == -1)
 		{
 			//バックスペース入力があった場合
 			//最後の文字を消去
