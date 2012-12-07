@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "Room.h"
 
+
 struct Room
 {
     int model;

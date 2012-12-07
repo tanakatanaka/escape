@@ -3,14 +3,22 @@
 #include "Console.h"
 #include "Pad.h"
 
-
+static const float moji[] =
+{
+	D_DIK_A, D_DIK_B, D_DIK_C, D_DIK_D, D_DIK_E,
+	D_DIK_F, D_DIK_G, D_DIK_H, D_DIK_I, D_DIK_J,
+	D_DIK_K, D_DIK_L, D_DIK_M, D_DIK_N, D_DIK_O,
+	D_DIK_P, D_DIK_Q, D_DIK_R, D_DIK_S, D_DIK_T,
+	D_DIK_U, D_DIK_V, D_DIK_W, D_DIK_X, D_DIK_Y,
+	D_DIK_Z
+};
 
 struct Console
 {
-	int cr ;
 	int win_s;
-	std::string d_bag;
+	int blue ;
 	int green;
+	std::string d_bag;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
@@ -18,19 +26,24 @@ Console *Console_Initialize()
 {
 	Console *self;
 	self =  new Console();
-	self->cr = GetColor( 0 , 0 , 200 ) ;
 	self->win_s = 0;
+	self->blue = GetColor( 0 , 0 , 200 ) ;
 	self->green = GetColor( 0, 255, 0 );
 	return self;
 }
 
-static int get_chara()
+int Console_over(Console *self)
+{
+	return self->win_s % 2;
+}
+
+static float get_chara()
 {
 	for (int i = 0; i < 26; i++)
   	{
 	    if (Pad_Get( KEY_INPUT_A + i ) == -1)
 	    {
-			return 'a' + i;
+			return  moji[i];
 	    }
 	}
   return -1;
@@ -46,7 +59,7 @@ void Console_Update( Console *self )
 
 	if(self->win_s % 2 == 1)
 	{
-		int bag = get_chara();
+		float bag = get_chara();
 
 		if(bag == -1)
 		{
@@ -75,11 +88,11 @@ void Console_Draw( Console *self)
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
 	if(self->win_s % 2 == 0)
 	{
-		DrawBox( 0, 420 , 640 , 480, self->cr, TRUE) ;
+		DrawBox( 0, 420 , 640 , 480, self->blue, TRUE) ;
 	}
 	else
 	{
-		DrawBox( 0, 380 , 640 , 480, self->cr, TRUE) ;
+		DrawBox( 0, 380 , 640 , 480, self->blue, TRUE) ;
 		DrawFormatString( 10, 10, self->green, "%s", self->d_bag.c_str()); // •¶Žš‚ð•`‰æ‚·‚é
 	}
 }

@@ -7,6 +7,8 @@ struct Console;
 // ‰Šú‰»‚ğ‚·‚é
 Console *Console_Initialize( );
 
+int Console_over(Console *Console);
+
 // “®‚«‚ğŒvZ‚·‚é
 void Console_Update( Console *Console );
 
