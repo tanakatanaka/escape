@@ -3,7 +3,7 @@
 #include "Console.h"
 #include "Pad.h"
 
-static const float moji[] =
+static const int KEYCODES[] =
 {
 	D_DIK_A, D_DIK_B, D_DIK_C, D_DIK_D, D_DIK_E,
 	D_DIK_F, D_DIK_G, D_DIK_H, D_DIK_I, D_DIK_J,
@@ -37,15 +37,22 @@ int Console_over(Console *self)
 	return self->win_s % 2;
 }
 
-static float get_chara()
+static int get_chara()
 {
 	for (int i = 0; i < 26; i++)
   	{
-	    if (Pad_Get( KEY_INPUT_A + i ) == -1)
+	    if (Pad_Get( KEYCODES[i] ) == -1)
 	    {
-			return  moji[i];
+			return  'a'+ i;
 	    }
 	}
+	//バックスペース入力があった場合
+	if(Pad_Get( KEY_INPUT_BACK ) == -1){return 2;}
+
+	//スペース入力があった場合
+	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return 32;}
+
+  //入力がなかった場合
   return -1;
 }
 
@@ -59,13 +66,13 @@ void Console_Update( Console *self )
 
 	if(self->win_s % 2 == 1)
 	{
-		float bag = get_chara();
+		int bag = get_chara();
 
 		if(bag == -1)
 		{
 			//入力がない場合
 		}
-		else if(Pad_Get( KEY_INPUT_BACK ) == -1)
+		else if(bag == 2)
 		{
 			//バックスペース入力があった場合
 			//最後の文字を消去
