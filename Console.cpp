@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include <string>
+#include <deque>
 #include "Console.h"
 #include "Pad.h"
 
@@ -13,12 +14,16 @@ static const int KEYCODES[] =
 	D_DIK_Z
 };
 
+
 struct Console
 {
 	int win_s;
-	int blue ;
-	int green;
+	int win_c;
+	int moji_c;
+	int x;
+	int y;
 	std::string d_bag;
+	std::deque<std::string> log;
 }; 
 
 // 初期化をする
@@ -27,8 +32,11 @@ Console *Console_Initialize()
 	Console *self;
 	self =  new Console();
 	self->win_s = 0;
-	self->blue = GetColor( 0 , 0 , 200 ) ;
-	self->green = GetColor( 0, 255, 0 );
+	self->win_c = GetColor( 0 , 0 , 200 );
+	self->moji_c = GetColor( 0, 255, 0 );
+	self->x = 0;
+	self->y = 420;
+
 	return self;
 }
 
@@ -47,15 +55,42 @@ static int get_chara()
 	    }
 	}
 	//バックスペース入力があった場合
-	if(Pad_Get( KEY_INPUT_BACK ) == -1){return 2;}
+	if(Pad_Get( KEY_INPUT_BACK ) == -1){return -2;}
+
+	//エンター入力があった場合
+	if(Pad_Get( KEY_INPUT_RETURN ) == -1){return -3;}
 
 	//スペース入力があった場合
-	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return 32;}
+	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return ' ';}
+
+
 
   //入力がなかった場合
   return -1;
 }
 
+void split_string(char *code)
+{
+	char *tp;
+	char *box[10];
+	printf("\ncode = %s\n",code);
+
+	for(int i = 0; i < 2 ; i++ )
+	{
+		//分割対象文字列が無くなるまで分割
+		if( (box[i] = strtok(code, " ")) == NULL )
+		{
+			break;
+		}
+
+		printf("\narea = %s\n",box[i]);
+		//2回目にstrtokを呼び出す時は，cpをNULLにする
+		code = NULL;
+	}
+        
+		
+		
+}
 
 // 動きを計算する
 void Console_Update( Console *self )
@@ -72,11 +107,21 @@ void Console_Update( Console *self )
 		{
 			//入力がない場合
 		}
-		else if(bag == 2)
+		else if(bag == -2)
 		{
 			//バックスペース入力があった場合
 			//最後の文字を消去
 			self->d_bag.erase(self->d_bag.size() - 1);
+
+		}
+		else if(bag == -3)
+		{
+			//エンター入力があった場合
+			self->log.push_back(self->d_bag);
+			char code[100];
+			strcpy( code,self->d_bag.c_str() );
+			split_string(code);
+			self->d_bag.erase(0);
 
 		}
 		else
@@ -86,6 +131,10 @@ void Console_Update( Console *self )
 		}
 		
 	}
+	else
+	{
+		//コンソールとき	
+	}
 
 }
 
@@ -93,15 +142,16 @@ void Console_Update( Console *self )
 void Console_Draw( Console *self)
 {
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
-	if(self->win_s % 2 == 0)
-	{
-		DrawBox( 0, 420 , 640 , 480, self->blue, TRUE) ;
-	}
-	else
-	{
-		DrawBox( 0, 380 , 640 , 480, self->blue, TRUE) ;
-		DrawFormatString( 10, 10, self->green, "%s", self->d_bag.c_str()); // 文字を描画する
-	}
+	
+	int plus;
+	if(self->win_s % 2 == 1){plus = -40;}
+	else{plus = 0;}
+
+	DrawBox( 0, 420 +  plus, 640 , 480, self->win_c, TRUE) ;
+	
+	
+	DrawFormatString( self->x, 465 - 15, self->moji_c, "%s", self->log); // logを描画する
+	DrawFormatString( self->x, 465, self->moji_c, "%s", self->d_bag.c_str()); // 現在の文字を描画する
 }
 
 // 終了処理をする
