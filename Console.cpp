@@ -46,8 +46,13 @@ int console_state(Console *self)
 
 const char *console_d_bag(Console *self)
 {
-	if(Pad_Get( KEY_INPUT_RETURN ) == -1){return self->d_bag.c_str();}
-	else{return NULL;}
+	return self->d_bag.c_str();
+}
+
+void console_shift_log(Console *self)
+{
+	self->log.push_back(self->d_bag);
+	self->d_bag.erase(0);
 }
 
 static int get_chara()
@@ -61,10 +66,6 @@ static int get_chara()
 	}
 	//バックスペース入力があった場合
 	if(Pad_Get( KEY_INPUT_BACK ) == -1){return -2;}
-
-	//エンター入力があった場合
-	if(Pad_Get( KEY_INPUT_RETURN ) == -1){return -3;}
-
 	//スペース入力があった場合
 	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return ' ';}
 
@@ -94,13 +95,6 @@ void Console_Update( Console *self )
 			//バックスペース入力があった場合
 			//最後の文字を消去
 			self->d_bag.erase(self->d_bag.size() - 1);
-
-		}
-		else if(bag == -3)
-		{
-			//エンター入力があった場合
-			self->log.push_back(self->d_bag);
-			self->d_bag.erase(0);
 
 		}
 		else

@@ -1,6 +1,12 @@
 #include "DxLib.h"
+#include <string>
 #include <string.h>
 #include <stdlib.h>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+#include <vector>
+
 #include "Script.h"
 #include "Room.h"
 #include "Camera.h"
@@ -10,11 +16,17 @@
 #include "Pad.h"
 #include "Console.h"
 
-
 //スクリプトは最大1000行まで読み込む
 #define SCRIPT_MAX_LINE 1000
 //スクリプト最大文字数
 #define SCRIPT_MAX_STRING_LENGTH 300
+
+typedef std::vector<std::string> Words;
+typedef std::istream_iterator<std::string> I;
+using std::istringstream;
+using std::copy;
+
+
 
 struct Script
 {
@@ -28,6 +40,7 @@ struct Script
 	int currentLine;			//現在何行目を実行しているか
 	const char* filename;		//ファイル名
 	char script[SCRIPT_MAX_LINE][SCRIPT_MAX_STRING_LENGTH];
+	char *word[10];
 };
 
 int loadScript(const char* filename, Script *script);
@@ -302,21 +315,29 @@ int decodeScript(const char* scriptMessage, Script *self)
 	return 1;
 }
 
-//コンソールからもらったコードをデコード
-void decode_console(Script *self)
+Words split(const char *str)
+{
+    istringstream ss(str);
+    Words words;
+    copy(I(ss), I(), std::back_inserter<Words>(words));
+    return words;
+}
+
+
+void decode_command(Script *self)
 {
 	int i = 0; 
-	const char *code = console_d_bag(self->console);
+	char s[256];
 
-	if(code == NULL)
+
+	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
-		//何もしない
+		Words words = split(console_d_bag(self->console));
+		console_shift_log(self->console);
+		printf("\naa = %s\n",words[0].c_str());
 	}
-	else
-	{
-		fprintf(stderr, "hoge");
-		printf("\ncode = %s\n",code);
-	}
+	else{}
+
 }
 
 // 動きを計算する
@@ -338,12 +359,12 @@ void Script_Update( Script *self )
 
 	if(Pad_Get(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
 
-	decode_console(self);
+	decode_command(self);
 
 	//スクリプトを繰り返すかどうか　コメントアウト
 	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
 	
-
+	
 }
 
 // 描画する
