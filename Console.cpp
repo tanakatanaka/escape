@@ -22,7 +22,6 @@ struct Console
 	int moji_c;
 	int x;
 	int y;
-	char *box[10];
 	std::string d_bag;
 	std::deque<std::string> log;
 }; 
@@ -45,11 +44,11 @@ int console_state(Console *self)
 	return self->win_s % 2;
 }
 
-char *conole_code(Console *self)
+const char *console_d_bag(Console *self)
 {
-	return self->box[0];
+	if(Pad_Get( KEY_INPUT_RETURN ) == -1){return self->d_bag.c_str();}
+	else{return NULL;}
 }
-
 
 static int get_chara()
 {
@@ -73,26 +72,6 @@ static int get_chara()
 
   //入力がなかった場合
   return -1;
-}
-
-void split_string(Console *self, char *code)
-{
-	int i = 0;
-	printf("\ncode = %s\n",code);
-
-	while(1)
-	{
-		//分割対象文字列が無くなるまで分割
-		if( (self->box[i] = strtok(code, " ")) == NULL )
-		{
-			break;
-		}
-		printf("\nbox = %s\n",self->box[i]);
-		//2回目にstrtokを呼び出す時は，cpをNULLにする
-		i++;
-		code = NULL;
-	}
-    
 }
 
 // 動きを計算する
@@ -121,9 +100,6 @@ void Console_Update( Console *self )
 		{
 			//エンター入力があった場合
 			self->log.push_back(self->d_bag);
-			char code[100];
-			strcpy( code,self->d_bag.c_str() );
-			split_string(self,code);
 			self->d_bag.erase(0);
 
 		}
@@ -152,8 +128,12 @@ void Console_Draw( Console *self)
 
 	DrawBox( 0, 420 +  plus, 640 , 480, self->win_c, TRUE) ;
 	
+
+	for (int i = 0; i < self->log.size(); i++)
+	{
+		DrawFormatString( self->x, 435, self->moji_c, "%s", self->log[i].c_str()); //ログを描画する
+	}
 	
-	DrawFormatString( self->x, 465 - 15, self->moji_c, "%s", self->log); // logを描画する
 	DrawFormatString( self->x, 465, self->moji_c, "%s", self->d_bag.c_str()); // 現在の文字を描画する
 }
 

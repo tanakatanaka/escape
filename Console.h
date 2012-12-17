@@ -9,8 +9,8 @@ Console *Console_Initialize( );
 
 //コンソールの閉じてる開いてるを表示
 int console_state(Console *self);
-//コンソールの入力コードを返す
-char *conole_code(Console *self);
+//コンソールの文字を返す関数
+const char *console_d_bag(Console *self);
 
 // 動きを計算する
 void Console_Update( Console *Console );

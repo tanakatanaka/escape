@@ -306,11 +306,17 @@ int decodeScript(const char* scriptMessage, Script *self)
 void decode_console(Script *self)
 {
 	int i = 0; 
-	char *code;
+	const char *code = console_d_bag(self->console);
 
-	code = conole_code(self->console); 
-	printf("\ncode = %s\n",code);
-
+	if(code == NULL)
+	{
+		//何もしない
+	}
+	else
+	{
+		fprintf(stderr, "hoge");
+		printf("\ncode = %s\n",code);
+	}
 }
 
 // 動きを計算する
@@ -332,7 +338,7 @@ void Script_Update( Script *self )
 
 	if(Pad_Get(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
 
-	//decode_console(self);
+	decode_console(self);
 
 	//スクリプトを繰り返すかどうか　コメントアウト
 	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
