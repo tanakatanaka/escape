@@ -7,7 +7,10 @@ struct Console;
 // 初期化をする
 Console *Console_Initialize( );
 
-int Console_over(Console *Console);
+//コンソールの閉じてる開いてるを表示
+int console_state(Console *self);
+//コンソールの入力コードを返す
+char *conole_code(Console *self);
 
 // 動きを計算する
 void Console_Update( Console *Console );

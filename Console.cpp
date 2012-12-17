@@ -22,6 +22,7 @@ struct Console
 	int moji_c;
 	int x;
 	int y;
+	char *box[10];
 	std::string d_bag;
 	std::deque<std::string> log;
 }; 
@@ -36,14 +37,19 @@ Console *Console_Initialize()
 	self->moji_c = GetColor( 0, 255, 0 );
 	self->x = 0;
 	self->y = 420;
-
 	return self;
 }
 
-int Console_over(Console *self)
+int console_state(Console *self)
 {
 	return self->win_s % 2;
 }
+
+char *conole_code(Console *self)
+{
+	return self->box[0];
+}
+
 
 static int get_chara()
 {
@@ -69,27 +75,24 @@ static int get_chara()
   return -1;
 }
 
-void split_string(char *code)
+void split_string(Console *self, char *code)
 {
-	char *tp;
-	char *box[10];
+	int i = 0;
 	printf("\ncode = %s\n",code);
 
-	for(int i = 0; i < 2 ; i++ )
+	while(1)
 	{
 		//•ªŠ„‘ÎÛ•¶Žš—ñ‚ª–³‚­‚È‚é‚Ü‚Å•ªŠ„
-		if( (box[i] = strtok(code, " ")) == NULL )
+		if( (self->box[i] = strtok(code, " ")) == NULL )
 		{
 			break;
 		}
-
-		printf("\narea = %s\n",box[i]);
+		printf("\nbox = %s\n",self->box[i]);
 		//2‰ñ–Ú‚Éstrtok‚ðŒÄ‚Ño‚·Žž‚ÍCcp‚ðNULL‚É‚·‚é
+		i++;
 		code = NULL;
 	}
-        
-		
-		
+    
 }
 
 // “®‚«‚ðŒvŽZ‚·‚é
@@ -120,7 +123,7 @@ void Console_Update( Console *self )
 			self->log.push_back(self->d_bag);
 			char code[100];
 			strcpy( code,self->d_bag.c_str() );
-			split_string(code);
+			split_string(self,code);
 			self->d_bag.erase(0);
 
 		}
