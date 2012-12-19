@@ -22,6 +22,7 @@ struct Console
 	int moji_c;
 	int x;
 	int y;
+	int ly;
 	std::string d_bag;
 	std::deque<std::string> log;
 }; 
@@ -125,7 +126,7 @@ void Console_Draw( Console *self)
 
 	for (int i = 0; i < self->log.size(); i++)
 	{
-		DrawFormatString( self->x, 435, self->moji_c, "%s", self->log[i].c_str()); //ƒƒO‚ğ•`‰æ‚·‚é
+		DrawFormatString( self->x, 435 - i * 15, self->moji_c, "%s", self->log[i].c_str()); //ƒƒO‚ğ•`‰æ‚·‚é
 	}
 	
 	DrawFormatString( self->x, 465, self->moji_c, "%s", self->d_bag.c_str()); // Œ»İ‚Ì•¶š‚ğ•`‰æ‚·‚é

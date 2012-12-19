@@ -323,18 +323,28 @@ Words split(const char *str)
     return words;
 }
 
+void word_act(Words words)
+{
+	if(words[0] == "jojo")
+	{
+		if(words[1] == "gogo")
+		printf("\ndododo = %s\n",words[0].c_str());
+	}
+
+}
 
 void decode_command(Script *self)
 {
-	int i = 0; 
-	char s[256];
-
-
 	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
+		//単語後に分解
 		Words words = split(console_d_bag(self->console));
+		//コンソールのほうにあるコマンドをログに移動
 		console_shift_log(self->console);
+		word_act(words);
 		printf("\naa = %s\n",words[0].c_str());
+
+
 	}
 	else{}
 
