@@ -47,7 +47,8 @@ int console_state(Console *self)
 
 const char *console_d_bag(Console *self)
 {
-	return self->d_bag.c_str();
+	if( self->d_bag.empty()){return NULL;}
+	else{return self->d_bag.c_str();}
 }
 
 void console_shift_log(Console *self)

@@ -338,15 +338,21 @@ void decode_command(Script *self)
 	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
 		//単語後に分解
-		Words words = split(console_d_bag(self->console));
-		//コンソールのほうにあるコマンドをログに移動
-		console_shift_log(self->console);
-		word_act(words);
-		printf("\naa = %s\n",words[0].c_str());
+		const char *command = console_d_bag(self->console);
 
-
+		printf("command = %s",command);
+		
+		if(command != NULL)
+		{
+			Words words = split(command);
+			//コンソールのほうにあるコマンドをログに移動
+			console_shift_log(self->console);
+			//分解したwordを解読関数にかける
+			word_act(words);
+		}
+		
+		
 	}
-	else{}
 
 }
 
@@ -381,6 +387,7 @@ void Script_Update( Script *self )
 void Script_Draw( Script *self)
 {
 	Room_Draw(self->room);
+	Camera_Draw(self->camera);
 	Console_Draw( self->console );
 	Twod_Draw( self->twod );
 	Mess_Draw(self->mess);
