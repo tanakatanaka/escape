@@ -17,8 +17,8 @@ Camera *Camera_Initialize()
 	self = (Camera *)malloc(sizeof(Camera));
 	//self->cam = VGet(0.0f,500.0f,-500.0f);
 	self->mode= 0;
-	self->cam = VGet(1110,170,170);
-	self->pt = VGet(-120,160,160);
+	self->cam = VGet(1160,150,-130);
+	self->pt = VGet(-920,190,-120);
 	return self;
 }
 
@@ -53,11 +53,23 @@ void Camera_Update( Camera *self )
 			}
 	}
 
+	//ƒ‹ƒ“ƒoƒ‹ƒ“ƒoƒ‹ƒ“ƒo
+	if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
+	{
+		
+	}
+	else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
+	{
+
+	}
+
+
+
+
 	if(Pad_Get(KEY_INPUT_Z) == -1 )
 	{
-		printf("\ncam(x,y,z) = (%lf,%lf,%lf)\n",self->cam.x,self->cam.y,self->cam.y);
-		printf("\npt(x,y,z) = (%lf,%lf,%lf)\n",self->pt.x,self->pt.y,self->pt.y);
-		//self->cam = VGet(0.0f,500.0f,-500.0f);
+		printf("\ncam(x,y,z) = (%lf,%lf,%lf)\n",self->cam.x,self->cam.y,self->cam.z);
+		printf("\npt(x,y,z) = (%lf,%lf,%lf)\n",self->pt.x,self->pt.y,self->pt.z);
 	}
 	
 	if(Pad_Get(KEY_INPUT_X) == -1 )
