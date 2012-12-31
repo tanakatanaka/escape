@@ -48,12 +48,12 @@ int decodeScript(const char* scriptMessage, Script *script);
 void splitString(const char* src, char* dest[], const char* delim, int splitNum);
 
 // ‰Šú‰»‚ð‚·‚é
-Script *Script_Initialize( )
+Script *Script_Initialize(Camera *camera )
 {
 	Script *self;
 	self = (Script *)calloc(sizeof(Script), 1);
 
-	self->camera = Camera_Initialize( );
+	self->camera = camera;
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );

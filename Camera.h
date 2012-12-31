@@ -7,6 +7,8 @@ struct Camera;
 // ‰Šú‰»‚ğ‚·‚é
 Camera *Camera_Initialize( );
 
+void Camera_get_area(Camera *self, int area);
+
 // “®‚«‚ğŒvZ‚·‚é
 void Camera_Update( Camera *Camera );
 

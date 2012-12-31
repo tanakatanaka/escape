@@ -1,11 +1,12 @@
 #ifndef DEF_Script_H //“ñdinclude–h~
 
 #define DEF_Script_H
+#include "Camera.h"
 
 struct Script;
 
 // ‰Šú‰»‚ğ‚·‚é
-Script *Script_Initialize();
+Script *Script_Initialize(Camera *self);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Script_Update( Script *Script );

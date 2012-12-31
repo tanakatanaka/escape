@@ -2,13 +2,14 @@ Metasequoia Document
 Format Text Ver 1.0
 
 Scene {
-	pos 2.7188 -127.6228 2400.0007
+	pos -808.3834 -404.7960 2400.0007
 	lookat 0.0000 0.0000 0.0000
-	head -1.0600
-	pich 0.2308
+	head -0.9700
+	pich -0.0792
 	bank 0.0000
-	ortho 0
-	zoom2 1.2206
+	ortho 1
+	zoom2 0.7629
+	zoom_pers 1.2206
 	amb 0.250 0.250 0.250
 	dirlights 1 {
 		light {
@@ -20,7 +21,7 @@ Scene {
 Material 9 {
 	"mat1" col(0.451 1.000 0.149 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"mat2" col(1.000 0.200 0.031 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
-	"mat3" col(0.667 0.984 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
+	"mat3" col(0.667 0.984 1.000 1.000) dif(0.800) amb(1.000) emi(0.000) spc(0.000) power(5.00)
 	"mat4" col(1.000 0.894 0.196 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"mat5" col(0.114 0.690 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"mat6" col(0.000 0.000 0.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
@@ -30,7 +31,7 @@ Material 9 {
 }
 Object "yuka" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -56,7 +57,7 @@ Object "yuka" {
 }
 Object "carpet" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -268,7 +269,7 @@ Object "carpet" {
 }
 Object "sofa" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -917,7 +918,7 @@ Object "sofa" {
 }
 Object "table" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -1111,7 +1112,7 @@ Object "table" {
 }
 Object "stand" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -1575,7 +1576,7 @@ Object "stand" {
 }
 Object "desk" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -1751,7 +1752,7 @@ Object "desk" {
 }
 Object "wall" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -1777,7 +1778,7 @@ Object "wall" {
 }
 Object "bookshelf" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -1901,7 +1902,7 @@ Object "bookshelf" {
 }
 Object "table2" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -2095,7 +2096,7 @@ Object "table2" {
 }
 Object "cup" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -2495,7 +2496,7 @@ Object "cup" {
 }
 Object "bed" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -3063,7 +3064,7 @@ Object "bed" {
 }
 Object "chair" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -3855,7 +3856,7 @@ Object "chair" {
 }
 Object "tv" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -3909,7 +3910,7 @@ Object "tv" {
 }
 Object "book" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -3935,7 +3936,7 @@ Object "book" {
 }
 Object "kakoi a" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
@@ -3985,6 +3986,42 @@ Object "kakoi a" {
 		4 V(22 16 17 23) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
 		4 V(22 20 18 16) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
 		4 V(17 19 21 23) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+	}
+}
+Object "obj1" {
+	visible 15
+	locking 0
+	shading 1
+	facet 59.5
+	color 0.898 0.498 0.698
+	color_type 0
+	vertex 16 {
+		892.4956 404.7467 890.3033
+		892.4956 -81.1991 890.3033
+		892.4956 404.7467 876.4991
+		892.4956 -81.1991 876.4991
+		894.2898 404.7467 -885.8217
+		894.2898 -81.1991 -885.8217
+		894.2893 404.7467 891.4956
+		894.2893 -81.1991 891.4956
+		908.0938 404.7467 891.4956
+		908.0938 -81.1991 891.4956
+		908.0940 404.7467 -885.8217
+		908.0940 -81.1991 -885.8217
+		892.4956 404.7467 -879.2010
+		892.4956 -81.1991 -879.2010
+		892.4956 404.7467 -893.0052
+		892.4956 -81.1991 -893.0052
+	}
+	face 8 {
+		4 V(2 0 1 3) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(4 6 7 5) M(2) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(6 8 9 7) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(8 10 11 9) M(2) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(10 4 5 11) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(10 8 6 4) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(5 7 9 11) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
+		4 V(14 12 13 15) M(1) UV(0.00000 0.00000 1.00000 0.00000 1.00000 1.00000 0.00000 1.00000)
 	}
 }
 Eof
