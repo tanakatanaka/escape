@@ -73,9 +73,9 @@ void move_cam(Camera *self)
 {
 	if(self->move_swit == 1)
 	{
-		float cut = 100;
+		float cut = 10;
 		float diff = self->area - self->old_a; 
-		self->cam = VGet(cam_pos[self->area][0] + diff / cut,cam_pos[self->area][1] + diff / cut,cam_pos[self->area][2] + diff / cut);
+		self->cam = VGet(cam_pos[self->old_a][0] + diff / cut,cam_pos[self->old_a][1] + diff / cut,cam_pos[self->old_a][2] + diff / cut);
 		self->move_count++;
 
 		if(self->move_count == cut )
