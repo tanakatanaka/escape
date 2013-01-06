@@ -27,19 +27,19 @@ inline VECTOR &operator *=(VECTOR &a, float b)
     return a;
 }
 
-inline VECTOR operator +(const VECTOR &a, const VECTOR &b)
-{
-    VECTOR c(a);
-    c += b;
-    return c;
-}
-
 inline VECTOR &operator /=(VECTOR &a, float b)
 {
     a.x /= b;
     a.y /= b;
     a.z /= b;
     return a;
+}
+
+inline VECTOR operator +(const VECTOR &a, const VECTOR &b)
+{
+    VECTOR c(a);
+    c += b;
+    return c;
 }
 
 inline VECTOR operator -(const VECTOR &a, const VECTOR &b)
