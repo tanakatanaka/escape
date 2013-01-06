@@ -97,6 +97,7 @@ void Console_Update( Console *self )
 			//バックスペース入力があった場合
 			//最後の文字を消去
 			if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
+
 		}
 		else
 		{
