@@ -1,0 +1,1 @@
+@msbuild GameProg.sln /p:Platform=Win32 && debug\GameProg.exe
