@@ -22,11 +22,11 @@ Room *Room_Initialize()
 // “®‚«‚ðŒvŽZ‚·‚é
 void Room_Update( Room *self )
 {
-		MV1SetPosition(self->model, VGet( 200.0f, 0.0f, 300.0f ) );
-        MV1SetRotationXYZ( self->model, VGet( 0.0f, self->rotY, 0.0f ) );
+	MV1SetPosition(self->model, VGet( 200.0f, 0.0f, 300.0f ) );
+    MV1SetRotationXYZ( self->model, VGet( 0.0f, self->rotY, 0.0f ) );
 
-		if(CheckHitKey(KEY_INPUT_A)){self->rotY -= (PHI / 180.0f);}
-		else if(CheckHitKey(KEY_INPUT_D)){self->rotY += (PHI / 180.0f);}
+	if(CheckHitKey(KEY_INPUT_A)){self->rotY -= (PHI / 180.0f);}
+	else if(CheckHitKey(KEY_INPUT_D)){self->rotY += (PHI / 180.0f);}
 }		
 
 // •`‰æ‚·‚é

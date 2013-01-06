@@ -74,12 +74,11 @@ void move_cam(Camera *self)
 	if(self->move_swit == 1)
 	{
 		float cut = 10;
-		float diff[3];
-	
-		for(int i = 0; i < 3; i++)
-		{
-			diff[i] = cam_pos[self->area][i] - cam_pos[self->old_a][i]; 
-		}
+		VECTOR diff;
+		
+		diff.x = cam_pos[self->area][0] - cam_pos[self->old_a][0]; 
+		
+
 		self->cam = VGet(cam_pos[self->old_a][0] + float (diff[0] / cut),cam_pos[self->old_a][1] + float (diff[1] / cut),cam_pos[self->old_a][2] + float(diff[2] / cut));
 		self->move_count++;
 
