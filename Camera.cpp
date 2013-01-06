@@ -18,6 +18,7 @@ struct Camera
 	int move_count;
 	int area;
 	int old_a;
+	int muki;
 };
 
 static const VECTOR cam_pos[8] =
@@ -46,12 +47,18 @@ Camera *Camera_Initialize()
 	self->move_count = 0;
 	self->swit = 0;
 	self->count = 0;
+	self->muki = 0;
 	return self;
 }
 
 void Camera_get_area(Camera *self, int area)
 {
 	self->area = area;
+}
+
+void Camera_get_rl(Camera *self, int rl)
+{
+	self->muki = rl;
 }
 
 void role_cam(Camera *self)
@@ -77,7 +84,7 @@ void move_cam(Camera *self)
 {
 	if(self->move_swit == 1)
 	{
-		int cut = 60;
+		int cut = 50;
 		const VECTOR &old = cam_pos[self->old_a];
 		const VECTOR &next = cam_pos[self->area];
 
@@ -104,16 +111,14 @@ void Camera_Update( Camera *self )
 	SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;
 
 	//ƒ‹ƒ“ƒoƒ‹ƒ“ƒoƒ‹ƒ“ƒo
-	if(self->swit == 0 && Pad_Get( KEY_INPUT_RIGHT ) == -1){self->swit = 1;	}
-	else if(self->swit == 0 && Pad_Get(KEY_INPUT_LEFT ) == -1){self->swit = 2;}
+	if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
+	else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
 	
 	role_cam(self);
 	
 	if(self->move_swit == 0 && self->area != self->old_a){self->move_swit = 1;}
 
 	move_cam(self);
-	//self->cam = VGet(cam_pos[self->area][0],cam_pos[self->area][1],cam_pos[self->area][2]);
-
 
 	if(Pad_Get(KEY_INPUT_X) == -1 )
 	{

@@ -56,11 +56,13 @@ void Game_Update(Game *self)
 {
 	if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
 	{
+		Camera_get_rl(self->camera, 1);
 		if(self->hougaku == 3){self->hougaku = 0;}
 		else{self->hougaku++;}
 	}
 	else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
 	{
+		Camera_get_rl(self->camera, 2);
 		if(self->hougaku == 0){self->hougaku = 3;}
 		else{self->hougaku--;}
 	}

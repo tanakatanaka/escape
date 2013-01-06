@@ -327,8 +327,7 @@ void word_act(Words words)
 {
 	if(words[0] == "jojo")
 	{
-		if(words[1] == "gogo")
-		printf("\ndododo = %s\n",words[0].c_str());
+		if(words[1] == "gogo"){printf("\ndododo = %s\n",words[0].c_str());}
 	}
 
 }

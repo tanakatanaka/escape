@@ -83,7 +83,7 @@ void Console_Update( Console *self )
 	
 	if(Pad_Get(KEY_INPUT_ESCAPE) == 1 ){self->win_s++;}
 
-
+	//入力モード時
 	if(self->win_s % 2 == 1)
 	{
 		int bag = get_chara();
@@ -96,8 +96,7 @@ void Console_Update( Console *self )
 		{
 			//バックスペース入力があった場合
 			//最後の文字を消去
-			self->d_bag.erase(self->d_bag.size() - 1);
-
+			if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
 		}
 		else
 		{
@@ -105,10 +104,6 @@ void Console_Update( Console *self )
 			self->d_bag += (char) bag;
 		}
 		
-	}
-	else
-	{
-		//コンソールとき	
 	}
 
 }
