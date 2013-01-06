@@ -74,12 +74,18 @@ void move_cam(Camera *self)
 	if(self->move_swit == 1)
 	{
 		float cut = 10;
-		float diff = self->area - self->old_a; 
-		self->cam = VGet(cam_pos[self->old_a][0] + diff / cut,cam_pos[self->old_a][1] + diff / cut,cam_pos[self->old_a][2] + diff / cut);
+		float diff[3];
+	
+		for(int i = 0; i < 3; i++)
+		{
+			diff[i] = cam_pos[self->area][i] - cam_pos[self->old_a][i]; 
+		}
+		self->cam = VGet(cam_pos[self->old_a][0] + float (diff[0] / cut),cam_pos[self->old_a][1] + float (diff[1] / cut),cam_pos[self->old_a][2] + float(diff[2] / cut));
 		self->move_count++;
 
 		if(self->move_count == cut )
 		{
+			self->cam = VGet(cam_pos[self->area][0],cam_pos[self->area][1],cam_pos[self->area][2]);
 			self->move_count = 0;
 			self->move_swit = 0;
 			self->old_a = self->area;
@@ -105,7 +111,7 @@ void Camera_Update( Camera *self )
 	if(self->move_swit == 0 && self->area != self->old_a){self->move_swit = 1;}
 
 	move_cam(self);
-
+	//self->cam = VGet(cam_pos[self->area][0],cam_pos[self->area][1],cam_pos[self->area][2]);
 
 
 	if(Pad_Get(KEY_INPUT_X) == -1 )
