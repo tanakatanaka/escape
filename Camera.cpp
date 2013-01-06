@@ -77,7 +77,7 @@ void move_cam(Camera *self)
 {
 	if(self->move_swit == 1)
 	{
-		int cut = 10;
+		int cut = 60;
 		const VECTOR &old = cam_pos[self->old_a];
 		const VECTOR &next = cam_pos[self->area];
 
