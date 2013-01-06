@@ -1,7 +1,7 @@
 #ifndef VECTOR_OPERATOR_H_
 #define VECTOR_OPERATOR_H_
 
-/* vectorã«æ¼”ç®—å­ã®å®šç¾© */
+/* vector‚É‰‰Zq‚Ì’è‹` */
 
 inline VECTOR &operator +=(VECTOR &a, const VECTOR &b)
 {
