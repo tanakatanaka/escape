@@ -23,7 +23,7 @@ struct Camera
 
 static const VECTOR cam_pos[8] =
 {
-	{1717,250,-310}, {982,250,-310}, {195,250,-310}, {-592,250,-310},
+	{1717,250,-310}, {882,250,-310}, {195,250,-310}, {-592,250,-310},
 	{-592,250,255}, {-592,250,820}, {158,250,820}, {928,250,450}
 };
 
@@ -82,7 +82,7 @@ void role_cam(Camera *self)
 
 void move_cam(Camera *self)
 {
-	if(self->move_swit == 1)
+	if(self->move_swit = 1)
 	{
 		int cut = 50;
 		const VECTOR &old = cam_pos[self->old_a];

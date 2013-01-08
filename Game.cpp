@@ -78,7 +78,7 @@ void Game_Update(Game *self)
 	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
 		printf("\nmuki = %d\n",self->hougaku);
-		printf("\area = %d\n",self->area);
+		printf("\narea = %d\n",self->area);
 	}
 
 	Script_Update( self->script );
