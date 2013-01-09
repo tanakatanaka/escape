@@ -36,16 +36,17 @@ Mess *Mess_Initialize()
 	
 	for(int i = 0; i < 100;i++)
 	{
-		self->word[i].on_off = -1;
+		self->word[i].on_off = 1;
 	}
 
-	/*
-	strcpy(self->g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
+	
+	strcpy(self->word[0].g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
 	"にぬねのはひふへほまみむめもやゆよらりるれろわをん");
 	
-	self->g_currentCursor = 0;
-	self->g_currentLineCursor = 0;
-	*/
+	self->word[0].g_currentCursor = 0;
+	self->word[0].g_currentLineCursor = 0;
+	self->word[0].on_off = 1;
+
 	return self;
 }
 void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
@@ -148,6 +149,8 @@ void drawMessage(Word *self)
 		self->g_currentCursor++;
 	}
 
+	printf("\n test1 draw\n ");
+
 	//MESSAGE_MAX_LENGTH まで文字を描画したら段落を切り替える
 	if(self->g_currentCursor % MESSAGE_MAX_LENGTH == 0 ) {
 		if( self->g_message[self->g_currentCursor] != '\0' ) {
@@ -155,6 +158,7 @@ void drawMessage(Word *self)
 		}
 	}
 
+	printf("\n test2 draw\n ");
 	//メッセージ描画部分
 	for( i = 0; i < MESSAGE_MAX_LINE; i++ ) {
 		if( i == self->g_currentLineCursor ) {
@@ -187,6 +191,7 @@ void Mess_Draw( Mess *self)
 	{
 		if(self->word[i].on_off != -1)
 		{
+			printf("\n mess draw\n ");
 			drawMessage(&self->word[i]);
 			Sleep( 100 );
 		}

@@ -12,6 +12,7 @@ struct Game
 	Camera *camera;
 	int hougaku;
 	int area;
+	int count;
 };
 
 // ‰Šú‰»‚ð‚·‚é
@@ -27,7 +28,7 @@ Game *Game_Initialize()
 	self->script = Script_Initialize(self->camera);
 	self->hougaku = 0;
 	self->area = 0;
-
+	self->count = 30;
 	return self;
 }
 
@@ -67,10 +68,10 @@ void Game_Update(Game *self)
 		else{self->hougaku--;}
 	}
 
-	if(Pad_Get( KEY_INPUT_UP ) == -1)
+	if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
 	{
+		self->count = 0;
 		move_area(self);
-
 	}
 
 
@@ -82,6 +83,7 @@ void Game_Update(Game *self)
 	}
 
 	Script_Update( self->script );
+	self->count++;
 }
 
 // •`‰æ‚·‚é

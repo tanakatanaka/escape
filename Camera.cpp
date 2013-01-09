@@ -107,7 +107,7 @@ void move_cam(Camera *self)
 // 動きを計算する
 void Camera_Update( Camera *self )
 {
-	SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);
+	//SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);
 	SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;
 
 	//ルンバルンバルンバ

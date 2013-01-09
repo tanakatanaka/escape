@@ -5,7 +5,6 @@
 struct Room
 {
     int room;
-	int test;
 	double rotY;
 }; 
 
@@ -15,7 +14,6 @@ Room *Room_Initialize()
 	Room *self;
 	self = (Room *)malloc(sizeof(Room));
     self->room = MV1LoadModel("meta/room.mqo") ;    //‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
-	self->test = MV1LoadModel("meta/test.mqo") ; 
 	
 	self->rotY = 0.0f;
 	return self;
@@ -32,9 +30,6 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->room, VGet( 200.0f, 0.0f, 300.0f ) );
     MV1SetRotationXYZ( self->room, VGet( 0.0f, self->rotY, 0.0f ) );
 
-	MV1SetPosition(self->test, VGet( 0, 0, 0 ) );
-    MV1SetRotationXYZ( self->test, VGet( 0, self->rotY, 0 ) );
-
 	if(CheckHitKey(KEY_INPUT_A)){self->rotY -= (PHI / 180.0f);}
 	else if(CheckHitKey(KEY_INPUT_D)){self->rotY += (PHI / 180.0f);}
 }		
@@ -42,8 +37,10 @@ void Room_Update( Room *self )
 // •`‰æ‚·‚é
 void Room_Draw( Room *self)
 {
-	MV1DrawModel( self->room);    
-	MV1DrawModel( self->test); 
+	for(int i = 0;  i < MV1GetFrameNum(self->room);i++)
+	{
+		MV1DrawFrame( self->room,i);
+	}    
 }
 
 // I—¹ˆ—‚ğ‚·‚é

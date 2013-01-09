@@ -260,6 +260,8 @@ int decodeScript(const char* scriptMessage, Script *self)
 		twod_erase_image(self->twod, message[1] );
 	}
 
+
+
 	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 
 		for(i = 0; message[i + 1] != NULL; i++ ) {
@@ -323,7 +325,7 @@ Words split(const char *str)
     return words;
 }
 
-void word_act(Words words)
+void word_act(Words &words)
 {
 	if(words[0] == "jojo")
 	{
@@ -362,7 +364,7 @@ void Script_Update( Script *self )
 	Camera_Update(self->camera);
 	Room_Update( self->room );
 	Console_Update( self->console );
-	//Mess_Update( self->mess );
+	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 	
 
