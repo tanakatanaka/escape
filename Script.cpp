@@ -259,8 +259,14 @@ int decodeScript(const char* scriptMessage, Script *self)
 	{
 		twod_erase_image(self->twod, message[1] );
 	}
-
-
+	else if(strncmp(message[0], "@@mess_up", SCRIPT_MAX_STRING_LENGTH) == 0 )
+	{
+		mess_add_word(self->mess,atoi( message[1] ), atoi( message[2] ), message[3] , message[4] );
+	}
+	else if(strncmp(message[0], "@@mess_erase", SCRIPT_MAX_STRING_LENGTH) == 0 )
+	{
+		mess_erase_word(self->mess, message[1]);
+	}
 
 	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
 
@@ -329,7 +335,10 @@ void word_act(Words &words)
 {
 	if(words[0] == "jojo")
 	{
-		if(words[1] == "gogo"){printf("\ndododo = %s\n",words[0].c_str());}
+		if(words.size() > 1)
+		{
+			if(words[1] == "gogo"){printf("\ntest_jojo = %s\n",words[0].c_str());}	
+		}
 	}
 
 }
@@ -340,8 +349,6 @@ void decode_command(Script *self)
 	{
 		//’PŒêŒã‚É•ª‰ğ
 		const char *command = console_d_bag(self->console);
-
-		printf("command = %s",command);
 		
 		if(command != NULL)
 		{
@@ -351,10 +358,7 @@ void decode_command(Script *self)
 			//•ª‰ğ‚µ‚½word‚ğ‰ğ“ÇŠÖ”‚É‚©‚¯‚é
 			word_act(words);
 		}
-		
-		
 	}
-
 }
 
 // “®‚«‚ğŒvZ‚·‚é

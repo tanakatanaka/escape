@@ -9,15 +9,17 @@
 //仮想バッファの最大行数
 #define MESSAGE_MAX_LINE 5
 //メッセージボックスのX座標
-#define MESSAGE_BOX_X_POS 40
+#define MESSAGE_BOX_X_POS 60
 //メッセージボックスのY座標
-#define MESSAGE_BOX_Y_POS 340
+#define MESSAGE_BOX_Y_POS 90
 
 struct Word
 {
    char g_message[MESSAGE_MAX_LENGTH * MESSAGE_MAX_LINE];
-   int g_currentCursor;
-   int g_currentLineCursor;
+   int g_currentCursor; //現在の行で何文字目か
+   int g_currentLineCursor;//現在何行目か
+   int x; //メッセージボックスのx座標に加える数
+   int y; //メッセージボックスのy座標に加える数
    int on_off;
    char tag[100];
 };
@@ -25,7 +27,6 @@ struct Word
 struct Mess
 {	
 	Word word[100];
-
 };
 
 // 初期化をする
@@ -36,17 +37,14 @@ Mess *Mess_Initialize()
 	
 	for(int i = 0; i < 100;i++)
 	{
-		self->word[i].on_off = 1;
+		self->word[i].on_off = -1;
 	}
-
-	
-	strcpy(self->word[0].g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな" \
-	"にぬねのはひふへほまみむめもやゆよらりるれろわをん");
-	
-	self->word[0].g_currentCursor = 0;
-	self->word[0].g_currentLineCursor = 0;
-	self->word[0].on_off = 1;
-
+	/*
+		strcpy(self->word[0].g_message,"はろーhelloわーるどWorldあいうえおかきくけこさしすせそたちつてとな");
+		self->word[0].g_currentCursor = 0;
+		self->word[0].g_currentLineCursor = 0;
+		self->word[0].on_off = 1;
+	*/
 	return self;
 }
 void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
@@ -56,8 +54,10 @@ void mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 		if(self->word[i].on_off < 0)
 		{
 			self->word[i].on_off = 1;
-			self->word[i].g_currentCursor = x;
-			self->word[i].g_currentLineCursor = y;
+			self->word[i].g_currentCursor = 0;
+			self->word[i].g_currentLineCursor = 0;
+			self->word[i].x = x;
+			self->word[i].y = y;
 			strcpy(self->word[i].g_message, word);
 			strcpy(self->word[i].tag, tag);
 			break;
@@ -145,11 +145,10 @@ void drawMessage(Word *self)
 	int g_whiteColor = GetColor(255,255,255);//白
 	int g_blackColor = GetColor(0, 0, 0);//黒
 
-	if( self->g_message[self->g_currentCursor] != '\0' ) {
+	if( self->g_message[self->g_currentCursor] != '\0' ) 
+	{
 		self->g_currentCursor++;
 	}
-
-	printf("\n test1 draw\n ");
 
 	//MESSAGE_MAX_LENGTH まで文字を描画したら段落を切り替える
 	if(self->g_currentCursor % MESSAGE_MAX_LENGTH == 0 ) {
@@ -158,20 +157,20 @@ void drawMessage(Word *self)
 		}
 	}
 
-	printf("\n test2 draw\n ");
 	//メッセージ描画部分
 	for( i = 0; i < MESSAGE_MAX_LINE; i++ ) {
 		if( i == self->g_currentLineCursor ) {
 			//メッセージ風に表示
 			writeSubstring( self->g_message, i * MESSAGE_MAX_LENGTH , self->g_currentCursor - MESSAGE_MAX_LENGTH * i,
-				MESSAGE_BOX_X_POS + 15, MESSAGE_BOX_Y_POS + MESSAGE_FONT_SIZE * i + 15, g_blackColor, i );
+				MESSAGE_BOX_X_POS + 15 + self->x, MESSAGE_BOX_Y_POS + MESSAGE_FONT_SIZE * i + 15 + self->y, g_whiteColor, i );
 			break;
 		}else {
 			//メッセージをそのまま表示
-			writeSubstring( self->g_message, i * MESSAGE_MAX_LENGTH , MESSAGE_MAX_LENGTH, MESSAGE_BOX_X_POS + 15,
-				MESSAGE_BOX_Y_POS + MESSAGE_FONT_SIZE * i + 15, g_blackColor, i );
+			writeSubstring( self->g_message, i * MESSAGE_MAX_LENGTH , MESSAGE_MAX_LENGTH, MESSAGE_BOX_X_POS + 15 + self->x,
+				MESSAGE_BOX_Y_POS + MESSAGE_FONT_SIZE * i + 15 + self->y, g_whiteColor, i );
 		}
 	}
+
 }
 
 
@@ -179,9 +178,7 @@ void drawMessage(Word *self)
 // 動きを計算する
 void Mess_Update( Mess *self )
 {
-	
 
-	
 }		
 
 // 描画する
@@ -191,11 +188,10 @@ void Mess_Draw( Mess *self)
 	{
 		if(self->word[i].on_off != -1)
 		{
-			printf("\n mess draw\n ");
 			drawMessage(&self->word[i]);
-			Sleep( 100 );
 		}
 	}
+
 	
 }
 
