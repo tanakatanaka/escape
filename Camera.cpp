@@ -52,7 +52,7 @@ Camera *Camera_Initialize()
 	//霧描画on:についてcolorで色・st～始終
 	SetFogEnable( TRUE );
 	SetFogColor( 0,0,0 );
-	SetFogStartEnd( 500, 3500 );
+	SetFogStartEnd( 200, 3500 );
 	return self;
 }
 

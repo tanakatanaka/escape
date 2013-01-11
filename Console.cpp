@@ -14,6 +14,12 @@ static const int KEYCODES[] =
 	D_DIK_Z
 };
 
+static const int KEYNUM[] =
+{
+	D_DIK_1, D_DIK_2, D_DIK_3, D_DIK_4, D_DIK_5,
+	D_DIK_6, D_DIK_7, D_DIK_8, D_DIK_9
+};
+
 
 struct Console
 {
@@ -21,6 +27,8 @@ struct Console
 	int x;
 	int y;
 	int ly;
+	int log_count;
+	int back_count;
 	std::string d_bag;
 	std::deque<std::string> log;
 }; 
@@ -33,6 +41,8 @@ Console *Console_Initialize()
 	self->mode = 0;
 	self->x = 0;
 	self->y = 420;
+	self->log_count = 0;
+	self->back_count = 0;
 	return self;
 }
 
@@ -40,7 +50,6 @@ void Console_get_mode(Console *self, int mode)
 {
 	self->mode = mode;
 }
-
 
 const char *console_d_bag(Console *self)
 {
@@ -50,24 +59,29 @@ const char *console_d_bag(Console *self)
 
 void console_shift_log(Console *self)
 {
-	self->log.push_back(self->d_bag);
+	if(self->log_count < 4){self->log.push_back(self->d_bag);}
+	else{self->log[self->log_count % 4].clear(); self->log[self->log_count % 4].append(self->d_bag);}
 	self->d_bag.erase(0);
+	self->log_count++;
 }
 
 static int get_chara()
 {
 	for (int i = 0; i < 26; i++)
   	{
-	    if (Pad_Get( KEYCODES[i] ) == -1)
-	    {
-			return  'a'+ i;
-	    }
+	    if (Pad_Get( KEYCODES[i] ) == -1){return  'a'+ i;}
 	}
+
+	//数値入力があった場合
+	for (int i = 0; i < 10; i++)
+	{
+		if (Pad_Get( KEYNUM[i] ) == -1){return  '1'+ i;}
+	}
+
 	//バックスペース入力があった場合
 	if(Pad_Get( KEY_INPUT_BACK ) == -1){return -2;}
 	//スペース入力があった場合
 	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return ' ';}
-
 
 
   //入力がなかった場合
@@ -81,7 +95,6 @@ void Console_Update( Console *self )
 	if(self->mode % 2 == 1)
 	{
 		int bag = get_chara();
-
 		if(bag == -1)
 		{
 			//入力がない場合
@@ -95,11 +108,22 @@ void Console_Update( Console *self )
 		}
 		else
 		{
-			//文字入力があった場合追加
+			//文字・数値入力があった場合追加
 			self->d_bag += (char) bag;
 		}
-		
+
+		if(Pad_Get( KEY_INPUT_UP ) == -1)
+		{
+			if(self->log.size() > self->back_count % 4)
+			{
+				self->d_bag.erase(0); 
+				self->d_bag.append(self->log[self->back_count % 4]);
+			}
+			self->back_count++;
+		}
 	}
+	//入力モード以外
+	else{self->back_count = 0;}
 
 }
 
@@ -120,9 +144,11 @@ void Console_Draw( Console *self)
 		{
 			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[i].c_str()); //ログを描画する
 		}
+
+		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // 現在の文字を描画する
 	}
 
-	DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // 現在の文字を描画する
+	
 }
 
 // 終了処理をする

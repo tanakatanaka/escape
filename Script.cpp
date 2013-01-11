@@ -118,7 +118,6 @@ int loadScript(const char* filename, Script *script)
 			script->currentLine++;
 			//‘‚«‚İˆÊ’u‚ğ0‚É‚·‚é
 			pos = 0;
-			
 		}
 		else 
 		{
