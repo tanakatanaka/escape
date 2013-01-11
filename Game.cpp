@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Game.h"
+#include "Console.h"
 #include "Script.h"
 #include "Pad.h"
 #include "Camera.h"
@@ -10,9 +11,11 @@ struct Game
 {
 	Script *script;
 	Camera *camera;
+	Console *console;
 	int hougaku;
 	int area;
 	int count;
+	int mode;
 };
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -25,10 +28,12 @@ Game *Game_Initialize()
 	Game *self;
 	self = (Game *)malloc(sizeof(Game));
 	self->camera = Camera_Initialize();
-	self->script = Script_Initialize(self->camera);
+	self->console = Console_Initialize();
+	self->script = Script_Initialize(self->camera, self->console);
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
+	self->mode = 0;
 	return self;
 }
 
@@ -55,32 +60,30 @@ void move_area(Game *self)
 // “®‚«‚ğŒvZ‚·‚é
 void Game_Update(Game *self)
 {
-	if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
+	if(self->mode % 2 == 0)
 	{
-		Camera_get_rl(self->camera, 1);
-		if(self->hougaku == 3){self->hougaku = 0;}
-		else{self->hougaku++;}
-	}
-	else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
-	{
-		Camera_get_rl(self->camera, 2);
-		if(self->hougaku == 0){self->hougaku = 3;}
-		else{self->hougaku--;}
+		if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
+		{
+			Camera_get_muki(self->camera, 1);
+			if(self->hougaku == 3){self->hougaku = 0;}
+			else{self->hougaku++;}
+		}
+		else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
+		{
+			Camera_get_muki(self->camera, 2);
+			if(self->hougaku == 0){self->hougaku = 3;}
+			else{self->hougaku--;}
+		}
+	
+		if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
+		{
+			self->count = 0;
+			move_area(self);
+		}
 	}
 
-	if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
-	{
-		self->count = 0;
-		move_area(self);
-	}
+	if(Pad_Get(KEY_INPUT_ESCAPE) == 1){self->mode++; Console_get_mode(self->console,self->mode);}
 
-
-
-	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
-	{
-		printf("\nmuki = %d\n",self->hougaku);
-		printf("\narea = %d\n",self->area);
-	}
 
 	Script_Update( self->script );
 	self->count++;

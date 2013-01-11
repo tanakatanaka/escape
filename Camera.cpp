@@ -48,6 +48,11 @@ Camera *Camera_Initialize()
 	self->swit = 0;
 	self->count = 0;
 	self->muki = 0;
+
+	//–¶•`‰æon:‚É‚Â‚¢‚Äcolor‚ÅFEst`ŽnI
+	SetFogEnable( TRUE );
+	SetFogColor( 0,0,0 );
+	SetFogStartEnd( 500, 3500 );
 	return self;
 }
 
@@ -56,9 +61,9 @@ void Camera_get_area(Camera *self, int area)
 	self->area = area;
 }
 
-void Camera_get_rl(Camera *self, int rl)
+void Camera_get_muki(Camera *self, int muki)
 {
-	self->muki = rl;
+	self->muki = muki;
 }
 
 void role_cam(Camera *self)

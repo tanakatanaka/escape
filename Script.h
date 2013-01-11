@@ -2,11 +2,12 @@
 
 #define DEF_Script_H
 #include "Camera.h"
+#include "Console.h"
 
 struct Script;
 
 // ‰Šú‰»‚ğ‚·‚é
-Script *Script_Initialize(Camera *self);
+Script *Script_Initialize(Camera *self, Console *console);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Script_Update( Script *Script );

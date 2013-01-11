@@ -17,9 +17,7 @@ static const int KEYCODES[] =
 
 struct Console
 {
-	int win_s;
-	int win_c;
-	int moji_c;
+	int mode;
 	int x;
 	int y;
 	int ly;
@@ -32,18 +30,17 @@ Console *Console_Initialize()
 {
 	Console *self;
 	self =  new Console();
-	self->win_s = 0;
-	self->win_c = GetColor( 0 , 0 , 200 );
-	self->moji_c = GetColor( 0, 255, 0 );
+	self->mode = 0;
 	self->x = 0;
 	self->y = 420;
 	return self;
 }
 
-int console_state(Console *self)
+void Console_get_mode(Console *self, int mode)
 {
-	return self->win_s % 2;
+	self->mode = mode;
 }
+
 
 const char *console_d_bag(Console *self)
 {
@@ -80,11 +77,8 @@ static int get_chara()
 // 動きを計算する
 void Console_Update( Console *self )
 {
-	
-	if(Pad_Get(KEY_INPUT_ESCAPE) == 1 ){self->win_s++;}
-
 	//入力モード時
-	if(self->win_s % 2 == 1)
+	if(self->mode % 2 == 1)
 	{
 		int bag = get_chara();
 
@@ -115,18 +109,20 @@ void Console_Draw( Console *self)
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
 	
 	int plus;
-	if(self->win_s % 2 == 1){plus = -40;}
+	if(self->mode % 2 == 1){plus = -40;}
 	else{plus = 0;}
 
-	DrawBox( 0, 420 +  plus, 640 , 480, self->win_c, TRUE) ;
+	DrawBox( 0, 420 +  plus, 640 , 480, GetColor( 0 , 0 , 200 ), TRUE) ;
 	
-
-	for (int i = 0; i < self->log.size(); i++)
+	if(self->mode % 2 == 1)
 	{
-		DrawFormatString( self->x, 435 - i * 15, self->moji_c, "%s", self->log[i].c_str()); //ログを描画する
+		for (int i = 0; i < self->log.size(); i++)
+		{
+			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[i].c_str()); //ログを描画する
+		}
 	}
-	
-	DrawFormatString( self->x, 465, self->moji_c, "%s", self->d_bag.c_str()); // 現在の文字を描画する
+
+	DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // 現在の文字を描画する
 }
 
 // 終了処理をする

@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <iterator>
 #include <vector>
-
+#include "Console.h"
 #include "Script.h"
 #include "Room.h"
 #include "Camera.h"
@@ -14,7 +14,6 @@
 #include "Mess.h"
 #include "Twod.h"
 #include "Pad.h"
-#include "Console.h"
 
 //スクリプトは最大1000行まで読み込む
 #define SCRIPT_MAX_LINE 1000
@@ -48,7 +47,7 @@ int decodeScript(const char* scriptMessage, Script *script);
 void splitString(const char* src, char* dest[], const char* delim, int splitNum);
 
 // 初期化をする
-Script *Script_Initialize(Camera *camera )
+Script *Script_Initialize(Camera *camera, Console *console)
 {
 	Script *self;
 	self = (Script *)calloc(sizeof(Script), 1);
@@ -57,7 +56,7 @@ Script *Script_Initialize(Camera *camera )
 	self->room = Room_Initialize();
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
-	self->console = Console_Initialize( );
+	self->console = console;
 	self->load_flag = 1;
 	
 	printf("\nスクリプト開始\n\n");

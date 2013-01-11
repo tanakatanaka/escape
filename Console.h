@@ -6,9 +6,8 @@ struct Console;
 
 // 初期化をする
 Console *Console_Initialize( );
-
-//コンソールの閉じてる開いてるを表示
-int console_state(Console *self);
+//入力モードか歩行モード化をもらう
+void Console_get_mode(Console *self, int mode);
 //コンソールの文字を返す関数
 const char *console_d_bag(Console *self);
 //コンソールのコマンドをシフト配列に格納
