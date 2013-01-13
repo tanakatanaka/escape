@@ -23,7 +23,7 @@ struct Camera
 
 static const VECTOR cam_pos[8] =
 {
-	{1717,250,-310}, {882,250,-310}, {195,250,-310}, {-592,250,-310},
+	{2017,250,-310}, {882,250,-310}, {195,250,-310}, {-592,250,-310},
 	{-592,250,255}, {-592,250,820}, {158,250,820}, {928,250,450}
 };
 
@@ -52,7 +52,7 @@ Camera *Camera_Initialize()
 	//霧描画on:についてcolorで色・st～始終
 	SetFogEnable( TRUE );
 	SetFogColor( 0,0,0 );
-	SetFogStartEnd( 200, 3500 );
+	SetFogStartEnd( 500,  1500) ;
 	return self;
 }
 
