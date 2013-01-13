@@ -75,7 +75,7 @@ static int get_chara()
 	//数値入力があった場合
 	for (int i = 0; i < 10; i++)
 	{
-		if (Pad_Get( KEYNUM[i] ) == -1){return  '1'+ i;}
+		if (Pad_Get( KEYNUM[i] ) == -1){return  '0'+ i;}
 	}
 
 	//バックスペース入力があった場合
