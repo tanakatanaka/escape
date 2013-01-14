@@ -74,11 +74,14 @@ static int get_chara()
 		if (Pad_Get( KEYNUM[i] ) == -1){return  '0'+ i;}
 	}
 
-	//バックスペース入力があった場合
-	if(Pad_Get( KEY_INPUT_BACK ) == -1){return -2;}
 	//スペース入力があった場合
 	if(Pad_Get( KEY_INPUT_SPACE ) == -1){return ' ';}
-
+	//バックスペース入力があった場合
+	if(Pad_Get( KEY_INPUT_BACK ) == -1){return -2;}
+	//上キー入力があった場合
+	if(Pad_Get( KEY_INPUT_UP ) == -1){return -3;}
+	//したキー入力があった場合
+	if(Pad_Get( KEY_INPUT_DOWN ) == -1){return -4;}
 
   //入力がなかった場合
   return -1;
@@ -102,26 +105,35 @@ void Console_Update( Console *self )
 			if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
 
 		}
+		else if(bag == -3)
+		{
+			//上キー入力があった場合
+			int in = self->log.size()- 1 - self->back_count;
+			if(self->log.size() > self->back_count)
+			{
+				self->d_bag.erase(0); 
+				self->d_bag.append(self->log[in]);
+				if(in > 0){self->back_count++;}
+			}
+			
+		}
+		else if(bag == -4)
+		{
+			//下キー入力があった場合
+			int in = self->log.size()- 1 - self->back_count;
+			if((in) > -1)
+			{
+				self->d_bag.erase(0); 
+				self->d_bag.append(self->log[in]);
+				if(self->back_count > 0){self->back_count--;}
+			}
+			
+		}
 		else
 		{
 			//文字・数値入力があった場合追加
 			self->d_bag += (char) bag;
 		}
-
-		if(Pad_Get( KEY_INPUT_UP ) == -1)
-		{
-			printf("\nsize = %d\n",self->log.size());
-			printf("\nback = %d\n",self->back_count);
-			
-			if(self->log.size() > self->back_count)
-			{
-				self->d_bag.erase(0); 
-				self->d_bag.append(self->log[self->log.size() - self->back_count]);
-				self->back_count++;
-			}
-			
-		}
-
 	}
 	//入力モード以外
 	else{self->back_count = 0;}
@@ -143,9 +155,12 @@ void Console_Draw( Console *self)
 	{
 		for (int i = 0; i < self->log.size() ; i++)
 		{
-			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size() - i].c_str()); //ログを描画する
+			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size()-1 - i].c_str()); //ログを描画する
+			if(i == 3){break;}
 		}
 		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // 現在の文字を描画する
+
+
 	}
 
 	
