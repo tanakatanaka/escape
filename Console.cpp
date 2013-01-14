@@ -16,8 +16,8 @@ static const int KEYCODES[] =
 
 static const int KEYNUM[] =
 {
-	D_DIK_1, D_DIK_2, D_DIK_3, D_DIK_4, D_DIK_5,
-	D_DIK_6, D_DIK_7, D_DIK_8, D_DIK_9
+	D_DIK_0, D_DIK_1, D_DIK_2, D_DIK_3, D_DIK_4, 
+	D_DIK_5, D_DIK_6, D_DIK_7, D_DIK_8, D_DIK_9
 };
 
 
@@ -27,7 +27,6 @@ struct Console
 	int x;
 	int y;
 	int ly;
-	int log_count;
 	int back_count;
 	std::string d_bag;
 	std::deque<std::string> log;
@@ -41,7 +40,6 @@ Console *Console_Initialize()
 	self->mode = 0;
 	self->x = 0;
 	self->y = 420;
-	self->log_count = 0;
 	self->back_count = 0;
 	return self;
 }
@@ -59,10 +57,8 @@ const char *console_d_bag(Console *self)
 
 void console_shift_log(Console *self)
 {
-	if(self->log_count < 4){self->log.push_back(self->d_bag);}
-	else{self->log[self->log_count % 4].clear(); self->log[self->log_count % 4].append(self->d_bag);}
+	self->log.push_back(self->d_bag);
 	self->d_bag.erase(0);
-	self->log_count++;
 }
 
 static int get_chara()
@@ -114,13 +110,18 @@ void Console_Update( Console *self )
 
 		if(Pad_Get( KEY_INPUT_UP ) == -1)
 		{
-			if(self->log.size() > self->back_count % 4)
+			printf("\nsize = %d\n",self->log.size());
+			printf("\nback = %d\n",self->back_count);
+			
+			if(self->log.size() > self->back_count)
 			{
 				self->d_bag.erase(0); 
-				self->d_bag.append(self->log[self->back_count % 4]);
+				self->d_bag.append(self->log[self->log.size() - self->back_count]);
+				self->back_count++;
 			}
-			self->back_count++;
+			
 		}
+
 	}
 	//入力モード以外
 	else{self->back_count = 0;}
@@ -140,11 +141,10 @@ void Console_Draw( Console *self)
 	
 	if(self->mode % 2 == 1)
 	{
-		for (int i = 0; i < self->log.size(); i++)
+		for (int i = 0; i < self->log.size() ; i++)
 		{
-			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[i].c_str()); //ログを描画する
+			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size() - i].c_str()); //ログを描画する
 		}
-
 		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // 現在の文字を描画する
 	}
 
