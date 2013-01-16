@@ -121,7 +121,7 @@ void Console_Update( Console *self )
 		{
 			//‰ºƒL[“ü—Í‚ª‚ ‚Á‚½ê‡
 			int in = self->log.size()- 1 - self->back_count;
-			if((in) > -1)
+			if(in > -1)
 			{
 				self->d_bag.erase(0); 
 				self->d_bag.append(self->log[in]);

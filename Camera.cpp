@@ -8,7 +8,6 @@
 
 struct Camera 
 {
-	int mode;
 	VECTOR cam;
 	VECTOR pt;
 	float HRotate;
@@ -19,6 +18,8 @@ struct Camera
 	int area;
 	int old_a;
 	int muki;
+
+	int test;
 };
 
 static const VECTOR cam_pos[8] =
@@ -48,6 +49,7 @@ Camera *Camera_Initialize()
 	self->swit = 0;
 	self->count = 0;
 	self->muki = 0;
+	self->test = 0;
 
 	//–¶•`‰æon:‚É‚Â‚¢‚Äcolor‚ÅFEst`nI
 	SetFogEnable( TRUE );
@@ -102,6 +104,7 @@ void move_cam(Camera *self)
 			self->move_count = 0;
 			self->move_swit = 0;
 			self->old_a = self->area;
+			self->pt = pt_pos[self->area];
 		}
 	}
 	
@@ -112,10 +115,10 @@ void move_cam(Camera *self)
 // “®‚«‚ğŒvZ‚·‚é
 void Camera_Update( Camera *self )
 {
-	//SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);
-	SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;
+	if(self->test == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
+	else if(self->test == 0){SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;}
 
-	//ƒ‹ƒ“ƒoƒ‹ƒ“ƒoƒ‹ƒ“ƒo
+	//•ûŠp‚É‚Â‚¢‚Ä
 	if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
 	else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
 	
@@ -125,12 +128,10 @@ void Camera_Update( Camera *self )
 
 	move_cam(self);
 
-	if(Pad_Get(KEY_INPUT_X) == -1 )
+	if(Pad_Get(KEY_INPUT_V) == -1 )
 	{
-		self->mode++;
-		printf("\narea = %d\n",self->area);
-		if(self->mode %2 == 0){printf("\ncamre mode\n");}
-		else{printf("\npoint mode\n");}
+		if(self->test == 1){self->test = 0;}
+		else if(self->test == 0){self->test = 1;}
 	}
 
 }
