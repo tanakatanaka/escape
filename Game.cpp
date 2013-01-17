@@ -16,6 +16,7 @@ struct Game
 	int area;
 	int count;
 	int mode;
+	int camera_mode;
 };
 
 // 初期化をする
@@ -34,6 +35,7 @@ Game *Game_Initialize()
 	self->area = 0;
 	self->count = 30;
 	self->mode = 0;
+	self->camera_mode = 0;
 	return self;
 }
 
@@ -62,23 +64,42 @@ void Game_Update(Game *self)
 {
 	if(self->mode % 2 == 0)
 	{
-		if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
+		//歩行もしくはカメラ操作状態
+		if(self->camera_mode % 2 == 0)
 		{
-			Camera_get_muki(self->camera, 1);
-			if(self->hougaku == 3){self->hougaku = 0;}
-			else{self->hougaku++;}
-		}
-		else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
-		{
-			Camera_get_muki(self->camera, 2);
-			if(self->hougaku == 0){self->hougaku = 3;}
-			else{self->hougaku--;}
-		}
+			//歩行状態
+			if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
+			{
+				Camera_get_muki(self->camera, 1);
+				if(self->hougaku == 3){self->hougaku = 0;}
+				else{self->hougaku++;}
+			}
+			else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
+			{
+				Camera_get_muki(self->camera, 2);
+				if(self->hougaku == 0){self->hougaku = 3;}
+				else{self->hougaku--;}
+			}
 	
-		if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
+			if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
+			{
+				self->count = 0;
+				move_area(self);
+			}
+		}
+		else if(self->camera_mode % 2 == 1)
 		{
-			self->count = 0;
-			move_area(self);
+			//カメラ操作状態
+
+		}
+
+		if(Pad_Get( KEY_INPUT_Z ) == -1)
+		{
+			self->camera_mode++;
+			int hougaku = self->hougaku;
+			if(hougaku == 0){hougaku = 2;}
+			else if(hougaku == 2){hougaku = 0;}
+			Camera_get_camera_mode(self->camera, self->camera_mode, hougaku);
 		}
 	}
 

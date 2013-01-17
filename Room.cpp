@@ -67,7 +67,6 @@ void slide_glass(Room *self)
 	{
 		self->slide += self->s_swit * SLIDE / (float)cut;
 		self->s_count++;
-		printf("\nslide = %lf\n",self->slide);
 	}
 }
 
@@ -92,7 +91,7 @@ void Room_Update( Room *self )
 	if(Pad_Get( KEY_INPUT_X ) == -1){ self->s_swit = 1;}
 	else if(Pad_Get( KEY_INPUT_Z ) == -1){self->s_swit = -1;}
 
-	if(self->swit == 1 || self->s_swit == -1){slide_glass(self);}
+	if(self->s_swit == 1 || self->s_swit == -1){slide_glass(self);}
 
 	
 

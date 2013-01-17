@@ -1,10 +1,12 @@
 #include "DxLib.h"
 #include "Camera.h"
+#include <math.h>
 #include <stdio.h>
 #include "pad.h"
 #include "vector_operator.h"
 
 #define ROTE 1.570796
+#define PI 3.1415926f
 
 struct Camera 
 {
@@ -18,20 +20,16 @@ struct Camera
 	int area;
 	int old_a;
 	int muki;
-
-	int test;
+	//Ž‹“_ŠÖŒW‚Ì•Ï”
+	int camera_mode;
+	double deg;
+	double r;
 };
 
 static const VECTOR cam_pos[8] =
 {
 	{2017,250,-310}, {882,250,-310}, {195,250,-310}, {-592,250,-310},
 	{-592,250,255}, {-592,250,820}, {158,250,820}, {928,250,450}
-};
-
-static const VECTOR pt_pos[8] =
-{
-	{-920,200,-310}, {-920,200,-310}, {-920,200,-310}, {-592,250,-310},
-	{-592,250,1020}, {-592,250,1020}, {-592,250,1020}, {-592,250,1020}
 };
 
 // ‰Šú‰»‚ð‚·‚é
@@ -42,14 +40,19 @@ Camera *Camera_Initialize()
 	self->area = 0;
 	self->old_a = 0;
 	self->cam = cam_pos[0];
-	self->pt = pt_pos[0];
+	self->pt = VGet(0,200,0); 
 	self->HRotate = -1.570796f;
 	self->move_swit = 0;
 	self->move_count = 0;
 	self->swit = 0;
 	self->count = 0;
 	self->muki = 0;
-	self->test = 0;
+	
+	//Ž‹“_ŠÖŒW‚Ì‰Šú’l
+	self->camera_mode = 0;
+	self->deg = 0; 
+	self->r = 300;
+
 
 	//–¶•`‰æon:‚É‚Â‚¢‚Äcolor‚ÅFEst`ŽnI
 	SetFogEnable( TRUE );
@@ -63,10 +66,23 @@ void Camera_get_area(Camera *self, int area)
 	self->area = area;
 }
 
+
+double Camera_give_area(Camera *self)
+{
+	return self->deg;
+}
+
 void Camera_get_muki(Camera *self, int muki)
 {
 	self->muki = muki;
 }
+
+void Camera_get_camera_mode(Camera *self, int camera_mode, int hougaku)
+{
+	if(camera_mode % 2 == 1){self->deg = hougaku * 90;}
+	self->camera_mode = camera_mode;
+}
+
 
 void role_cam(Camera *self)
 {
@@ -104,35 +120,49 @@ void move_cam(Camera *self)
 			self->move_count = 0;
 			self->move_swit = 0;
 			self->old_a = self->area;
-			self->pt = pt_pos[self->area];
 		}
 	}
 	
 }
 
+void look_out_cam(Camera *self)
+{
+	if(self->camera_mode % 2 == 1)
+	{
+		if(CheckHitKey(KEY_INPUT_UP)){self->pt.y += 10;}
+		else if(CheckHitKey(KEY_INPUT_DOWN)){self->pt.y -= 10;}
+
+		if(CheckHitKey(KEY_INPUT_RIGHT)){self->deg -= 5;}
+		else if(CheckHitKey(KEY_INPUT_LEFT)){self->deg += 5;}
+		
+		if(CheckHitKey(KEY_INPUT_C)){self->r += 5;}
+		else if(CheckHitKey(KEY_INPUT_X)){self->r -= 5;}
+		
+		self->pt.z = self->cam.z + self->r * sin(PI/180 * self->deg); 
+		self->pt.x = self->cam.x + self->r * cos(PI/180 * self->deg); 
+	}
+
+}
 
 
 // “®‚«‚ðŒvŽZ‚·‚é
 void Camera_Update( Camera *self )
 {
-	if(self->test == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
-	else if(self->test == 0){SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;}
+	if(self->camera_mode % 2 == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
+	else if(self->camera_mode % 2 == 0){SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;}
 
 	//•ûŠp‚É‚Â‚¢‚Ä
 	if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
 	else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
 	
 	role_cam(self);
-	
+	//ˆÚ“®ƒXƒCƒbƒ`‚É‚Â‚¢‚Ä
 	if(self->move_swit == 0 && self->area != self->old_a){self->move_swit = 1;}
 
 	move_cam(self);
+	look_out_cam(self);
 
-	if(Pad_Get(KEY_INPUT_V) == -1 )
-	{
-		if(self->test == 1){self->test = 0;}
-		else if(self->test == 0){self->test = 1;}
-	}
+	if(Pad_Get(KEY_INPUT_F) == 1){printf("\ndeg = %lf\n",self->deg);}
 
 }
 
