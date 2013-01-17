@@ -148,7 +148,8 @@ void look_out_cam(Camera *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Camera_Update( Camera *self )
 {
-	if(self->camera_mode % 2 == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
+	//if(self->camera_mode % 2 == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
+	if(self->camera_mode % 2 == 1){SetCameraPositionAndAngle( self->cam, self->pt.x, self->pt.y, self->pt.y );}
 	else if(self->camera_mode % 2 == 0){SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;}
 
 	//•ûŠp‚É‚Â‚¢‚Ä
