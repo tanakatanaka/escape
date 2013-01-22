@@ -11,7 +11,6 @@ struct Camera
 {
 	VECTOR cam;
 	VECTOR pt;
-	float HRotate;
 	int count;
 	int swit;
 	int move_swit;
@@ -40,7 +39,7 @@ Camera *Camera_Initialize()
 	self->old_a = 0;
 	self->cam = cam_pos[0];
 	self->pt = VGet(0,200,0); 
-	self->HRotate = -1.570796f;
+	self->pt.y = -1.570796f;
 	self->move_swit = 0;
 	self->move_count = 0;
 	self->swit = 0;
@@ -70,31 +69,11 @@ void Camera_get_muki(Camera *self, int muki)
 
 int Camera_look_to(Camera *self)
 {
-	int count = 1;
-
-	if(self->pt.y > self->look_camera_pt + (ROTE * 0.5))
-	{	
-		while(1)
-		{
-			if(self->pt.y < self->look_camera_pt + (count * ROTE  + (ROTE * 0.5))){break;}
-			count++;
-		}
-		self->HRotate += count * ROTE;
-		
-	}
-	else if(self->pt.y < self->look_camera_pt - (ROTE * 0.5))
-	{
-		while(1)
-		{
-			if(self->pt.y > self->look_camera_pt - (count * ROTE  + (ROTE * 0.5))){break;}
-			count++;
-		}
-		self->HRotate -= count * ROTE;
-		count = -count;
-	}
-	else{count = 0;}
-
-	return count;
+	if (self->pt.y < 45) { return 0; }
+	else if (self->pt.y < 135) { return 1; }
+	else if (self->pt.y < 225) { return 2; }
+	else if (self->pt.y < 315) { return 3; }
+	return 0;
 }
 
 int Camera_get_camera_mode(Camera *self, int camera_mode)
@@ -103,8 +82,8 @@ int Camera_get_camera_mode(Camera *self, int camera_mode)
 
 	if(camera_mode % 2 == 1)
 	{
-		self->look_camera_pt = self->HRotate;
-		self->pt = VGet(0.0f, self->HRotate, 0.0f);
+		self->look_camera_pt = self->pt.y;
+		self->pt = VGet(0.0f, self->pt.y, 0.0f);
 	}
 	else{ role_count = Camera_look_to(self);}
 
@@ -130,7 +109,7 @@ void role_cam(Camera *self)
 
 		if(self->count < cut)
 		{
-			self->HRotate += (float) (sign * ROTE / cut);
+			self->pt.y += (float) (sign * ROTE / cut);
 			self->count++;
 		}
 		else{self->count = 0; self->swit = 0;}
@@ -161,7 +140,7 @@ void Camera_Update( Camera *self )
 {
 	if(self->camera_mode % 2 == 0)
 	{
-		SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;
+		SetCameraPositionAndAngle( self->cam, 0.0f, self->pt.y, 0.0f ) ;
 		
 		//•ûŠp‚É‚Â‚¢‚Ä
 		if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
