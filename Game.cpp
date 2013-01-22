@@ -13,6 +13,7 @@ struct Game
 	Camera *camera;
 	Console *console;
 	int hougaku;
+	int siten_hougaku;
 	int area;
 	int count;
 	int mode;
@@ -90,20 +91,40 @@ void Game_Update(Game *self)
 		else if(self->camera_mode % 2 == 1)
 		{
 			//ƒJƒƒ‰‘€ìó‘Ô
+			float move_point = 0.04;
+
+			if(CheckHitKey(KEY_INPUT_UP)){Camera_get_pt(self->camera, 0, -move_point);}
+			else if(CheckHitKey(KEY_INPUT_DOWN)){Camera_get_pt(self->camera, 0, +move_point);}
+
+			if(CheckHitKey(KEY_INPUT_RIGHT)){Camera_get_pt(self->camera, 1, move_point);}
+			else if(CheckHitKey(KEY_INPUT_LEFT)){Camera_get_pt(self->camera, 1, -move_point);}
 
 		}
 
 		if(Pad_Get( KEY_INPUT_Z ) == -1)
 		{
 			self->camera_mode++;
-			int hougaku = self->hougaku;
-			if(hougaku == 0){hougaku = 2;}
-			else if(hougaku == 2){hougaku = 0;}
-			Camera_get_camera_mode(self->camera, self->camera_mode, hougaku);
+			self->hougaku = (Camera_get_camera_mode(self->camera, self->camera_mode) + self->hougaku) % 4;
+			if(self->hougaku < 0){self->hougaku = 4 + self->hougaku;}
 		}
 	}
 
-	if(Pad_Get(KEY_INPUT_ESCAPE) == 1){self->mode++; Console_get_mode(self->console,self->mode);}
+	//‚Ç‚ñ‚Èƒ‚[ƒh‚Å‚à
+	if(Pad_Get(KEY_INPUT_ESCAPE) == 1)
+	{
+		self->mode++; 
+		Console_get_mode(self->console,self->mode);
+
+		if(self->camera_mode % 2 == 1)
+		{
+			self->siten_hougaku = (Camera_look_to(self->camera) + self->hougaku) % 4;
+			if(self->siten_hougaku  < 0){self->siten_hougaku  = 4 + self->siten_hougaku ;}
+			printf("\nhougaku = %d\n",self->siten_hougaku);
+		}
+	}
+
+	if(Pad_Get(KEY_INPUT_F) == 1){printf("\nrote = %d\n",self->hougaku);}
+
 
 
 	Script_Update( self->script );

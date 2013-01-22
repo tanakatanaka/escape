@@ -6,7 +6,6 @@
 #include "vector_operator.h"
 
 #define ROTE 1.570796
-#define PI 3.1415926f
 
 struct Camera 
 {
@@ -22,8 +21,8 @@ struct Camera
 	int muki;
 	//Ž‹“_ŠÖŒW‚Ì•Ï”
 	int camera_mode;
-	double deg;
-	double r;
+	float look_camera_pt;
+
 };
 
 static const VECTOR cam_pos[8] =
@@ -50,8 +49,6 @@ Camera *Camera_Initialize()
 	
 	//Ž‹“_ŠÖŒW‚Ì‰Šú’l
 	self->camera_mode = 0;
-	self->deg = 0; 
-	self->r = 300;
 
 
 	//–¶•`‰æon:‚É‚Â‚¢‚Äcolor‚ÅFEst`ŽnI
@@ -66,23 +63,61 @@ void Camera_get_area(Camera *self, int area)
 	self->area = area;
 }
 
-
-double Camera_give_area(Camera *self)
-{
-	return self->deg;
-}
-
 void Camera_get_muki(Camera *self, int muki)
 {
 	self->muki = muki;
 }
 
-void Camera_get_camera_mode(Camera *self, int camera_mode, int hougaku)
+int Camera_look_to(Camera *self)
 {
-	if(camera_mode % 2 == 1){self->deg = hougaku * 90;}
-	self->camera_mode = camera_mode;
+	int count = 1;
+
+	if(self->pt.y > self->look_camera_pt + (ROTE * 0.5))
+	{	
+		while(1)
+		{
+			if(self->pt.y < self->look_camera_pt + (count * ROTE  + (ROTE * 0.5))){break;}
+			count++;
+		}
+		self->HRotate += count * ROTE;
+		
+	}
+	else if(self->pt.y < self->look_camera_pt - (ROTE * 0.5))
+	{
+		while(1)
+		{
+			if(self->pt.y > self->look_camera_pt - (count * ROTE  + (ROTE * 0.5))){break;}
+			count++;
+		}
+		self->HRotate -= count * ROTE;
+		count = -count;
+	}
+	else{count = 0;}
+
+	return count;
 }
 
+int Camera_get_camera_mode(Camera *self, int camera_mode)
+{
+	int role_count = 0;
+
+	if(camera_mode % 2 == 1)
+	{
+		self->look_camera_pt = self->HRotate;
+		self->pt = VGet(0.0f, self->HRotate, 0.0f);
+	}
+	else{ role_count = Camera_look_to(self);}
+
+	self->camera_mode = camera_mode;
+
+	return role_count;
+}
+
+void Camera_get_pt(Camera *self, int type, float point)
+{
+	if(type == 0){self->pt.x += point;}
+	else {self->pt.y += point;}
+}
 
 void role_cam(Camera *self)
 {
@@ -105,72 +140,53 @@ void role_cam(Camera *self)
 
 void move_cam(Camera *self)
 {
-	if(self->move_swit = 1)
+	int cut = 50;
+	const VECTOR &old = cam_pos[self->old_a];
+	const VECTOR &next = cam_pos[self->area];
+
+	self->cam = old + (next - old) * (self->move_count / (float)cut);
+	self->move_count++;
+
+	if (self->move_count == cut)
 	{
-		int cut = 50;
-		const VECTOR &old = cam_pos[self->old_a];
-		const VECTOR &next = cam_pos[self->area];
-
-		self->cam = old + (next - old) * (self->move_count / (float)cut);
-		self->move_count++;
-
-		if (self->move_count == cut)
-		{
-			self->cam = next;
-			self->move_count = 0;
-			self->move_swit = 0;
-			self->old_a = self->area;
-		}
+		self->cam = next;
+		self->move_count = 0;
+		self->move_swit = 0;
+		self->old_a = self->area;
 	}
-	
 }
-
-void look_out_cam(Camera *self)
-{
-	if(self->camera_mode % 2 == 1)
-	{
-		if(CheckHitKey(KEY_INPUT_UP)){self->pt.y += 10;}
-		else if(CheckHitKey(KEY_INPUT_DOWN)){self->pt.y -= 10;}
-
-		if(CheckHitKey(KEY_INPUT_RIGHT)){self->deg -= 5;}
-		else if(CheckHitKey(KEY_INPUT_LEFT)){self->deg += 5;}
-		
-		if(CheckHitKey(KEY_INPUT_C)){self->r += 5;}
-		else if(CheckHitKey(KEY_INPUT_X)){self->r -= 5;}
-		
-		self->pt.z = self->cam.z + self->r * sin(PI/180 * self->deg); 
-		self->pt.x = self->cam.x + self->r * cos(PI/180 * self->deg); 
-	}
-
-}
-
 
 // “®‚«‚ðŒvŽZ‚·‚é
 void Camera_Update( Camera *self )
 {
-	//if(self->camera_mode % 2 == 1){SetCameraPositionAndTarget_UpVecY(self->cam, self->pt);}
-	if(self->camera_mode % 2 == 1){SetCameraPositionAndAngle( self->cam, self->pt.x, self->pt.y, self->pt.y );}
-	else if(self->camera_mode % 2 == 0){SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;}
+	if(self->camera_mode % 2 == 0)
+	{
+		SetCameraPositionAndAngle( self->cam, 0.0f, self->HRotate, 0.0f ) ;
+		
+		//•ûŠp‚É‚Â‚¢‚Ä
+		if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
+		else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
+		role_cam(self);
 
-	//•ûŠp‚É‚Â‚¢‚Ä
-	if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
-	else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
+		//ˆÚ“®ƒXƒCƒbƒ`‚É‚Â‚¢‚Ä
+		if(self->move_swit == 0 && self->area != self->old_a){self->move_swit = 1;}
+		move_cam(self);
+
+		
+	}
+	if(self->camera_mode % 2 == 1)
+	{
+		SetCameraPositionAndAngle( self->cam, self->pt.x, self->pt.y, 0.0f);
+	}
 	
-	role_cam(self);
-	//ˆÚ“®ƒXƒCƒbƒ`‚É‚Â‚¢‚Ä
-	if(self->move_swit == 0 && self->area != self->old_a){self->move_swit = 1;}
+	
 
-	move_cam(self);
-	look_out_cam(self);
-
-	if(Pad_Get(KEY_INPUT_F) == 1){printf("\ndeg = %lf\n",self->deg);}
 
 }
 
 // •`‰æ‚·‚é
 void Camera_Draw( Camera *self)
 {
-	DrawSphere3D( self->pt, 50, 32, GetColor( 0,255,127 ), GetColor( 0,255,127 ), TRUE ) ;
 
 }
 
