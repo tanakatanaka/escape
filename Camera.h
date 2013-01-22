@@ -12,7 +12,7 @@ void Camera_get_area(Camera *self, int area);
 //gameから左右回転をもらう関数
 void Camera_get_muki(Camera *self, int muki);
 //cameraの方角をもらう関数;
-int Camera_look_to(Camera *self);
+int Camera_get_muki(Camera *self);
 /*gameからカメラモード(歩行・視点)をもらう関数
 もし視点モードになる場合方角をもらう*/
 int Camera_get_camera_mode(Camera *self, int camera_mode);

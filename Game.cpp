@@ -117,7 +117,7 @@ void Game_Update(Game *self)
 
 		if(self->camera_mode % 2 == 1)
 		{
-			self->siten_hougaku = (Camera_look_to(self->camera) + self->hougaku) % 4;
+			self->siten_hougaku = (Camera_get_muki(self->camera) + self->hougaku) % 4;
 			if(self->siten_hougaku  < 0){self->siten_hougaku  = 4 + self->siten_hougaku ;}
 			printf("\nhougaku = %d\n",self->siten_hougaku);
 		}
@@ -135,9 +135,6 @@ void Game_Update(Game *self)
 void Game_Draw(Game *self)
 {
 	 Script_Draw( self->script );
-	 
-	 
-     
 }
 
 // I—¹ˆ—‚ğ‚·‚é
