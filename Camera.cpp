@@ -67,10 +67,17 @@ void Camera_get_muki(Camera *self, int muki)
 
 int Camera_get_muki(Camera *self)
 {
-	if (self->pt.y < ROTE / 2) { return 0; }
-	else if (self->pt.y < ROTE * 3 / 2) { return 1; }
-	else if (self->pt.y < ROTE * 5 / 2) { return 2; }
-	else if (self->pt.y < ROTE * 7 / 2) { return 3; }
+  float y = fmodf(self->pt.y, ROTE * 4);
+  
+  if (y < 0)
+  {
+      y += ROTE * 4;
+  }
+  
+	if (y < ROTE / 2) { return 0; }
+	else if (y < ROTE * 3 / 2) { return 1; }
+	else if (y < ROTE * 5 / 2) { return 2; }
+	else if (y < ROTE * 7 / 2) { return 3; }
 	return 0;
 }
 
@@ -86,7 +93,7 @@ int Camera_get_camera_mode(Camera *self, int camera_mode)
 	else
 	{
 		role_count = Camera_get_muki(self);
-		self->pt.y = role_count * ROTE;
+		self->pt.y = (role_count) * ROTE;
 		self->pt.x = 0;
 	}
 
