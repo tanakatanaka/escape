@@ -44,7 +44,7 @@ Console *Console_Initialize()
 	return self;
 }
 
-void Console_get_mode(Console *self, int mode)
+void Console_set_mode(Console *self, int mode)
 {
 	self->mode = mode;
 }

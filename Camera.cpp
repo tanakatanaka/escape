@@ -55,17 +55,17 @@ Camera *Camera_Initialize()
 	return self;
 }
 
-void Camera_get_area(Camera *self, int area)
+void Camera_set_area(Camera *self, int area)
 {
 	self->area = area;
 }
 
-void Camera_get_muki(Camera *self, int muki)
+void Camera_set_muki(Camera *self, int muki)
 {
 	self->muki = muki;
 }
 
-int Camera_get_muki(Camera *self)
+int Camera_set_muki(Camera *self)
 {
   float y = fmodf(self->pt.y, ROTE * 4);
   
@@ -81,7 +81,7 @@ int Camera_get_muki(Camera *self)
 	return 0;
 }
 
-int Camera_get_camera_mode(Camera *self, int camera_mode)
+int Camera_set_camera_mode(Camera *self, int camera_mode)
 {
 	int role_count = 0;
 
@@ -92,7 +92,7 @@ int Camera_get_camera_mode(Camera *self, int camera_mode)
 	}
 	else
 	{
-		role_count = Camera_get_muki(self);
+		role_count = Camera_set_muki(self);
 		self->pt.y = (role_count) * ROTE;
 		self->pt.x = 0;
 	}
@@ -102,7 +102,7 @@ int Camera_get_camera_mode(Camera *self, int camera_mode)
 	return role_count;
 }
 
-void Camera_get_pt(Camera *self, int type, float point)
+void Camera_set_pt(Camera *self, int type, float point)
 {
 	if(type == 0){self->pt.x += point;}
 	else {self->pt.y += point;}

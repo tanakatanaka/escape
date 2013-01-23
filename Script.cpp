@@ -1,5 +1,7 @@
 #include "DxLib.h"
 #include <string>
+#include <deque>
+#include <string>
 #include <string.h>
 #include <stdlib.h>
 #include <sstream>
@@ -34,12 +36,16 @@ struct Script
     Mess *mess;
 	Twod *twod;
 	Console *console;
-	int load_flag;
     int maxLineNumber;			//スクリプト行数
 	int currentLine;			//現在何行目を実行しているか
 	const char* filename;		//ファイル名
 	char script[SCRIPT_MAX_LINE][SCRIPT_MAX_STRING_LENGTH];
 	char *word[10];
+	//プレイヤー情報
+	int area;
+	int hougaku;
+	//命令を記憶する変数
+	Words words;
 };
 
 int loadScript(const char* filename, Script *script);
@@ -57,7 +63,6 @@ Script *Script_Initialize(Camera *camera, Console *console)
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
 	self->console = console;
-	self->load_flag = 1;
 	
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
@@ -232,91 +237,24 @@ int decodeScript(const char* scriptMessage, Script *self)
 		return 0;
 	}
 
-	//scriptの仕様
-	//
-	//@@message 文字列
-	//--- 文字列をメッセージとして表示する
-	//@@select 条件1の場合@@LABEL1 条件2の場合@@LABEL2 条件3の場合@@LABEL3
-	//--- 条件分岐
-	
-	//message[0] が @@message の時は，メッセージ命令が来たと判断
-	if( strncmp(message[0], "@@message", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
+	if(strncmp(message[0], "@@draw", SCRIPT_MAX_STRING_LENGTH) == 0)
 	{
-		printf("メッセージ : %s\n", message[1] );
-	}
-	else if( strncmp(message[0], "@@drawgraph", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
-	{
-		printf("画像 %s 表示 -- x座標 : %d, y座標 : %d\n", 
-			message[3], atoi( message[1] ), atoi( message[2] ) );
-	}
-	else if(strncmp(message[0], "@@drawtest", SCRIPT_MAX_STRING_LENGTH) == 0 )
-	{
-		twod_add_image(self->twod, atoi( message[1] ), atoi( message[2] ), atoi( message[3] ),  message[4] );
-	}
-	else if(strncmp(message[0], "@@drawerase", SCRIPT_MAX_STRING_LENGTH) == 0 )
-	{
-		twod_erase_image(self->twod, message[1] );
-	}
-	else if(strncmp(message[0], "@@mess_up", SCRIPT_MAX_STRING_LENGTH) == 0 )
-	{
-		mess_add_word(self->mess,atoi( message[1] ), atoi( message[2] ), message[3] , message[4] );
-	}
-	else if(strncmp(message[0], "@@mess_erase", SCRIPT_MAX_STRING_LENGTH) == 0 )
-	{
-		mess_erase_word(self->mess, message[1]);
-	}
-
-	else if( strncmp(message[0], "@@select", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
-
-		for(i = 0; message[i + 1] != NULL; i++ ) {
-			//条件を条件文章とジャンプラベルとに分ける
-			splitString( message[i + 1], selectMessage, selectDelim, 2 );
-			//条件文章
-			select[i][0] = selectMessage[0];
-			//ラベル
-			select[i][1] = selectMessage[1];
+		//画像描画
+		if(self->area == atoi( message[1] ) && self->hougaku == atoi( message[2] ))
+		{
+			
 		}
-		//分岐数
-		selectNum = i;
-
-		//ここで分岐を画面に表示
-		for(i = 0; i < selectNum; i++) {
-			printf("条件 %d : %s\n", i + 1, select[i][0] );
-		}
-		//分岐を選択
-		choice = 0;
-		while( choice <= 0 || choice > selectNum ) {
-			printf("選択 :");
-			scanf("%d", &choice );
-		}
-
-		//ラベルが何行目にあるかを取得
-		line = searchScriptLabel( select[choice - 1][1] , self );
-		//指定したラベルが見つからなかった
-		if( line == -1 ) {
-			printf("スクリプトエラー:条件分岐の指定ラベルが間違っています(%d行目)\n",
-				self->currentLine + 1 );
-			return 0;
-		}
-		//読み取り中の行番号をラベルの行に移動
-		self->currentLine = line;
-
-	}else if( strncmp(message[0], "@@goto", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
-		//ラベルが何行目にあるかを取得
-		line = searchScriptLabel( message[1], self );
-		//指定したラベルが見つからなかった
-		if( line == -1 ) {
-			printf("スクリプトエラー:指定したラベルが見つかりませんでした(%d行目)\n",
-				self->currentLine + 1);
-			return 0;
-		}
-		//読み取り中の行番号をラベルの行に移動
-		self->currentLine = line;
-
-	}else if( strncmp(message[0], "@@label", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
+	}
+	else if(strncmp(message[0], "@@reset", SCRIPT_MAX_STRING_LENGTH) == 0)
+	{
+		return -1;
+	}
+	else if( strncmp(message[0], "@@label", SCRIPT_MAX_STRING_LENGTH) == 0 ) 
+	{
 		//ラベルの場合はなにもしない
+		printf("\ngyou = %d\n",self->currentLine);
+		return 1;
 	}
-	
 
 	return 1;
 }
@@ -331,11 +269,11 @@ Words split(const char *str)
 
 void word_act(Words &words)
 {
-	if(words[0] == "jojo")
+	if(words[0] == "check")
 	{
 		if(words.size() > 1)
 		{
-			if(words[1] == "gogo"){printf("\ntest_jojo = %s\n",words[0].c_str());}	
+			if(words[1] == "draw"){}	
 		}
 	}
 
@@ -350,14 +288,25 @@ void decode_command(Script *self)
 		
 		if(command != NULL)
 		{
-			Words words = split(command);
+			self->words = split(command);
 			//コンソールのほうにあるコマンドをログに移動
 			console_shift_log(self->console);
 			//分解したwordを解読関数にかける
-			word_act(words);
+			word_act(self->words);
 		}
 	}
 }
+
+void Script_set_area(Script *self, int area)
+{
+	self->area = area;
+}
+
+void Script_set_hougaku(Script *self, int hougaku)
+{
+	self->hougaku = hougaku;
+}
+
 
 // 動きを計算する
 void Script_Update( Script *self )
@@ -368,29 +317,29 @@ void Script_Update( Script *self )
 	Console_Update( self->console );
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
-	
-
-	if(self->load_flag == 1 && decodeScript( self->script[ self->currentLine ], self ) != 0)
-	{
-		self->currentLine++;
-		self->load_flag = 0;	
-	}
-
-	if(Pad_Get(KEY_INPUT_Q) == 1 ){self->load_flag = 1;}
 
 	decode_command(self);
 
-	//スクリプトを繰り返すかどうか　コメントアウト
-	//for( ; decodeScript( self->script[ self->currentLine ], self ) != 0 ; self->currentLine++ );
+	int state_flag = decodeScript( self->script[ self->currentLine ], self );
 	
-	
-}
+	if(state_flag == 1)
+	{
+		//一般の命令後次の行へ
+		self->currentLine++;
+	}
+	else if(state_flag == -1)
+	{
+		//@@resetの命令後0行目へ
+		self->currentLine = 0;
+	}
+
+}	
 
 // 描画する
 void Script_Draw( Script *self)
 {
-	Room_Draw(self->room);
 	Camera_Draw(self->camera);
+	Room_Draw(self->room);
 	Console_Draw( self->console );
 	Twod_Draw( self->twod );
 	Mess_Draw(self->mess);

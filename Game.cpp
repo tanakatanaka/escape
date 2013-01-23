@@ -55,7 +55,7 @@ void move_area(Game *self)
 	}
 	else if(self->hougaku == 3){if(self->area > 3 && self->area < 6 ){self->area--;}}
 
-	Camera_get_area(self->camera, self->area);
+	Camera_set_area(self->camera, self->area);
 }
 
 
@@ -71,13 +71,13 @@ void Game_Update(Game *self)
 			//•àsó‘Ô
 			if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
 			{
-				Camera_get_muki(self->camera, 1);
+				Camera_set_muki(self->camera, 1);
 				if(self->hougaku == 3){self->hougaku = 0;}
 				else{self->hougaku++;}
 			}
 			else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
 			{
-				Camera_get_muki(self->camera, 2);
+				Camera_set_muki(self->camera, 2);
 				if(self->hougaku == 0){self->hougaku = 3;}
 				else{self->hougaku--;}
 			}
@@ -93,19 +93,18 @@ void Game_Update(Game *self)
 			//ƒJƒƒ‰‘€ìó‘Ô
 			float move_point = 0.04;
 
-			if(CheckHitKey(KEY_INPUT_UP)){Camera_get_pt(self->camera, 0, -move_point);}
-			else if(CheckHitKey(KEY_INPUT_DOWN)){Camera_get_pt(self->camera, 0, +move_point);}
+			if(CheckHitKey(KEY_INPUT_UP)){Camera_set_pt(self->camera, 0, -move_point);}
+			else if(CheckHitKey(KEY_INPUT_DOWN)){Camera_set_pt(self->camera, 0, +move_point);}
 
-			if(CheckHitKey(KEY_INPUT_RIGHT)){Camera_get_pt(self->camera, 1, move_point);}
-			else if(CheckHitKey(KEY_INPUT_LEFT)){Camera_get_pt(self->camera, 1, -move_point);}
+			if(CheckHitKey(KEY_INPUT_RIGHT)){Camera_set_pt(self->camera, 1, move_point);}
+			else if(CheckHitKey(KEY_INPUT_LEFT)){Camera_set_pt(self->camera, 1, -move_point);}
 
 		}
 
 		if(Pad_Get( KEY_INPUT_Z ) == -1)
 		{
 			self->camera_mode++;
-			self->hougaku = (Camera_get_camera_mode(self->camera, self->camera_mode) + self->hougaku) % 4;
-			if(self->hougaku < 0){self->hougaku = 4 + self->hougaku;}
+			self->hougaku = Camera_set_camera_mode(self->camera, self->camera_mode);
 		}
 	}
 
@@ -113,11 +112,11 @@ void Game_Update(Game *self)
 	if(Pad_Get(KEY_INPUT_ESCAPE) == 1)
 	{
 		self->mode++; 
-		Console_get_mode(self->console,self->mode);
+		Console_set_mode(self->console,self->mode);
 
 		if(self->camera_mode % 2 == 1)
 		{
-			self->siten_hougaku = (Camera_get_muki(self->camera) + self->hougaku) % 4;
+			self->siten_hougaku = (Camera_set_muki(self->camera) + self->hougaku) % 4;
 			if(self->siten_hougaku  < 0){self->siten_hougaku  = 4 + self->siten_hougaku ;}
 			printf("\nhougaku = %d\n",self->siten_hougaku);
 		}
@@ -125,8 +124,8 @@ void Game_Update(Game *self)
 
 	if(Pad_Get(KEY_INPUT_F) == 1){printf("\nrote = %d\n",self->hougaku);}
 
-
-
+	Script_set_area(self->script, self->area);
+	Script_set_hougaku(self->script, self->hougaku);
 	Script_Update( self->script );
 	self->count++;
 }

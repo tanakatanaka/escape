@@ -8,16 +8,16 @@ struct Camera;
 Camera *Camera_Initialize( );
 
 //gameから現在の位置をもらう関数
-void Camera_get_area(Camera *self, int area);
+void Camera_set_area(Camera *self, int area);
 //gameから左右回転をもらう関数
-void Camera_get_muki(Camera *self, int muki);
+void Camera_set_muki(Camera *self, int muki);
 //cameraの方角をもらう関数;
-int Camera_get_muki(Camera *self);
+int Camera_set_muki(Camera *self);
 /*gameからカメラモード(歩行・視点)をもらう関数
 もし視点モードになる場合方角をもらう*/
-int Camera_get_camera_mode(Camera *self, int camera_mode);
+int Camera_set_camera_mode(Camera *self, int camera_mode);
 //視点操作の値を回収..type0:x,type1:y
-void Camera_get_pt(Camera *self, int type, float point);
+void Camera_set_pt(Camera *self, int type, float point);
 // 動きを計算する
 void Camera_Update( Camera *Camera );
 
