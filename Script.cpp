@@ -45,7 +45,8 @@ struct Script
 	int area;
 	int hougaku;
 	//命令フラッグをもつ変数
-	int order[10];
+	int draw_order[10];
+	int word_order[10];
 };
 
 int loadScript(const char* filename, Script *script);
@@ -66,7 +67,8 @@ Script *Script_Initialize(Camera *camera, Console *console)
 	
 	for(int i = 0; i < 10; i++ )
 	{
-		self->order[i] = 0;
+		self->draw_order[i] = 0;
+		self->word_order[i] = 0;
 	}
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
@@ -147,38 +149,6 @@ int loadScript(const char* filename, Script *script)
 	return 0;
 }
 
-//指定したラベルがある行数を探す
-//戻り値 正の数: 指定したラベルの行番号 -1: エラー
-int searchScriptLabel(const char* label, Script *script)
-{
-	//分割されたスクリプト文
-	char* message[100];
-	//文字列分割時の区切り文字
-	const char* delim = " ";
-	int i, line = -1;
-
-	for( i = 0; i < script->maxLineNumber; i++ ) { 
-		//スクリプト分割
-		splitString( script->script[i] , message, delim, 100 );
-
-		//分割に失敗した場合
-		if( message[0] == NULL ) {
-			return -1;
-		}
-
-		//指定したラベルを探す
-		if( strncmp(message[0], "@@label", SCRIPT_MAX_STRING_LENGTH) == 0 ) {
-			if( strncmp(message[1], label, SCRIPT_MAX_STRING_LENGTH) == 0 ) {
-				//指定したラベルが見つかった時
-				line = i;
-				break;
-			}
-		}
-	}
-
-	return line;
-}
-
 //文字列分割(1行の最大文字数は SCRIPT_MAX_STRING_LENGTH)
 //src : 分割したい文字列
 //dest: 分割された文字列
@@ -208,16 +178,6 @@ void splitString(const char* src, char* dest[], const char* delim, int splitNum)
 	dest[i] = NULL;
 }
 
-//デバッグ用
-//elemの要素を表示
-void printElements(char* elem[])
-{
-	int i;
-	for( i = 0; elem[i] != NULL; i++ ) {
-		printf("%d : %s\n", i + 1, elem[i] );
-	}
-}
-
 //スクリプト文を解読する
 //戻り値 1: 成功  0: 失敗
 int decodeScript(const char* scriptMessage, Script *self)
@@ -244,10 +204,20 @@ int decodeScript(const char* scriptMessage, Script *self)
 	if(strncmp(message[0], "@@draw", SCRIPT_MAX_STRING_LENGTH) == 0)
 	{
 		//画像描画
-		if(self->order[atoi( message[1] )] == -1)
+		if(self->draw_order[atoi( message[1] )] == -1)
 		{
 			twod_add_image(self->twod, atoi( message[2] ), atoi( message[3] ), atoi( message[4] ),  message[5]);
-			self->order[0] == 0;
+			self->draw_order[0] == 0;
+		}
+		return 1;
+	}
+	else if(strncmp(message[0], "@@word", SCRIPT_MAX_STRING_LENGTH) == 0)
+	{
+		//文字描画
+		if(self->word_order[atoi( message[1] )] == -1)
+		{
+			mess_add_word(self->mess,atoi( message[2] ), atoi( message[3] ), message[4] , message[5] );
+			self->word_order[0] == 0;
 		}
 		return 1;
 	}
@@ -281,7 +251,8 @@ void word_act(Script *self, Words &words)
 		{
 			if(words[1] == "draw" && self->area == 1 && self->hougaku == 3)
 			{
-				self->order[0] = -1;
+				self->draw_order[0] = -1;
+				self->word_order[0] = -1;
 			}
 		}
 	}
