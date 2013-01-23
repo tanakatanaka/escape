@@ -44,8 +44,8 @@ struct Script
 	//プレイヤー情報
 	int area;
 	int hougaku;
-	//命令を記憶する変数
-	Words words;
+	//命令フラッグをもつ変数
+	int order[10];
 };
 
 int loadScript(const char* filename, Script *script);
@@ -64,6 +64,10 @@ Script *Script_Initialize(Camera *camera, Console *console)
 	self->twod = Twod_Initialize( );
 	self->console = console;
 	
+	for(int i = 0; i < 10; i++ )
+	{
+		self->order[i] = 0;
+	}
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
 	return self;
@@ -240,10 +244,12 @@ int decodeScript(const char* scriptMessage, Script *self)
 	if(strncmp(message[0], "@@draw", SCRIPT_MAX_STRING_LENGTH) == 0)
 	{
 		//画像描画
-		if(self->area == atoi( message[1] ) && self->hougaku == atoi( message[2] ))
+		if(self->order[atoi( message[1] )] == -1)
 		{
-			
+			twod_add_image(self->twod, atoi( message[2] ), atoi( message[3] ), atoi( message[4] ),  message[5]);
+			self->order[0] == 0;
 		}
+		return 1;
 	}
 	else if(strncmp(message[0], "@@reset", SCRIPT_MAX_STRING_LENGTH) == 0)
 	{
@@ -267,13 +273,16 @@ Words split(const char *str)
     return words;
 }
 
-void word_act(Words &words)
+void word_act(Script *self, Words &words)
 {
 	if(words[0] == "check")
 	{
 		if(words.size() > 1)
 		{
-			if(words[1] == "draw"){}	
+			if(words[1] == "draw" && self->area == 1 && self->hougaku == 3)
+			{
+				self->order[0] = -1;
+			}
 		}
 	}
 
@@ -288,11 +297,11 @@ void decode_command(Script *self)
 		
 		if(command != NULL)
 		{
-			self->words = split(command);
+			Words words = split(command);
 			//コンソールのほうにあるコマンドをログに移動
 			console_shift_log(self->console);
 			//分解したwordを解読関数にかける
-			word_act(self->words);
+			word_act(self,words);
 		}
 	}
 }
