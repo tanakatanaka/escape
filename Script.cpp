@@ -44,9 +44,9 @@ struct Script
 	//プレイヤー情報
 	int area;
 	int hougaku;
-	//命令フラッグをもつ変数
-	int draw_order[10];
-	int word_order[10];
+	//命令条件をもつ変数
+	int draw_order[100];
+	int word_order[100];
 };
 
 int loadScript(const char* filename, Script *script);
@@ -65,7 +65,7 @@ Script *Script_Initialize(Camera *camera, Console *console)
 	self->twod = Twod_Initialize( );
 	self->console = console;
 	
-	for(int i = 0; i < 10; i++ )
+	for(int i = 0; i < 100; i++ )
 	{
 		self->draw_order[i] = 0;
 		self->word_order[i] = 0;
@@ -182,7 +182,6 @@ void splitString(const char* src, char* dest[], const char* delim, int splitNum)
 //戻り値 1: 成功  0: 失敗
 int decodeScript(const char* scriptMessage, Script *self)
 {
-	int i, selectNum, choice, line;
 	//分割されたスクリプト文
 	char* message[100];
 	//条件分岐用
@@ -207,7 +206,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 		if(self->draw_order[atoi( message[1] )] == -1)
 		{
 			twod_add_image(self->twod, atoi( message[2] ), atoi( message[3] ), atoi( message[4] ),  message[5]);
-			self->draw_order[0] == 0;
+			self->draw_order[atoi( message[1] )] == 0;
 		}
 		return 1;
 	}
@@ -217,7 +216,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 		if(self->word_order[atoi( message[1] )] == -1)
 		{
 			mess_add_word(self->mess,atoi( message[2] ), atoi( message[3] ), message[4] , message[5] );
-			self->word_order[0] == 0;
+			self->word_order[atoi( message[1] )] == 0;
 		}
 		return 1;
 	}
@@ -243,19 +242,55 @@ Words split(const char *str)
     return words;
 }
 
+
+int area_hougaku(Script *self, int area , int hougaku)
+{
+	if(self->area == area && self->hougaku == hougaku)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
 void word_act(Script *self, Words &words)
 {
 	if(words[0] == "check")
 	{
 		if(words.size() > 1)
 		{
-			if(words[1] == "draw" && self->area == 1 && self->hougaku == 3)
+			if(words[1] == "door")
 			{
-				self->draw_order[0] = -1;
-				self->word_order[0] = -1;
+				if(area_hougaku(self,0,0))
+				{
+					self->word_order[0] = -1;
+				}
+			}
+			if(words[1] == "draw")
+			{
+				if(area_hougaku(self,1,3))
+				{	
+					self->draw_order[10] = -1;
+					self->word_order[10] = -1;
+				}
 			}
 		}
 	}
+
+	else if(words[0] == "open")
+	{
+		if(words.size() > 1)
+		{
+			if(words[1] == "door")
+			{
+				if(area_hougaku(self,0,0))
+				{
+					Room_set_open(self->room, 1);
+				}
+			}
+		}
+	}
+	
 
 }
 

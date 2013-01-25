@@ -16,7 +16,7 @@ struct Game
 	int siten_hougaku;
 	int area;
 	int count;
-	int mode;
+	int consele_mode;
 	int camera_mode;
 };
 
@@ -35,7 +35,7 @@ Game *Game_Initialize()
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
-	self->mode = 0;
+	self->consele_mode = 0;
 	self->camera_mode = 0;
 	return self;
 }
@@ -63,7 +63,7 @@ void move_area(Game *self)
 // 動きを計算する
 void Game_Update(Game *self)
 {
-	if(self->mode % 2 == 0)
+	if(self->consele_mode % 2 == 0)
 	{
 		//歩行もしくはカメラ操作状態
 		if(self->camera_mode % 2 == 0)
@@ -111,8 +111,8 @@ void Game_Update(Game *self)
 	//どんなモードでも
 	if(Pad_Get(KEY_INPUT_ESCAPE) == 1)
 	{
-		self->mode++; 
-		Console_set_mode(self->console,self->mode);
+		self->consele_mode++; 
+		Console_set_mode(self->console,self->consele_mode);
 
 		if(self->camera_mode % 2 == 1)
 		{

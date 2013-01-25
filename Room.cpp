@@ -36,6 +36,11 @@ Room *Room_Initialize()
 	return self;
 }
 
+void Room_set_open(Room *self, int open_close)
+{
+	self->swit = open_close;
+}
+
 void door_open(Room *self)
 {
 	int cut = 15;
@@ -79,10 +84,6 @@ void Room_Update( Room *self )
 	if(CheckHitKey(KEY_INPUT_A)){self->rotY ++;}
 	else if(CheckHitKey(KEY_INPUT_D)){self->rotY --;}
   */
-	
-	//doorŠÖ˜A
-	if(Pad_Get( KEY_INPUT_X ) == -1){ self->swit = 1;}
-	else if(Pad_Get( KEY_INPUT_Z ) == -1){self->swit = -1;}
 
 	if(self->swit == 1 || self->swit == -1){door_open(self);}
 	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );

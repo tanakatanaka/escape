@@ -1,4 +1,6 @@
-@@draw  0 5 5 0 zeppeli
-@@word  0 100 100 こんちは test
+@@word  0 100 100 please_"door_open" test (0-0 door check)
+
+@@draw  10 5 5 0 zeppeli  (1-3 door check)
+@@word  10 100 100 こんちは test (1-3 door check)
 @@reset
 
