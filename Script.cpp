@@ -206,7 +206,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 		if(self->draw_order[atoi( message[1] )] == -1)
 		{
 			twod_add_image(self->twod, atoi( message[2] ), atoi( message[3] ), atoi( message[4] ),  message[5]);
-			self->draw_order[atoi( message[1] )] == 0;
+			self->draw_order[atoi( message[1] )] = 0;
 		}
 		return 1;
 	}
@@ -216,7 +216,7 @@ int decodeScript(const char* scriptMessage, Script *self)
 		if(self->word_order[atoi( message[1] )] == -1)
 		{
 			mess_add_word(self->mess,atoi( message[2] ), atoi( message[3] ), message[4] , message[5] );
-			self->word_order[atoi( message[1] )] == 0;
+			self->word_order[atoi( message[1] )] = 0;
 		}
 		return 1;
 	}
