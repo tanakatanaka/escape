@@ -84,29 +84,24 @@ void Room_Update( Room *self )
 	if(CheckHitKey(KEY_INPUT_A)){self->rotY ++;}
 	else if(CheckHitKey(KEY_INPUT_D)){self->rotY --;}
   */
-
 	if(self->swit == 1 || self->swit == -1){door_open(self);}
-	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );
 
 	//glassŠÖ˜A
 	if(Pad_Get( KEY_INPUT_X ) == -1){ self->s_swit = 1;}
 	else if(Pad_Get( KEY_INPUT_Z ) == -1){self->s_swit = -1;}
 
 	if(self->s_swit == 1 || self->s_swit == -1){slide_glass(self);}
-
-	
-
-	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
-	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
-
-	
-    
 }		
 
 // •`‰æ‚·‚é
 void Room_Draw( Room *self)
 {
+	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );
+
+	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
+	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
+
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
 	MV1DrawModel(self->glass);

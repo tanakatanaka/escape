@@ -1,11 +1,11 @@
-#ifndef DEF_PLAYER_H //“ñdinclude–h~
+#ifndef DEF_Player_H //“ñdinclude–h~
 
-#define DEF_PLAYER_H
+#define DEF_Player_H
 
 struct Player;
 
 // ‰Šú‰»‚ğ‚·‚é
-Player *Player_Initialize( int y, int img );
+Player *Player_Initialize();
 
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );

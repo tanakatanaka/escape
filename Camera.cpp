@@ -47,11 +47,6 @@ Camera *Camera_Initialize()
 	//視点関係の初期値
 	self->camera_mode = 0;
 
-
-	//霧描画on:についてcolorで色・st～始終
-	SetFogEnable( TRUE );
-	SetFogColor( 0,0,0 );
-	SetFogStartEnd( 500,  1500) ;
 	return self;
 }
 
@@ -152,12 +147,7 @@ void Camera_Update( Camera *self )
 		//移動スイッチについて
 		if(self->move_swit == 0 && self->area != self->old_area){self->move_swit = 1;}
 		move_cam(self);
-
-		
 	}
-	
-
-
 }
 
 // 描画する
@@ -166,6 +156,11 @@ void Camera_Draw( Camera *self)
     const VECTOR &old = cam_pos[self->old_area];
     const VECTOR &next = cam_pos[self->area];
     VECTOR cam = old;
+
+	//霧描画on:についてcolorで色・st～始終
+	SetFogEnable( TRUE );
+	SetFogColor( 0,0,0 );
+	SetFogStartEnd( 500,  1500) ;
     
     if (self->move_count < MOVE_CUT)
     {

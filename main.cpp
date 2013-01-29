@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Game.h"
+#include "Pad.h"
 
 int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 {
@@ -11,7 +12,7 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	{
 		Game_Update(game);
 		Game_Draw(game );
-
+		Pad_Update();
     }
 
 	Game_Finalize(game);

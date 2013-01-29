@@ -13,6 +13,7 @@
 #include "Room.h"
 #include "Camera.h"
 #include "Room.h"
+#include "Player.h"
 #include "Mess.h"
 #include "Twod.h"
 #include "Pad.h"
@@ -54,7 +55,7 @@ int decodeScript(const char* scriptMessage, Script *script);
 void splitString(const char* src, char* dest[], const char* delim, int splitNum);
 
 // ‰Šú‰»‚ð‚·‚é
-Script *Script_Initialize(Camera *camera, Console *console)
+Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 {
 	Script *self;
 	self = (Script *)calloc(sizeof(Script), 1);
@@ -326,7 +327,6 @@ void Script_set_hougaku(Script *self, int hougaku)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Script_Update( Script *self )
 {
-	Pad_Update(  );
 	Camera_Update(self->camera);
 	Room_Update( self->room );
 	Console_Update( self->console );

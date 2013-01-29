@@ -3,21 +3,26 @@
 #include "Console.h"
 #include "Script.h"
 #include "Pad.h"
+#include "Opening.h"
+#include "Player.h"
 #include "Camera.h"
-
-static const int NUM = 2;        //プレイヤーの数
 
 struct Game
 {
 	Script *script;
 	Camera *camera;
 	Console *console;
+	Player *player;
+	Opening *opening;
 	int hougaku;
 	int siten_hougaku;
 	int area;
 	int count;
 	int consele_mode;
 	int camera_mode;
+	//game進行関係
+	int game_state;
+	
 };
 
 // 初期化をする
@@ -31,12 +36,16 @@ Game *Game_Initialize()
 	self = (Game *)malloc(sizeof(Game));
 	self->camera = Camera_Initialize();
 	self->console = Console_Initialize();
-	self->script = Script_Initialize(self->camera, self->console);
+	self->player = Player_Initialize();
+	self->script = Script_Initialize(self->camera, self->console, self->player);
+	self->opening = Opening_Initialize();
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
 	self->consele_mode = 0;
 	self->camera_mode = 0;
+	//game進行関係
+	self->game_state = 0;
 	return self;
 }
 
@@ -58,10 +67,7 @@ void move_area(Game *self)
 	Camera_set_area(self->camera, self->area);
 }
 
-
-
-// 動きを計算する
-void Game_Update(Game *self)
+void game_play(Game *self)
 {
 	if(self->consele_mode % 2 == 0)
 	{
@@ -130,14 +136,36 @@ void Game_Update(Game *self)
 	self->count++;
 }
 
+// 動きを計算する
+void Game_Update(Game *self)
+{
+	if(self->game_state  == 0)
+	{
+		Opening_Update(self->opening);
+		self->game_state = Opening_get_game_state(self->opening);
+		if(self->game_state  == 1){ Opening_Finalize( self->opening ); }
+	}
+	else if(self->game_state  == 1)
+	{
+		game_play(self);
+	}
+}
+
 // 描画する
 void Game_Draw(Game *self)
 {
-	 Script_Draw( self->script );
+	if(self->game_state  == 0)
+	{
+		Opening_Draw(self->opening);
+	}
+	else if(self->game_state  == 1)	
+	{
+		Script_Draw( self->script );
+	}
 }
 
 // 終了処理をする
 void Game_Finalize(Game *self )
 {
-	
+	free(self);
 }

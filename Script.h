@@ -3,11 +3,12 @@
 #define DEF_Script_H
 #include "Camera.h"
 #include "Console.h"
+#include "Player.h"
 
 struct Script;
 
 // 初期化をする
-Script *Script_Initialize(Camera *self, Console *console);
+Script *Script_Initialize(Camera *self, Console *console, Player *player);
 
 //スクリプトに現在位置を設定する
 void Script_set_area(Script *self, int area);

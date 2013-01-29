@@ -151,6 +151,8 @@ void Console_Draw( Console *self)
 
 	DrawBox( 0, 420 +  plus, 640 , 480, GetColor( 0 , 0 , 200 ), TRUE) ;
 	
+	SetFontSize( 16 ) ;
+
 	if(self->mode % 2 == 1)
 	{
 		for (int i = 0; i < self->log.size() ; i++)
@@ -158,7 +160,8 @@ void Console_Draw( Console *self)
 			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size()-1 - i].c_str()); //ƒƒO‚ð•`‰æ‚·‚é
 			if(i == 3){break;}
 		}
-		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); // Œ»Ý‚Ì•¶Žš‚ð•`‰æ‚·‚é
+		// Œ»Ý‚Ì•¶Žš‚ð•`‰æ‚·‚é
+		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); 
 
 
 	}
