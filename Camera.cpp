@@ -148,6 +148,9 @@ void Camera_Update( Camera *self )
 		if(self->move_swit == 0 && self->area != self->old_area){self->move_swit = 1;}
 		move_cam(self);
 	}
+
+	if(Pad_Get( KEY_INPUT_RETURN ) == -1){printf("\n self->pt.y = %lf\n",self->pt.y);}
+
 }
 
 // •`‰æ‚·‚é

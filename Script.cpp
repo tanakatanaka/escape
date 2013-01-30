@@ -45,9 +45,9 @@ struct Script
 	//プレイヤー情報
 	int area;
 	int hougaku;
-	//命令条件をもつ変数
-	int draw_order[100];
-	int word_order[100];
+	//命令条件をもつ変数 
+	int draw_order [100];
+	int word_order [100];
 };
 
 int loadScript(const char* filename, Script *script);
@@ -66,11 +66,6 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->twod = Twod_Initialize( );
 	self->console = console;
 	
-	for(int i = 0; i < 100; i++ )
-	{
-		self->draw_order[i] = 0;
-		self->word_order[i] = 0;
-	}
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
 	return self;
