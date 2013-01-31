@@ -1,0 +1,10 @@
+	@@message こんにちは
+	@@message ノベルゲーム用スクリプトエンジンのテストです
+	@@drawtest  5 5 0 zeppeli
+	@@drawerase zeppeli
+	@@mess_up  100 100 こんちはaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa test
+	@@mess_up 0 0 dododo post
+	@@mess_erase test
+@@label
+
+	
