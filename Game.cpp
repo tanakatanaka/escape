@@ -111,6 +111,7 @@ void game_play(Game *self)
 		{
 			self->camera_mode++;
 			self->hougaku = Camera_set_camera_mode(self->camera, self->camera_mode);
+			printf("\n hougaku = %d \n", self->hougaku);
 		}
 	}
 
@@ -122,8 +123,7 @@ void game_play(Game *self)
 
 		if(self->camera_mode % 2 == 1)
 		{
-			self->siten_hougaku = (Camera_set_muki(self->camera) + self->hougaku) % 4;
-			if(self->siten_hougaku  < 0){self->siten_hougaku  = 4 + self->siten_hougaku ;}
+			self->siten_hougaku = Camera_set_muki(self->camera);
 			printf("\nhougaku = %d\n",self->siten_hougaku);
 		}
 	}

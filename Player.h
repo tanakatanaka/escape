@@ -7,6 +7,11 @@ struct Player;
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize();
 
+//Œ»İ’n‚ğ“¾‚é
+void Player_set_area(Player *self, int area);
+//•ûŠp‚ğ“¾‚é
+void Player_set_hougaku(Player *self, int hougaku);
+
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );
 

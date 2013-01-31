@@ -46,8 +46,8 @@ struct Script
 	int area;
 	int hougaku;
 	//命令条件をもつ変数 
-	int draw_order [100];
-	int word_order [100];
+	std::vector<int> draw_order;
+	std::vector<int> word_order;
 };
 
 int loadScript(const char* filename, Script *script);
@@ -65,7 +65,12 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
 	self->console = console;
-	
+
+	for(int i = 0; i < 100; i++)
+	{
+		self->draw_order.push_back( 0 );
+		self->word_order.push_back( 0 );
+	}	
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
 	return self;
