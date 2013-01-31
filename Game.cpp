@@ -5,7 +5,7 @@
 #include "Pad.h"
 #include "Opening.h"
 #include "Player.h"
-#include "Camera.h"
+
 
 struct Game
 {
@@ -14,12 +14,7 @@ struct Game
 	Console *console;
 	Player *player;
 	Opening *opening;
-	int hougaku;
-	int siten_hougaku;
-	int area;
-	int count;
-	int consele_mode;
-	int camera_mode;
+	
 	//game進行関係
 	int game_state;
 	
@@ -33,107 +28,15 @@ Game *Game_Initialize()
 	freopen("CONIN$", "r", stdin);
 
 	Game *self;
-	self = (Game *)malloc(sizeof(Game));
+	self = new Game();
 	self->camera = Camera_Initialize();
 	self->console = Console_Initialize();
-	self->player = Player_Initialize();
+	self->player = Player_Initialize(self->camera, self->console);
 	self->script = Script_Initialize(self->camera, self->console, self->player);
 	self->opening = Opening_Initialize();
-	self->hougaku = 0;
-	self->area = 0;
-	self->count = 30;
-	self->consele_mode = 0;
-	self->camera_mode = 0;
 	//game進行関係
 	self->game_state = 0;
 	return self;
-}
-
-void move_area(Game *self)
-{
-	if(self->hougaku == 0)
-	{
-		if(self->area > -1 && self->area < 3 ){self->area++;}
-		else if(self->area > 5 && self->area < 8 ){self->area--;}
-	}
-	else if(self->hougaku == 1){if(self->area > 2 && self->area < 5 ){self->area++;}}
-	else if(self->hougaku == 2)
-	{
-		if(self->area > 4 && self->area < 7 ){self->area++;}
-		else if(self->area > 1 && self->area < 4 ){self->area--;}
-	}
-	else if(self->hougaku == 3){if(self->area > 3 && self->area < 6 ){self->area--;}}
-
-	Camera_set_area(self->camera, self->area);
-}
-
-void game_play(Game *self)
-{
-	if(self->consele_mode % 2 == 0)
-	{
-		//歩行もしくはカメラ操作状態
-		if(self->camera_mode % 2 == 0)
-		{
-			//歩行状態
-			if(Pad_Get( KEY_INPUT_RIGHT ) == -1)
-			{
-				Camera_set_muki(self->camera, 1);
-				if(self->hougaku == 3){self->hougaku = 0;}
-				else{self->hougaku++;}
-			}
-			else if(Pad_Get( KEY_INPUT_LEFT ) == -1)
-			{
-				Camera_set_muki(self->camera, 2);
-				if(self->hougaku == 0){self->hougaku = 3;}
-				else{self->hougaku--;}
-			}
-	
-			if(self->count > 30 && Pad_Get( KEY_INPUT_UP ) == -1)
-			{
-				self->count = 0;
-				move_area(self);
-			}
-		}
-		else if(self->camera_mode % 2 == 1)
-		{
-			//カメラ操作状態
-			float move_point = 0.04;
-
-			if(CheckHitKey(KEY_INPUT_UP)){Camera_set_pt(self->camera, 0, -move_point);}
-			else if(CheckHitKey(KEY_INPUT_DOWN)){Camera_set_pt(self->camera, 0, +move_point);}
-
-			if(CheckHitKey(KEY_INPUT_RIGHT)){Camera_set_pt(self->camera, 1, move_point);}
-			else if(CheckHitKey(KEY_INPUT_LEFT)){Camera_set_pt(self->camera, 1, -move_point);}
-
-		}
-
-		if(Pad_Get( KEY_INPUT_Z ) == -1)
-		{
-			self->camera_mode++;
-			self->hougaku = Camera_set_camera_mode(self->camera, self->camera_mode);
-			printf("\n hougaku = %d \n", self->hougaku);
-		}
-	}
-
-	//どんなモードでも
-	if(Pad_Get(KEY_INPUT_ESCAPE) == 1)
-	{
-		self->consele_mode++; 
-		Console_set_mode(self->console,self->consele_mode);
-
-		if(self->camera_mode % 2 == 1)
-		{
-			self->siten_hougaku = Camera_set_muki(self->camera);
-			printf("\nhougaku = %d\n",self->siten_hougaku);
-		}
-	}
-
-	if(Pad_Get(KEY_INPUT_F) == 1){printf("\nrote = %d\n",self->hougaku);}
-
-	Script_set_area(self->script, self->area);
-	Script_set_hougaku(self->script, self->hougaku);
-	Script_Update( self->script );
-	self->count++;
 }
 
 // 動きを計算する
@@ -147,7 +50,8 @@ void Game_Update(Game *self)
 	}
 	else if(self->game_state  == 1)
 	{
-		game_play(self);
+		Player_Update( self->player );
+		Script_Update( self->script );
 	}
 }
 
@@ -160,6 +64,7 @@ void Game_Draw(Game *self)
 	}
 	else if(self->game_state  == 1)	
 	{
+		Player_Draw( self->player);
 		Script_Draw( self->script );
 	}
 }

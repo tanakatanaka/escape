@@ -4,8 +4,11 @@
 
 struct Player;
 
+#include "Camera.h"
+#include "Console.h"
+
 // ‰Šú‰»‚ğ‚·‚é
-Player *Player_Initialize();
+Player *Player_Initialize(Camera *camera, Console *console);
 
 //Œ»İ’n‚ğ“¾‚é
 void Player_set_area(Player *self, int area);

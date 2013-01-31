@@ -19,7 +19,7 @@ struct Camera
 	int old_area;
 	int muki;
 	//‹“_ŠÖŒW‚Ì•Ï”
-	int camera_mode;
+	int look_at;
 	float look_camera_pt;
 
 };
@@ -45,7 +45,7 @@ Camera *Camera_Initialize()
 	self->muki = 0;
 	
 	//‹“_ŠÖŒW‚Ì‰Šú’l
-	self->camera_mode = 0;
+	self->look_at = 0;
 
 	return self;
 }
@@ -76,6 +76,11 @@ int Camera_set_muki(Camera *self)
 	return 0;
 }
 
+int Camera_is_look_at(Camera *self)
+{
+	return self->look_at % 2;
+}
+
 int Camera_set_camera_mode(Camera *self, int camera_mode)
 {
 	int role_count = 0;
@@ -92,7 +97,7 @@ int Camera_set_camera_mode(Camera *self, int camera_mode)
 		self->pt.x = 0;
 	}
 
-	self->camera_mode = camera_mode;
+	self->look_at = camera_mode;
 
 	return role_count;
 }
@@ -137,7 +142,7 @@ void move_cam(Camera *self)
 // “®‚«‚ğŒvZ‚·‚é
 void Camera_Update( Camera *self )
 {
-	if(self->camera_mode % 2 == 0)
+	if(self->look_at % 2 == 0)
 	{
 		//•ûŠp‚É‚Â‚¢‚Ä
 		if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}

@@ -10,7 +10,6 @@
 #include <vector>
 #include "Console.h"
 #include "Script.h"
-#include "Room.h"
 #include "Camera.h"
 #include "Room.h"
 #include "Player.h"
@@ -58,7 +57,7 @@ void splitString(const char* src, char* dest[], const char* delim, int splitNum)
 Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 {
 	Script *self;
-	self = (Script *)calloc(sizeof(Script), 1);
+	self = new Script();
 
 	self->camera = camera;
 	self->room = Room_Initialize();
@@ -66,11 +65,9 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->twod = Twod_Initialize( );
 	self->console = console;
 
-	for(int i = 0; i < 100; i++)
-	{
-		self->draw_order.push_back( 0 );
-		self->word_order.push_back( 0 );
-	}	
+	self->draw_order.resize(100, 0);
+	self->word_order.resize(100, 0);
+
 	printf("\nスクリプト開始\n\n");
 	loadScript( "tex/script.txt", self );
 	return self;

@@ -8,7 +8,7 @@
 struct Script;
 
 // 初期化をする
-Script *Script_Initialize(Camera *self, Console *console, Player *player);
+Script *Script_Initialize(Camera *camera, Console *console, Player *player);
 
 //スクリプトに現在位置を設定する
 void Script_set_area(Script *self, int area);

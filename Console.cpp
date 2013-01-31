@@ -23,7 +23,7 @@ static const int KEYNUM[] =
 
 struct Console
 {
-	int mode;
+	int is_input;
 	int x;
 	int y;
 	int ly;
@@ -37,16 +37,16 @@ Console *Console_Initialize()
 {
 	Console *self;
 	self =  new Console();
-	self->mode = 0;
+	self->is_input = 0;
 	self->x = 0;
 	self->y = 420;
 	self->back_count = 0;
 	return self;
 }
 
-void Console_set_mode(Console *self, int mode)
+int Console_is_input(Console *self)
 {
-	self->mode = mode;
+	return self->is_input % 2;
 }
 
 const char *console_d_bag(Console *self)
@@ -91,7 +91,7 @@ static int get_chara()
 void Console_Update( Console *self )
 {
 	//“ü—Íƒ‚[ƒhŽž
-	if(self->mode % 2 == 1)
+	if(self->is_input % 2 == 1)
 	{
 		int bag = get_chara();
 		if(bag == -1)
@@ -146,14 +146,14 @@ void Console_Draw( Console *self)
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
 	
 	int plus;
-	if(self->mode % 2 == 1){plus = -40;}
+	if(self->is_input % 2 == 1){plus = -40;}
 	else{plus = 0;}
 
 	DrawBox( 0, 420 +  plus, 640 , 480, GetColor( 0 , 0 , 200 ), TRUE) ;
 	
 	SetFontSize( 16 ) ;
 
-	if(self->mode % 2 == 1)
+	if(self->is_input % 2 == 1)
 	{
 		for (int i = 0; i < self->log.size() ; i++)
 		{
