@@ -81,11 +81,11 @@ int Camera_is_look_at(Camera *self)
 	return self->look_at % 2;
 }
 
-int Camera_set_camera_mode(Camera *self, int camera_mode)
+int Camera_set_camera_mode(Camera *self)
 {
 	int role_count = 0;
 
-	if(camera_mode % 2 == 1)
+	if(Camera_is_look_at(self) == 1)
 	{
 		self->look_camera_pt = self->pt.y;
 		self->pt.x = 0;
@@ -96,8 +96,6 @@ int Camera_set_camera_mode(Camera *self, int camera_mode)
 		self->pt.y = (role_count) * ROTE;
 		self->pt.x = 0;
 	}
-
-	self->look_at = camera_mode;
 
 	return role_count;
 }

@@ -19,7 +19,7 @@ int Camera_is_look_at(Camera *self);
 
 /*gameからカメラモード(歩行・視点)をもらう関数
 もし視点モードになる場合方角をもらう*/
-int Camera_set_camera_mode(Camera *self, int camera_mode);
+int Camera_set_camera_mode(Camera *self);
 //視点操作の値を回収..type0:x,type1:y
 void Camera_set_pt(Camera *self, int type, float point);
 // 動きを計算する

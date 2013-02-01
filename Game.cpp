@@ -52,6 +52,7 @@ void Game_Update(Game *self)
 	{
 		Player_Update( self->player );
 		Script_Update( self->script );
+		printf("\n jojo lion\n");
 	}
 }
 

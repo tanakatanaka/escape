@@ -11,8 +11,6 @@ struct Player
 	Camera *camera;
 	Console *console;
 	int count;
-	int consele_mode;
-	int camera_mode;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -27,8 +25,6 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
-	self->consele_mode = 0;
-	self->camera_mode = 0;
 
 	return self;
 }
@@ -95,26 +91,20 @@ void Player_Update( Player *self )
 
 		if(Pad_Get( KEY_INPUT_Z ) == -1)
 		{
-			self->camera_mode++;
-			self->hougaku = Camera_set_camera_mode(self->camera, self->camera_mode);
+			self->hougaku = Camera_set_camera_mode(self->camera);
 			printf("\n hougaku = %d \n", self->hougaku);
 		}
 	}
 
 	//‚Ç‚ñ‚Èƒ‚[ƒh‚Å‚à
 	if(Pad_Get(KEY_INPUT_ESCAPE) == 1)
-	{
-		self->consele_mode++; 
+	{ 
 
-		if(self->camera_mode % 2 == 1)
+		if(Camera_is_look_at(self->camera) == 1)
 		{
 
 		}
 	}
-
-	if(Pad_Get(KEY_INPUT_F) == 1){printf("\nrote = %d\n",self->hougaku);}
-
-	
 	self->count++;
 }
 
