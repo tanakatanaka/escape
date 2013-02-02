@@ -64,7 +64,8 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
 	self->console = console;
-
+	
+	self->currentLine = 0;
 	self->draw_order.resize(100, 0);
 	self->word_order.resize(100, 0);
 
@@ -182,9 +183,6 @@ int decodeScript(const char* scriptMessage, Script *self)
 {
 	//分割されたスクリプト文
 	char* message[100];
-	//条件分岐用
-	char* selectMessage[10];
-	char* select[10][2];
 
 	//文字列分割時の区切り文字
 	const char* delim = " ";

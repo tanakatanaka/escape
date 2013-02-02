@@ -4,24 +4,18 @@
 
 struct Camera;
 
+#include "console.h"
+
 // 初期化をする
-Camera *Camera_Initialize( );
+Camera *Camera_Initialize( Console *console );
 
 //gameから現在の位置をもらう関数
 void Camera_set_area(Camera *self, int area);
-//gameから左右回転をもらう関数
-void Camera_set_muki(Camera *self, int muki);
-//cameraの方角をもらう関数;
-int Camera_set_muki(Camera *self);
-
+//左右回転を返す関数(player_cameraによって返り値が変化)
+int Camera_set_hougaku(Camera *self, int play_cam);
 //カメラの視点モードの有無を返す
 int Camera_is_look_at(Camera *self);
 
-/*gameからカメラモード(歩行・視点)をもらう関数
-もし視点モードになる場合方角をもらう*/
-int Camera_set_camera_mode(Camera *self);
-//視点操作の値を回収..type0:x,type1:y
-void Camera_set_pt(Camera *self, int type, float point);
 // 動きを計算する
 void Camera_Update( Camera *Camera );
 

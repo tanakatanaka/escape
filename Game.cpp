@@ -29,8 +29,8 @@ Game *Game_Initialize()
 
 	Game *self;
 	self = new Game();
-	self->camera = Camera_Initialize();
 	self->console = Console_Initialize();
+	self->camera = Camera_Initialize(self->console);
 	self->player = Player_Initialize(self->camera, self->console);
 	self->script = Script_Initialize(self->camera, self->console, self->player);
 	self->opening = Opening_Initialize();
@@ -52,7 +52,6 @@ void Game_Update(Game *self)
 	{
 		Player_Update( self->player );
 		Script_Update( self->script );
-		printf("\n jojo lion\n");
 	}
 }
 

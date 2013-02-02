@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "pad.h"
+#include "console.h"
 #include "vector_operator.h"
 
 #define ROTE 1.570796
@@ -10,18 +11,19 @@
 
 struct Camera 
 {
+	Console *console;
 	VECTOR pt;
 	int count;
-	int swit;
+	int role_swit;
 	int move_swit;
 	int move_count;
 	int area;
 	int old_area;
 	int muki;
+
 	//視点関係の変数
 	int look_at;
-	float look_camera_pt;
-
+	int zero_one;
 };
 
 static const VECTOR cam_pos[8] =
@@ -31,21 +33,24 @@ static const VECTOR cam_pos[8] =
 };
 
 // 初期化をする
-Camera *Camera_Initialize()
+Camera *Camera_Initialize(Console *console)
 {
 	Camera *self;
-	self = (Camera *)malloc(sizeof(Camera));
+	self = new Camera();
+	self->console = console;
+
 	self->area = 0;
 	self->old_area = 0;
 	self->pt = VGet(0, -ROTE, 0);
 	self->move_swit = 0;
 	self->move_count = 0;
-	self->swit = 0;
+	self->role_swit= 0;
 	self->count = 0;
 	self->muki = 0;
 	
 	//視点関係の初期値
 	self->look_at = 0;
+	self->zero_one = 0;
 
 	return self;
 }
@@ -55,73 +60,63 @@ void Camera_set_area(Camera *self, int area)
 	self->area = area;
 }
 
-void Camera_set_muki(Camera *self, int muki)
+int Camera_set_hougaku(Camera *self, int play_cam)
 {
-	self->muki = muki;
+	//play_cam 0:playerから　1:cameraから
+
+	float y = fmodf(self->pt.y, ROTE * 4);
+	int back = 3;
+
+	if (y < 0)
+	{
+		y += ROTE * 4;
+	}
+  
+	if (y < ROTE / 2) { back = 0; }
+	else if (y < ROTE * 3 / 2) { back = 1; }
+	else if (y < ROTE * 5 / 2) { back = 2; }
+	else if (y < ROTE * 7 / 2) { back = 3; }
+
+	if(play_cam == 0)
+	{
+		back++;
+		if(back == 4){back = 0;}
+	}
+
+	return back;
 }
 
-int Camera_set_muki(Camera *self)
-{
-  float y = fmodf(self->pt.y, ROTE * 4);
-  
-  if (y < 0)
-  {
-      y += ROTE * 4;
-  }
-  
-	if (y < ROTE / 2) { return 0; }
-	else if (y < ROTE * 3 / 2) { return 1; }
-	else if (y < ROTE * 5 / 2) { return 2; }
-	else if (y < ROTE * 7 / 2) { return 3; }
-	return 0;
-}
 
 int Camera_is_look_at(Camera *self)
 {
 	return self->look_at % 2;
 }
 
-int Camera_set_camera_mode(Camera *self)
+
+void look_out_over(Camera *self)
 {
-	int role_count = 0;
+	float move_point = 0.04;
 
-	if(Camera_is_look_at(self) == 1)
-	{
-		self->look_camera_pt = self->pt.y;
-		self->pt.x = 0;
-	}
-	else
-	{
-		role_count = Camera_set_muki(self);
-		self->pt.y = (role_count) * ROTE;
-		self->pt.x = 0;
-	}
+	if(CheckHitKey(KEY_INPUT_UP)){self->pt.x -= move_point;}
+	else if(CheckHitKey(KEY_INPUT_DOWN)){self->pt.x += move_point;}
 
-	return role_count;
-}
-
-void Camera_set_pt(Camera *self, int type, float point)
-{
-	if(type == 0){self->pt.x += point;}
-	else {self->pt.y += point;}
+	if(CheckHitKey(KEY_INPUT_RIGHT)){self->pt.y +=move_point;}
+	else if(CheckHitKey(KEY_INPUT_LEFT)){self->pt.y -=move_point;}
 }
 
 void role_cam(Camera *self)
 {
-	if(self->swit != 0)
+	int cut = 15;
+
+	if(self->count < cut)
 	{
-		int sign;
-		int cut = 15;
-		if(self->swit == 1){sign = 1;}
-		else if(self->swit == 2){sign = -1;}
-
-		if(self->count < cut)
-		{
-			self->pt.y += (float) (sign * ROTE / cut);
-			self->count++;
-		}
-		else{self->count = 0; self->swit = 0;}
-
+		self->pt.y += (float) (self->role_swit * ROTE / cut);
+		self->count++;
+	}
+	else
+	{
+		self->count = 0; 
+		self->role_swit = 0;
 	}
 }
 
@@ -142,17 +137,38 @@ void Camera_Update( Camera *self )
 {
 	if(self->look_at % 2 == 0)
 	{
-		//方角について
-		if(self->swit == 0 && self->muki == 1){self->swit = 1;	self->muki = 0;}
-		else if(self->swit == 0 && self->muki == 2){self->swit = 2; self->muki = 0;}
-		role_cam(self);
+		if(self->role_swit == 0)
+		{
+			int turn = 0;
+
+			if(Pad_Get( KEY_INPUT_RIGHT ) == -1){ self->role_swit = 1; }
+			else if(Pad_Get( KEY_INPUT_LEFT ) == -1){ self->role_swit = -1; }
+		}
+		else if(self->role_swit != 0){ role_cam(self); }
+
 
 		//移動スイッチについて
 		if(self->move_swit == 0 && self->area != self->old_area){self->move_swit = 1;}
 		move_cam(self);
 	}
+	else if(self->look_at % 2 == 1)
+	{
+		//カメラ操作状態
+		look_out_over(self);
+	}
 
-	if(Pad_Get( KEY_INPUT_RETURN ) == -1){printf("\n self->pt.y = %lf\n",self->pt.y);}
+	if(Console_is_input(self->console) == 0 && Pad_Get( KEY_INPUT_Z ) == -1)
+	{
+		self->look_at++;
+		int new_zero_one = Camera_is_look_at(self);
+
+		if(self->zero_one == 1 && new_zero_one == 0)
+		{ 
+			self->pt.y = Camera_set_hougaku(self, 1) * ROTE;
+			self->pt.x = 0;
+		}
+		self->zero_one = new_zero_one;
+	}
 
 }
 
@@ -174,7 +190,6 @@ void Camera_Draw( Camera *self)
     }
     
     SetCameraPositionAndAngle(cam, self->pt.x, self->pt.y, 0.0f);
-
 }
 
 // 終了処理をする
