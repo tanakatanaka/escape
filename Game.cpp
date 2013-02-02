@@ -39,6 +39,19 @@ Game *Game_Initialize()
 	return self;
 }
 
+void game_play_tick(Game *self)
+{
+	Player_Update( self->player );
+	Script_Update( self->script );
+}
+
+void game_play_draw(Game *self)
+{
+	Player_Draw( self->player);
+	Script_Draw( self->script );
+}
+
+
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
@@ -50,8 +63,7 @@ void Game_Update(Game *self)
 	}
 	else if(self->game_state  == 1)
 	{
-		Player_Update( self->player );
-		Script_Update( self->script );
+		game_play_tick(self);
 	}
 }
 
@@ -64,8 +76,7 @@ void Game_Draw(Game *self)
 	}
 	else if(self->game_state  == 1)	
 	{
-		Player_Draw( self->player);
-		Script_Draw( self->script );
+		game_play_draw(self);
 	}
 }
 
