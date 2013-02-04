@@ -5,7 +5,7 @@
 //メッセージのフォントの大きさ
 #define MESSAGE_FONT_SIZE 20
 //仮想バッファの最大文字数
-#define MESSAGE_MAX_LENGTH 30
+#define MESSAGE_MAX_LENGTH 10
 //仮想バッファの最大行数
 #define MESSAGE_MAX_LINE 5
 //メッセージボックスのX座標

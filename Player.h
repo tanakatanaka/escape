@@ -10,10 +10,9 @@ struct Player;
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console);
 
-//Œ»İ’n‚ğ“¾‚é
-void Player_set_area(Player *self, int area);
-//•ûŠp‚ğ“¾‚é
-void Player_set_hougaku(Player *self, int hougaku);
+int Player_get_area(Player *self);
+int Player_get_hougaku(Player *self);
+
 
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );

@@ -43,12 +43,16 @@ void game_play_tick(Game *self)
 {
 	Player_Update( self->player );
 	Script_Update( self->script );
+	Camera_Update(self->camera);
+	Console_Update( self->console );
 }
 
 void game_play_draw(Game *self)
 {
 	Player_Draw( self->player);
 	Script_Draw( self->script );
+	Camera_Draw(self->camera);
+	Console_Draw( self->console );
 }
 
 

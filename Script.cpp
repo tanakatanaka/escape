@@ -322,9 +322,7 @@ void Script_set_hougaku(Script *self, int hougaku)
 // “®‚«‚ğŒvZ‚·‚é
 void Script_Update( Script *self )
 {
-	Camera_Update(self->camera);
 	Room_Update( self->room );
-	Console_Update( self->console );
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 
@@ -348,9 +346,8 @@ void Script_Update( Script *self )
 // •`‰æ‚·‚é
 void Script_Draw( Script *self)
 {
-	Camera_Draw(self->camera);
+	
 	Room_Draw(self->room);
-	Console_Draw( self->console );
 	Twod_Draw( self->twod );
 	Mess_Draw(self->mess);
 	

@@ -29,6 +29,17 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	return self;
 }
 
+int Player_get_area(Player *self)
+{
+	return self->area;
+}
+
+int Player_get_hougaku(Player *self)
+{
+	return self->hougaku;
+}
+
+
 void move_area(Player *self)
 {
 	if(self->hougaku == 0)
