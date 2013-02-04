@@ -10,12 +10,6 @@ struct Script;
 // 初期化をする
 Script *Script_Initialize(Camera *camera, Console *console, Player *player);
 
-//スクリプトに現在位置を設定する
-void Script_set_area(Script *self, int area);
-//スクリプトに現在の方角を設定する
-void Script_set_hougaku(Script *self, int hougaku);
-
-
 // 動きを計算する
 void Script_Update( Script *Script );
 
