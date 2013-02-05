@@ -62,7 +62,7 @@ struct Script
 	
 };
 
-void pack_words(Script *self, std::deque<std::string> one_words)
+void pack_words(Script *self, Words one_words)
 {
 	for(int i = 0; i < one_words.size(); i++)
 	{
@@ -77,7 +77,7 @@ int load_script(Script *self, const char *filename)
 	int now_line = 0; //現在の行位置
 	int block = 0;	//現在のブロック位置
 	char c; //1文字
-	std::deque<std::string> one_words;
+	std::vector<std::string> one_words;
 	FILE* fp; //スクリプトファイル
 
 	fp = fopen(filename, "r"); //スクリプトファイルを開く
