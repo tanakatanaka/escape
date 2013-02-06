@@ -26,8 +26,8 @@ struct Console
 	int is_input;
 	int x;
 	int y;
-	int ly;
 	int back_count;
+	int signal;
 	std::string d_bag;
 	std::deque<std::string> log;
 }; 
@@ -40,6 +40,7 @@ Console *Console_Initialize()
 	self->is_input = 0;
 	self->x = 0;
 	self->y = 420;
+	self->signal = 0;
 	self->back_count = 0;
 	return self;
 }
@@ -134,6 +135,7 @@ void Console_Update( Console *self )
 			//文字・数値入力があった場合追加
 			self->d_bag += (char) bag;
 		}
+		self->signal++;
 	}
 	//入力モード以外
 	else{self->back_count = 0;}
@@ -163,13 +165,16 @@ void Console_Draw( Console *self)
 			DrawFormatString( self->x, 435 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size()-1 - i].c_str()); //ログを描画する
 			if(i == 3){break;}
 		}
-		// 現在の文字を描画する
+		if(self->signal % 100 < 90)
+		{	
+			//カーソル位置
+			DrawFormatString( self->x + self->d_bag.size() * 9, 465, GetColor( 0, 255, 0 ), "%s", "■"); 
+		}
+		// 現在の文字を描画する 
 		DrawFormatString( self->x, 465, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); 
 
 
 	}
-
-	
 }
 
 // 終了処理をする

@@ -64,8 +64,14 @@ struct Script
 
 void pack_words(Script *self, Words one_words)
 {
-	for(int i = 0; i < one_words.size(); i++)
+	printf("\n 1 \n");
+
+	for(int i = 0; i < one_words.size() - 1; i++)
 	{
+		if(one_words[0] == "jojo")
+		{
+			printf("\n lalala \n");
+		}
 
 	}
 
@@ -142,7 +148,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->console = console;
 
 	printf("\nスクリプト読み込み　開始\n\n");
-	load_script(self, "tex/script.txt");
+	//load_script(self, "tex/script.txt");
 
 	return self;
 }
