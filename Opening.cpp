@@ -68,5 +68,6 @@ void Opening_Draw( Opening *self)
 // I—¹ˆ—‚ð‚·‚é
 void Opening_Finalize( Opening *self )
 {
-    
+	MV1DeleteModel(self->room);
+    free(self);
 }

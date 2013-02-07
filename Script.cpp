@@ -37,6 +37,7 @@ struct Condition_order
 	int hougaku;
 	std::string order;
 	std::string object;
+	std::string special;
 };
 
 struct Effect_order
@@ -64,15 +65,11 @@ struct Script
 	
 };
 
-void pack_words(Script *self, Words words)
+void pack_words(Script *self, Words &line)
 {
-	for(int i = 0; i < words.size() - 1; i++)
+	for(int i = 0; i < line.size(); i++)
 	{
-		if(words[0] == "jojo")
-		{
-			printf("\n lalala \n");
-		}
-
+		printf("\n %s \n", line[i].c_str());
 	}
 
 }
@@ -95,8 +92,10 @@ int load_script(Script *self, const char *filename)
 
 	while (std::getline(file, line))
 	{
-		words.push_back(split(line)); // •ª‰ð‚µ‚Ä‚Â‚Á‚±‚Þ
+		pack_words(self, split(line)); // •ª‰ð‚µ‚Ä‚Â‚Á‚±‚Þ
 	}
+
+	
 
 	return 0;
 }
