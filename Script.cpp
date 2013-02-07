@@ -83,10 +83,10 @@ int load_script(Script *self, const char *filename)
 	int now_line = 0; //現在の行位置
 	std::string line; //1行読み込み用
 	std::vector<std::vector<std::string>>  words;
-	std::ifstream file("filename"); // ファイルを読み込み
+	std::ifstream file(filename); // ファイルを読み込み
 
 
-	if(file == NULL )
+	if (file.fail())
 	{
 		//ファイル読み込みに失敗
 		printf("スクリプト %s を読み込めませんでした\n", filename);
