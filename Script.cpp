@@ -79,8 +79,8 @@ int load_script(Script *self, const char *filename)
 {
 	int pos = 0; //現在の文字位置
 	int now_line = 0; //現在の行位置
-	int block = 0;	//現在のブロック位置
 	char c; //1文字
+	std::string word;
 	std::vector<std::string> one_words;
 	FILE* fp; //スクリプトファイル
 
@@ -102,7 +102,8 @@ int load_script(Script *self, const char *filename)
 		//文章先頭の空白部分を読み飛ばす
 		while( (c == ' ' || c == '\t') && pos == 0 && !feof( fp ) ) 
 		{
-			block++;
+			one_words.push_back(word);
+			word.clear();
 			c = fgetc( fp );
 		}
 
@@ -110,7 +111,8 @@ int load_script(Script *self, const char *filename)
 		if( c != '\n' ) 
 		{
 			printf("\n eggman \n");
-			one_words[block] += c; //1単語に1文字追加
+			word += c; //1単語に1文字追加
+
 			pos++;//文字書き込み位置をずらす
 		}
 		else 
@@ -123,7 +125,6 @@ int load_script(Script *self, const char *filename)
 			pack_words(self, one_words);
 			now_line++; //次の行に移動
 			pos = 0; //現在の文字位置を0に
-			block = 0; //現在のブロックを0に
 		}
 	
 	
