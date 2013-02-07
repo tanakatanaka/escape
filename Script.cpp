@@ -64,8 +64,6 @@ struct Script
 
 void pack_words(Script *self, Words one_words)
 {
-	printf("\n 1 \n");
-
 	for(int i = 0; i < one_words.size() - 1; i++)
 	{
 		if(one_words[0] == "jojo")
@@ -111,6 +109,7 @@ int load_script(Script *self, const char *filename)
 		//改行文字がでるまで
 		if( c != '\n' ) 
 		{
+			printf("\n eggman \n");
 			one_words[block] += c; //1単語に1文字追加
 			pos++;//文字書き込み位置をずらす
 		}
@@ -148,7 +147,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->console = console;
 
 	printf("\nスクリプト読み込み　開始\n\n");
-	//load_script(self, "tex/script.txt");
+	load_script(self, "tex/script.txt");
 
 	return self;
 }
