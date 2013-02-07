@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iterator>
 #include <vector>
+#include <fstream>
 #include "Console.h"
 #include "Script.h"
 #include "Camera.h"
@@ -23,6 +24,8 @@ typedef std::istream_iterator<std::string> I;
 using std::istringstream;
 using std::copy;
 
+Words split(const std::string &str);
+
 
 struct Condition_order
 {
@@ -34,7 +37,6 @@ struct Condition_order
 	int hougaku;
 	std::string order;
 	std::string object;
-
 };
 
 struct Effect_order
@@ -62,11 +64,11 @@ struct Script
 	
 };
 
-void pack_words(Script *self, Words one_words)
+void pack_words(Script *self, Words words)
 {
-	for(int i = 0; i < one_words.size() - 1; i++)
+	for(int i = 0; i < words.size() - 1; i++)
 	{
-		if(one_words[0] == "jojo")
+		if(words[0] == "jojo")
 		{
 			printf("\n lalala \n");
 		}
@@ -79,57 +81,23 @@ int load_script(Script *self, const char *filename)
 {
 	int pos = 0; //現在の文字位置
 	int now_line = 0; //現在の行位置
-	char c; //1文字
-	std::string word;
-	std::vector<std::string> one_words;
-	FILE* fp; //スクリプトファイル
+	std::string line; //1行読み込み用
+	std::vector<std::vector<std::string>>  words;
+	std::ifstream file("filename"); // ファイルを読み込み
 
-	fp = fopen(filename, "r"); //スクリプトファイルを開く
 
-	if(fp == NULL )
+	if(file == NULL )
 	{
 		//ファイル読み込みに失敗
 		printf("スクリプト %s を読み込めませんでした\n", filename);
 		return -1;
 	}
 
-	while(1) 
+	while (std::getline(file, line))
 	{
-		c = fgetc( fp ); //一文字読み込み
-		
-		if( feof( fp ) ) { break;} //ファイルの終わりかどうか
-		
-		//文章先頭の空白部分を読み飛ばす
-		while( (c == ' ' || c == '\t') && pos == 0 && !feof( fp ) ) 
-		{
-			one_words.push_back(word);
-			word.clear();
-			c = fgetc( fp );
-		}
-
-		//改行文字がでるまで
-		if( c != '\n' ) 
-		{
-			printf("\n eggman \n");
-			word += c; //1単語に1文字追加
-
-			pos++;//文字書き込み位置をずらす
-		}
-		else 
-		{
-			//空行は読み飛ばす
-			if( pos == 0 ) { continue; }
-
-			//改行文字が出たら次の行へ
-			//その際に,その行の単語達を詰める関数へ,そして行位置・文字位置・ブロック位置をリセット
-			pack_words(self, one_words);
-			now_line++; //次の行に移動
-			pos = 0; //現在の文字位置を0に
-		}
-	
-	
-
+		words.push_back(split(line)); // 分解してつっこむ
 	}
+
 	return 0;
 }
 
@@ -154,10 +122,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 }
 
 
-
-
-
-Words split(const char *str)
+Words split(const std::string &str)
 {
     istringstream ss(str);
     Words words;
