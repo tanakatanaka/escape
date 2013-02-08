@@ -1,1 +1,8 @@
-jojo visara
+(con)・管理番号・場所・方角・命令内容・命令対象・特別命令
+(eff)・管理番号・ (draw:画像表示 or text:文字表示)・(画像タグ名 or 表示したい文)・x・y・(識別文字)
+
+con 1 0 0 check door 
+eff 1 draw zeppeli 0 0 zeppeli
+eff 1 text gagaga 10 10 test
+
+
