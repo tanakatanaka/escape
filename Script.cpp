@@ -168,7 +168,11 @@ Words split(const std::string &str)
 
 void word_act(Script *self, Words &words)
 {	
+	if(words.size() > 0)
+	{
+		
 
+	}
 }
 
 void decode_command(Script *self)
