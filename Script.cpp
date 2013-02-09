@@ -27,7 +27,7 @@ struct Condition
 {
 	//命令条件の構造体
 	//管理番号・場所・方角・命令内容・命令対象
-	int effect_id;
+	std::string effect_name;
 	int area;
 	int hougaku;
 	std::string order;
@@ -39,10 +39,10 @@ struct Effect
 {
 	//命令効果の構造体
 	//管理番号・y・効果番号(0:画像表示・1:文字表示)・画像管理番号・画像の名前・文字・画像文字の管理タグ
-	int id;
+	std::string name;
 	int x;
 	int y;
-	int effect_num;
+	std::string effect_type;
 	int draw_id;
 	std::string draw_name;
 	std::string text;
@@ -72,7 +72,7 @@ void pack_words(Script *self, Words &line)
 		{
 			Condition c;
 			
-			c.effect_id = std::stoi(line[1]);
+			c.effect_name = line[1].c_str();
 			c.area = std::stoi(line[2]);
 			c.hougaku = std::stoi(line[3]);
 			c.order = line[4].c_str();
@@ -89,17 +89,17 @@ void pack_words(Script *self, Words &line)
 		{
 			Effect e;
 			
-			e.id = std::stoi(line[1]);
+			e.name = line[1].c_str();
 
 			if(line[2] == "draw")
 			{
-				e.effect_num = 0;
+				e.effect_type = "draw";
 				e.draw_name = line[3].c_str();
 				e.draw_id = std::stoi(line[7]);
 			}
 			else if(line[2] == "text")
 			{
-				e.effect_num = 1;
+				e.effect_type = "text";
 				e.text = line[3].c_str();
 			}
 
@@ -183,15 +183,15 @@ void call_effect(Script *self, const Condition &c)
 {
 	for(int j = 0; j < (int)self->effect.size(); j++)
 	{
-		if(c.effect_id == self->effect[j].id)
+		if(c.effect_name == self->effect[j].name)
 		{
 			Effect &e = self->effect[j];
 
-			if(e.effect_num == 0)
+			if(e.effect_type == "draw")
 			{
 				twod_add_image(self->twod, e.x, e.y, e.draw_id, e.tag.c_str());
 			}
-			else if(e.effect_num == 1)
+			else if(e.effect_type == "text")
 			{
 				mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
 			}
