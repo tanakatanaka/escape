@@ -27,8 +27,7 @@ struct Condition
 {
 	//命令条件の構造体
 	//管理番号・場所・方角・命令内容・命令対象
-
-	int num;
+	int effect_id;
 	int area;
 	int hougaku;
 	std::string order;
@@ -39,11 +38,12 @@ struct Condition
 struct Effect
 {
 	//命令効果の構造体
-	//管理番号・x・y・効果番号(0:画像表示・1:文字表示)・画像の名前・文字・画像文字の管理タグ
-	int num;
+	//管理番号・y・効果番号(0:画像表示・1:文字表示)・画像管理番号・画像の名前・文字・画像文字の管理タグ
+	int id;
 	int x;
 	int y;
 	int effect_num;
+	int draw_id;
 	std::string draw_name;
 	std::string text;
 	std::string tag;
@@ -68,11 +68,11 @@ void pack_words(Script *self, Words &line)
 {
 	if(line.size() > 0)
 	{
-		if(line[0].c_str() == "con")
+		if(line[0] == "con")
 		{
 			Condition c;
 			
-			c.num = std::stoi(line[1]);
+			c.effect_id = std::stoi(line[1]);
 			c.area = std::stoi(line[2]);
 			c.hougaku = std::stoi(line[3]);
 			c.order = line[4].c_str();
@@ -85,18 +85,21 @@ void pack_words(Script *self, Words &line)
 
 			self->condition.push_back(c);
 		}
-		else if(line[0].c_str() == "eff")
+		else if(line[0] == "eff")
 		{
 			Effect e;
 			
-			e.num = std::stoi(line[1]);
+			e.id = std::stoi(line[1]);
 
-			if(line[2].c_str() == "draw")
+			if(line[2] == "draw")
 			{
+				e.effect_num = 0;
 				e.draw_name = line[3].c_str();
+				e.draw_id = std::stoi(line[7]);
 			}
-			else if(line[2].c_str() == "text")
+			else if(line[2] == "text")
 			{
+				e.effect_num = 1;
 				e.text = line[3].c_str();
 			}
 
@@ -145,7 +148,10 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->player = player;
 
 	printf("\nスクリプト読み込み　開始\n\n");
-	load_script(self, "tex/script.txt");
+	if(load_script(self, "tex/script.txt") == -1)
+	{
+		MessageBox(NULL,"ファイルが読み込みませんでした","ゲームのエラー", 0);
+	}
 
 	return self;
 }
@@ -160,14 +166,42 @@ Words split(const std::string &str)
     return words;
 }
 
-bool condition_match(const Condition &c, Player *player, Words &words)
+bool area_match(const Condition &c, Player *player, Words &words)
 {
 	return c.area == Player_get_area(player) &&
-		c.hougaku == Player_get_hougaku(player) &&
-		words.size() >= 2 &&
-		c.order == words[0] &&
-		c.object == words[1];
+		   c.hougaku == Player_get_hougaku(player);
 }
+
+bool condition_match(const Condition &c, Player *player, Words &words)
+{
+	return words.size() >= 2 &&
+		   c.order == words[0] &&
+		   c.object == words[1];
+}
+
+void call_effect(Script *self, const Condition &c)
+{
+	for(int j = 0; j < (int)self->effect.size(); j++)
+	{
+		if(c.effect_id == self->effect[j].id)
+		{
+			Effect &e = self->effect[j];
+
+			if(e.effect_num == 0)
+			{
+				twod_add_image(self->twod, e.x, e.y, e.draw_id, e.tag.c_str());
+			}
+			else if(e.effect_num == 1)
+			{
+				mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
+			}
+		}
+
+	}
+
+}
+
+
 
 void word_act(Script *self, Words &words)
 {	
@@ -175,8 +209,14 @@ void word_act(Script *self, Words &words)
 	{
 		for(int i = 0; i < (int)self->condition.size(); i++)
 		{
-			if (condition_match(self->condition[i], self->player, words))
+			Condition &c = self->condition[i];
+
+			if(area_match(c, self->player, words))
 			{
+				if(condition_match(c, self->player, words))
+				{
+					call_effect(self, c);
+				}
 			}
 		}
 
