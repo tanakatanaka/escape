@@ -18,6 +18,8 @@
 #include "Twod.h"
 #include "Pad.h"
 
+#define AREA_AND_ANGLE Player_get_area(self->player) == self->condition_order[i].area && Player_get_hougaku(self->player) == self->condition_order[i].hougaku
+#define ORD_AND_OBJ words[0] == self->condition_order[i].order && words[1] == self->condition_order[i].order
 
 typedef std::vector<std::string> Words;
 typedef std::istream_iterator<std::string> I;
@@ -62,6 +64,7 @@ struct Script
     Mess *mess;
 	Twod *twod;
 	Console *console;
+	Player *player;
 
 	//–½—ß\‘¢‘Ì•Ï” 
 	std::vector<Condition_order> condition_order;
@@ -147,6 +150,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
 	self->console = console;
+	self->player = player;
 
 	self->condition_count = 0;
 	self->effect_count = 0;
@@ -169,8 +173,18 @@ Words split(const std::string &str)
 void word_act(Script *self, Words &words)
 {	
 	if(words.size() > 0)
-	{
-		
+	{		
+		for(int i = 0; i == self->condition_count; i++)
+		{
+			if(AREA_AND_ANGLE)
+			{
+				if(ORD_AND_OBJ)
+				{
+
+					 
+				}
+			}
+		}
 
 	}
 }
