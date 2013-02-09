@@ -18,18 +18,12 @@
 #include "Twod.h"
 #include "Pad.h"
 
-#define AREA_AND_ANGLE Player_get_area(self->player) == self->condition_order[i].area && Player_get_hougaku(self->player) == self->condition_order[i].hougaku
-#define ORD_AND_OBJ words[0] == self->condition_order[i].order && words[1] == self->condition_order[i].order
-
 typedef std::vector<std::string> Words;
-typedef std::istream_iterator<std::string> I;
-using std::istringstream;
-using std::copy;
 
 Words split(const std::string &str);
 
 
-struct Condition_order
+struct Condition
 {
 	//命令条件の構造体
 	//管理番号・場所・方角・命令内容・命令対象
@@ -42,7 +36,7 @@ struct Condition_order
 	std::string special;
 };
 
-struct Effect_order
+struct Effect
 {
 	//命令効果の構造体
 	//管理番号・x・y・効果番号(0:画像表示・1:文字表示)・画像の名前・文字・画像文字の管理タグ
@@ -58,20 +52,16 @@ struct Effect_order
 
 struct Script
 {
-
 	Room *room;
-    Camera *camera;
-    Mess *mess;
+	Camera *camera;
+	Mess *mess;
 	Twod *twod;
 	Console *console;
 	Player *player;
 
 	//命令構造体変数 
-	std::vector<Condition_order> condition_order;
-	std::vector<Effect_order> effect_order;
-	int condition_count;
-	int effect_count;
-	
+	std::vector<Condition> condition;
+	std::vector<Effect> effect;
 };
 
 void pack_words(Script *self, Words &line)
@@ -80,41 +70,43 @@ void pack_words(Script *self, Words &line)
 	{
 		if(line[0].c_str() == "con")
 		{
-			self->condition_order[self->condition_count].num = std::stoi(line[1]);
-			self->condition_order[self->condition_count].area = std::stoi(line[2]);
-			self->condition_order[self->condition_count].hougaku = std::stoi(line[3]);
-			self->condition_order[self->condition_count].order = line[4].c_str();
-			self->condition_order[self->condition_count].object = line[5].c_str();
+			Condition c;
+			
+			c.num = std::stoi(line[1]);
+			c.area = std::stoi(line[2]);
+			c.hougaku = std::stoi(line[3]);
+			c.order = line[4].c_str();
+			c.object = line[5].c_str();
 
 			if(line.size() > 6)
 			{
-				self->condition_order[self->condition_count].special = line[6].c_str();
+				c.special = line[6].c_str();
 			}
 
-			self->condition_count++;
+			self->condition.push_back(c);
 		}
 		else if(line[0].c_str() == "eff")
 		{
-			self->effect_order[self->effect_count].num = std::stoi(line[1]);
+			Effect e;
+			
+			e.num = std::stoi(line[1]);
 
 			if(line[2].c_str() == "draw")
 			{
-				self->effect_order[self->effect_count].draw_name = line[3].c_str();
+				e.draw_name = line[3].c_str();
 			}
 			else if(line[2].c_str() == "text")
 			{
-				self->effect_order[self->effect_count].text = line[3].c_str();
+				e.text = line[3].c_str();
 			}
 
-			self->effect_order[self->effect_count].x = std::stoi(line[4]);
-			self->effect_order[self->effect_count].y = std::stoi(line[5]);
-			self->effect_order[self->effect_count].tag = line[6].c_str();
+			e.x = std::stoi(line[4]);
+			e.y = std::stoi(line[5]);
+			e.tag = line[6].c_str();
 
-			self->effect_count++;
+			self->effect.push_back(e);
 		}
-
 	}
-
 }
 
 int load_script(Script *self, const char *filename)
@@ -152,9 +144,6 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 	self->console = console;
 	self->player = player;
 
-	self->condition_count = 0;
-	self->effect_count = 0;
-
 	printf("\nスクリプト読み込み　開始\n\n");
 	load_script(self, "tex/script.txt");
 
@@ -164,25 +153,30 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player)
 
 Words split(const std::string &str)
 {
-    istringstream ss(str);
+    typedef std::istream_iterator<std::string> I;
+    std::istringstream ss(str);
     Words words;
-    copy(I(ss), I(), std::back_inserter<Words>(words));
+    std::copy(I(ss), I(), std::back_inserter<Words>(words));
     return words;
+}
+
+bool condition_match(const Condition &c, Player *player, Words &words)
+{
+	return c.area == Player_get_area(player) &&
+		c.hougaku == Player_get_hougaku(player) &&
+		words.size() >= 2 &&
+		c.order == words[0] &&
+		c.object == words[1];
 }
 
 void word_act(Script *self, Words &words)
 {	
 	if(words.size() > 0)
-	{		
-		for(int i = 0; i == self->condition_count; i++)
+	{
+		for(int i = 0; i < (int)self->condition.size(); i++)
 		{
-			if(AREA_AND_ANGLE)
+			if (condition_match(self->condition[i], self->player, words))
 			{
-				if(ORD_AND_OBJ)
-				{
-
-					 
-				}
 			}
 		}
 
