@@ -211,12 +211,9 @@ void word_act(Script *self, Words &words)
 		{
 			Condition &c = self->condition[i];
 
-			if(area_match(c, self->player, words))
+			if(area_match(c, self->player, words) && condition_match(c, self->player, words))
 			{
-				if(condition_match(c, self->player, words))
-				{
-					call_effect(self, c);
-				}
+				call_effect(self, c);
 			}
 		}
 
