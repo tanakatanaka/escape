@@ -55,6 +55,7 @@ void Mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 	//m.word = alteration_word(word);
 	m.tag = tag;
 	self->mess.push_back(m);
+	printf("\ndo do do\n");
 }
 
 void mess_erase_word(Mess *self, const char *tag)
