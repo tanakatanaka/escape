@@ -4,11 +4,10 @@
 
 struct Room;
 
-// ‰Šú‰»‚ğ‚·‚é
-Room *Room_Initialize();
+#include "Player.h"
 
-//door‚ÌŠJ•ÂğŒ‚ğ‚à‚ç‚¤ŠÖ”
-void Room_set_open(Room *self, int open_close);
+// ‰Šú‰»‚ğ‚·‚é
+Room *Room_Initialize(Player *player);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *Room );

@@ -44,16 +44,23 @@ void move_area(Player *self)
 {
 	if(self->hougaku == 0)
 	{
-		if(self->area > -1 && self->area < 3 ){self->area++;}
-		else if(self->area > 5 && self->area < 8 ){self->area--;}
+		if(self->area == 0 ){ self->area++; }
+		else if(self->area > 0 && self->area < 3 ){ self->area++; }
+		else if(self->area > 5 && self->area < 8 ){ self->area--; }
 	}
-	else if(self->hougaku == 1){if(self->area > 2 && self->area < 5 ){self->area++;}}
+	else if(self->hougaku == 1)
+	{
+		if(self->area > 2 && self->area < 5 ){ self->area++; }
+	}
 	else if(self->hougaku == 2)
 	{
-		if(self->area > 4 && self->area < 7 ){self->area++;}
-		else if(self->area > 1 && self->area < 4 ){self->area--;}
+		if(self->area > 4 && self->area < 7 ){ self->area++; }
+		else if(self->area > 1 && self->area < 4 ){ self->area--; }
 	}
-	else if(self->hougaku == 3){if(self->area > 3 && self->area < 6 ){self->area--;}}
+	else if(self->hougaku == 3)
+	{
+		if(self->area > 3 && self->area < 6 ){ self->area--; }
+	}
 
 	Camera_set_area(self->camera, self->area);
 }

@@ -4,11 +4,13 @@
 #include "Camera.h"
 #include "Console.h"
 #include "Player.h"
+#include "Script.h"
+#include "Room.h"
 
 struct Script;
 
 // ‰Šú‰»‚ğ‚·‚é
-Script *Script_Initialize(Camera *camera, Console *console, Player *player);
+Script *Script_Initialize(Camera *camera, Console *console, Player *player, Room *room);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Script_Update( Script *Script );

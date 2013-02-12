@@ -5,6 +5,7 @@
 #include "Pad.h"
 #include "Opening.h"
 #include "Player.h"
+#include "Room.h"
 
 
 struct Game
@@ -14,6 +15,7 @@ struct Game
 	Console *console;
 	Player *player;
 	Opening *opening;
+	Room *room;
 	
 	//gameisŠÖŒW
 	int game_state;
@@ -32,7 +34,8 @@ Game *Game_Initialize()
 	self->console = Console_Initialize();
 	self->camera = Camera_Initialize(self->console);
 	self->player = Player_Initialize(self->camera, self->console);
-	self->script = Script_Initialize(self->camera, self->console, self->player);
+	self->room = Room_Initialize(self->player);
+	self->script = Script_Initialize(self->camera, self->console, self->player, self->room);
 	self->opening = Opening_Initialize();
 	//gameisŠÖŒW
 	self->game_state = 0;
@@ -44,6 +47,7 @@ void game_play_tick(Game *self)
 	Player_Update( self->player );
 	Script_Update( self->script );
 	Camera_Update(self->camera);
+	Room_Update( self->room );
 	Console_Update( self->console );
 }
 
@@ -52,6 +56,7 @@ void game_play_draw(Game *self)
 	Player_Draw( self->player);
 	Script_Draw( self->script );
 	Camera_Draw(self->camera);
+	Room_Draw(self->room);
 	Console_Draw( self->console );
 }
 

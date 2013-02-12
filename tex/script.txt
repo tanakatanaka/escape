@@ -3,6 +3,6 @@
 
 con check_door 0 0 check door 
 eff check_door draw zeppeli 0 0 zeppeli 0
-eff check_door text gagaga  10 10 test
+eff check_door text dodo__dodo__dodo  10 10 test
 
 

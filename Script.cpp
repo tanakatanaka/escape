@@ -1,5 +1,4 @@
 #include "DxLib.h"
-#include <string>
 #include <deque>
 #include <string>
 #include <string.h>
@@ -78,10 +77,8 @@ void pack_words(Script *self, Words &line)
 			c.order = line[4].c_str();
 			c.object = line[5].c_str();
 
-			if(line.size() > 6)
-			{
-				c.special = line[6].c_str();
-			}
+			if(line.size() > 6){ c.special = line[6].c_str(); }
+			else{ c.special = "none"; }
 
 			self->condition.push_back(c);
 		}
@@ -132,16 +129,14 @@ int load_script(Script *self, const char *filename)
 	return 0;
 }
 
-
-
 // 初期化をする
-Script *Script_Initialize(Camera *camera, Console *console , Player *player)
+Script *Script_Initialize(Camera *camera, Console *console , Player *player, Room *room)
 {
 	Script *self;
 	self = new Script();
 
 	self->camera = camera;
-	self->room = Room_Initialize();
+	self->room = room;
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( );
 	self->console = console;
@@ -189,11 +184,11 @@ void call_effect(Script *self, const Condition &c)
 
 			if(e.effect_type == "draw")
 			{
-				twod_add_image(self->twod, e.x, e.y, e.draw_id, e.tag.c_str());
+				Twod_add_image(self->twod, e.x, e.y, e.draw_id, e.tag.c_str());
 			}
 			else if(e.effect_type == "text")
 			{
-				mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
+				Mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
 			}
 		}
 
@@ -222,19 +217,16 @@ void word_act(Script *self, Words &words)
 
 void decode_command(Script *self)
 {
-	if(Pad_Get( KEY_INPUT_RETURN ) == -1)
-	{
-		//単語後に分解
-		const char *command = console_d_bag(self->console);
+	//単語後に分解
+	const char *command = console_d_bag(self->console);
 		
-		if(command != NULL)
-		{
-			Words words = split(command);
-			//コンソールのほうにあるコマンドをログに移動
-			console_shift_log(self->console);
-			//分解したwordを解読関数にかける
-			word_act(self,words);
-		}
+	if(command != NULL)
+	{
+		Words words = split(command);
+		//コンソールのほうにあるコマンドをログに移動
+		console_shift_log(self->console);
+		//分解したwordを解読関数にかける
+		word_act(self,words);
 	}
 }
 
@@ -242,20 +234,19 @@ void decode_command(Script *self)
 // 動きを計算する
 void Script_Update( Script *self )
 {
-	Room_Update( self->room );
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 
-	decode_command(self);
-
+	if( Console_is_input(self->console) == 1 && Pad_Get( KEY_INPUT_RETURN ) == -1)
+	{
+		decode_command(self);
+	}
 	
 }	
 
 // 描画する
 void Script_Draw( Script *self)
 {
-	
-	Room_Draw(self->room);
 	Twod_Draw( self->twod );
 	Mess_Draw(self->mess);
 	

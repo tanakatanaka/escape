@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Room.h"
+#include "Player.h"
 #include "Pad.h"
 
 #define OPEN 1.658064
@@ -7,6 +8,8 @@
 
 struct Room
 {
+	Player *player;
+
     int room;
 	int door;
 	int glass;
@@ -19,10 +22,12 @@ struct Room
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
-Room *Room_Initialize()
+Room *Room_Initialize(Player *player)
 {
 	Room *self;
 	self = (Room *)malloc(sizeof(Room));
+	self->player = player;
+
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
@@ -34,11 +39,6 @@ Room *Room_Initialize()
 	self->slide = 0;
 
 	return self;
-}
-
-void Room_set_open(Room *self, int open_close)
-{
-	self->swit = open_close;
 }
 
 void door_open(Room *self)
@@ -80,11 +80,11 @@ void slide_glass(Room *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Room_Update( Room *self )
 {
-	/*
-	if(CheckHitKey(KEY_INPUT_A)){self->rotY ++;}
-	else if(CheckHitKey(KEY_INPUT_D)){self->rotY --;}
-  */
-	if(self->swit == 1 || self->swit == -1){door_open(self);}
+	
+	if(Pad_Get( KEY_INPUT_A ) == -1){ self->swit = 1;}
+	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1;}
+
+	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 
 	//glassŠÖ˜A
 	if(Pad_Get( KEY_INPUT_X ) == -1){ self->s_swit = 1;}

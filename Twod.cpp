@@ -30,7 +30,7 @@ Twod *Twod_Initialize()
 	return self;
 }
 
-void twod_add_image(Twod *self, int x, int y, int id, const char *tag)
+void Twod_add_image(Twod *self, int x, int y, int id, const char *tag)
 {
 	for (int i=0; i < 100; i++)
 	{
