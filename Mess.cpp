@@ -24,7 +24,7 @@ struct Mess
 Mess *Mess_Initialize()
 {
 	Mess *self;
-	self = (Mess *)malloc(sizeof(Mess));
+	self = new Mess();
 	return self;
 }
 
@@ -34,11 +34,10 @@ std::string alteration_word(std::string word)
 	{
 		if(word[i] == '_' && word[i + 1] == '_')
 		{
-			word.replace(i,i+1," ");
+			word.replace(i, 2, " ");
 		}	
 	}
 
-	printf("\n %s \n", word.c_str());
 	return word;
 }
 
@@ -51,11 +50,9 @@ void Mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 	m.line_cursor = 0;
 	m.x = x;
 	m.y = y;
-	m.word = word;
-	//m.word = alteration_word(word);
+	m.word = alteration_word(word);
 	m.tag = tag;
 	self->mess.push_back(m);
-	printf("\ndo do do\n");
 }
 
 void mess_erase_word(Mess *self, const char *tag)
@@ -74,8 +71,12 @@ void mess_erase_word(Mess *self, const char *tag)
 
 void draw_words(Word *self)
 {
-	self->word.size();
+	int white = GetColor(255,255,255);
+	std::string now_word = self->word.substr( 0, self->line_cursor);
 
+	DrawFormatString( self->x, self->y, white, "%s", now_word.c_str()); 
+
+	self->line_cursor++;
 }
 
 
@@ -88,18 +89,14 @@ void Mess_Update( Mess *self )
 // •`‰æ‚·‚é
 void Mess_Draw( Mess *self)
 {
-	if(self->mess.size() > 0)
+	for (int i = 0; i < self->mess.size(); i++)
 	{
-		for (int i = 0; i < self->mess.size(); i++)
+		if(self->mess[i].on_off != -1)
 		{
-			if(self->mess[i].on_off != -1)
-			{
-				draw_words(&self->mess[i]);
-			}
+			draw_words(&self->mess[i]);
 		}
 	}
-	
-}
+}	
 
 // I—¹ˆ—‚ğ‚·‚é
 void Mess_Finalize( Mess *self )

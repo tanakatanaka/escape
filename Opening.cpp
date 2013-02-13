@@ -21,6 +21,7 @@ Opening *Opening_Initialize( )
 	self->state = 0;
 	self->game_state = 0;
 	self->on_and_off = 0;
+
 	return self;
 }
 
@@ -29,6 +30,21 @@ int Opening_get_game_state(Opening *self)
 	return self->game_state;
 }
 
+void moji_enter(Opening *self)
+{ 
+	SetFontSize( 30 ) ;
+
+	if(self->on_and_off % 100 < 80)
+	{ 
+		DrawFormatString( 0, 0, GetColor( 255, 20, 255 ), "%s", "Pless Enter key"); 
+	}
+}
+
+void moji_game(Opening *self)
+{ 
+	SetFontSize( 30 ) ;
+	DrawFormatString( 0, 0, GetColor( 20, 20, 255 ), "%s", "Game Start"); 
+}
 
 // “®‚«‚ğŒvZ‚·‚é
 void Opening_Update( Opening *self )
@@ -58,11 +74,8 @@ void Opening_Draw( Opening *self)
 	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 	MV1DrawModel(self->room);
 
-	SetFontSize( 30 ) ;
-
-	if(self->state == 0 && self->on_and_off % 100 < 80)
-	{ DrawFormatString( 0, 0, GetColor( 255, 20, 255 ), "%s", "Pless Enter key"); }
-	
+	if(self->state == 0){ moji_enter(self);}
+	else if(self->state == 1){ moji_game(self);}
 }
 
 // I—¹ˆ—‚ğ‚·‚é

@@ -1,19 +1,20 @@
 #include "DxLib.h"
 #include "Twod.h"
-
+#include <string>
+#include <vector>
 
 struct Image
 {
 	int	x;
 	int y;
 	int id;
-	char tag[100];
+	std::string tag;
 
 };
 
 struct Twod
 {
-	Image image[100];
+	std::vector<Image> image;
 	int dx[100];
 };
 
@@ -21,35 +22,32 @@ struct Twod
 Twod *Twod_Initialize()
 {
 	Twod *self;
-	self = (Twod *)malloc(sizeof(Twod));
-	for(int i = 0; i < 100;i++)
-	{
-		self->image[i].id  = -1;
-	}
+	self = new Twod();
+
 	self->dx[0] = LoadGraph( "‰æ‘œ/test.jpg" ) ;
 	return self;
 }
 
 void Twod_add_image(Twod *self, int x, int y, int id, const char *tag)
 {
-	for (int i=0; i < 100; i++)
+	Image i;
+
+	if(i.id < 0)
 	{
-		if(self->image[i].id < 0)
-		{
-			self->image[i].id = id;
-			self->image[i].x = x;
-			self->image[i].y = y;
-			strcpy(self->image[i].tag, tag);
-			break;
-		}
+		i.id = id;
+		i.x = x;
+		i.y = y;
+		i.tag = tag;
 	}
+	
+	self->image.push_back(i);
 }
 
 void twod_erase_image(Twod *self, const char *tag)
 {
-	for (int i=0; i < 100; i++)
+	for (int i=0; i < self->image.size(); i++)
 	{
-		if (strcmp(self->image[i].tag, tag) == 0)
+		if(self->image[i].tag == tag)
 		{
 			self->image[i].id = -1;
 			break;
@@ -67,7 +65,7 @@ void Twod_Update( Twod *self )
 // •`‰æ‚·‚é
 void Twod_Draw( Twod *self)
 {
-	for (int i=0; i < 100; i++)
+	for (int i=0; i < self->image.size(); i++)
 	{
 		if(self->image[i].id != -1)
 		{

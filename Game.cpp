@@ -45,18 +45,18 @@ Game *Game_Initialize()
 void game_play_tick(Game *self)
 {
 	Player_Update( self->player );
+	Room_Update( self->room );
 	Script_Update( self->script );
 	Camera_Update(self->camera);
-	Room_Update( self->room );
 	Console_Update( self->console );
 }
 
 void game_play_draw(Game *self)
 {
 	Player_Draw( self->player);
+	Room_Draw(self->room);
 	Script_Draw( self->script );
 	Camera_Draw(self->camera);
-	Room_Draw(self->room);
 	Console_Draw( self->console );
 }
 
