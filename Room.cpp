@@ -41,6 +41,14 @@ Room *Room_Initialize(Player *player)
 	return self;
 }
 
+void Room_set_door(Room *self)
+{
+	if(self->rotY != OPEN)
+	{
+		self->swit = 1;
+	}
+}
+
 void door_open(Room *self)
 {
 	int cut = 15;
@@ -80,9 +88,11 @@ void slide_glass(Room *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Room_Update( Room *self )
 {
-	
-	if(Pad_Get( KEY_INPUT_A ) == -1){ self->swit = 1;}
-	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1;}
+	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) 
+	{ 
+		self->swit = -1;
+		Player_set_status(self->player, "open_door", 0, false);
+	}
 
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 

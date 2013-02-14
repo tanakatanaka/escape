@@ -42,11 +42,14 @@ struct Effect
 	int x;
 	int y;
 	std::string effect_type;
+	//•`‰æŠÖ˜A
 	int draw_id;
 	std::string draw_name;
+	//•¶ŽšŠÖ˜A
 	std::string text;
 	std::string tag;
-
+	//actŠÖ˜A
+	std::string action;
 };
 
 struct Script
@@ -99,11 +102,18 @@ void pack_words(Script *self, Words &line)
 				e.effect_type = "text";
 				e.text = line[3].c_str();
 			}
+			else if(line[2] == "act")
+			{
+				e.effect_type = "act";
+				e.action = line[3].c_str();
+			}
 
-			e.x = std::stoi(line[4]);
-			e.y = std::stoi(line[5]);
-			e.tag = line[6].c_str();
-
+			if(line[2] == "draw" || line[2] == "text")
+			{
+				e.x = std::stoi(line[4]);
+				e.y = std::stoi(line[5]);
+				e.tag = line[6].c_str();
+			}
 			self->effect.push_back(e);
 		}
 	}
@@ -174,6 +184,16 @@ bool condition_match(const Condition &c, Player *player, Words &words)
 		   c.object == words[1];
 }
 
+void action_match(Script *self, std::string act)
+{
+	if(act == "open_door")
+	{
+		Room_set_door(self->room);
+		Player_set_status(self->player, "open_door", 0, true);
+	}
+
+}
+
 void call_effect(Script *self, const Condition &c)
 {
 	for(int j = 0; j < (int)self->effect.size(); j++)
@@ -189,6 +209,10 @@ void call_effect(Script *self, const Condition &c)
 			else if(e.effect_type == "text")
 			{
 				Mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
+			}
+			else if(e.effect_type == "act")
+			{
+				action_match(self, e.action.c_str() );
 			}
 		}
 

@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Console.h"
 #include "Player.h"
+#include <string>
 
 struct Player
 {
@@ -11,6 +12,7 @@ struct Player
 	Camera *camera;
 	Console *console;
 	int count;
+	bool door_open;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
@@ -25,8 +27,19 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
-
+	
+	//status
+	self->door_open = false;
 	return self;
+}
+
+void Player_set_status(Player *self, std::string type, int plus, bool on_off)
+{
+	if(type == "open_door")
+	{
+		self->door_open = on_off;
+	}
+
 }
 
 int Player_get_area(Player *self)
@@ -44,7 +57,7 @@ void move_area(Player *self)
 {
 	if(self->hougaku == 0)
 	{
-		if(self->area == 0 ){ self->area++; }
+		if(self->area == 0 && self->door_open == true){ self->area++; }
 		else if(self->area > 0 && self->area < 3 ){ self->area++; }
 		else if(self->area > 5 && self->area < 8 ){ self->area--; }
 	}
@@ -56,6 +69,7 @@ void move_area(Player *self)
 	{
 		if(self->area > 4 && self->area < 7 ){ self->area++; }
 		else if(self->area > 1 && self->area < 4 ){ self->area--; }
+		else if(self->area == 1 && self->door_open == true){ self->area--; }
 	}
 	else if(self->hougaku == 3)
 	{

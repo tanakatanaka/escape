@@ -32,7 +32,7 @@ std::string alteration_word(std::string word)
 {
 	for(int i = 0; i < word.size(); i++)
 	{
-		if(word[i] == '_' && word[i + 1] == '_')
+		if(i != word.size() - 1 && word[i] == '_' && word[i + 1] == '_')
 		{
 			word.replace(i, 2, " ");
 		}	
@@ -72,10 +72,10 @@ void mess_erase_word(Mess *self, const char *tag)
 void draw_words(Word *self)
 {
 	int white = GetColor(255,255,255);
+	
 	std::string now_word = self->word.substr( 0, self->line_cursor);
-
 	DrawFormatString( self->x, self->y, white, "%s", now_word.c_str()); 
-
+	
 	self->line_cursor++;
 }
 

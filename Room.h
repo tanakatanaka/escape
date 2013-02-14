@@ -9,6 +9,8 @@ struct Room;
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize(Player *player);
 
+void Room_set_door(Room *self);
+
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *Room );
 

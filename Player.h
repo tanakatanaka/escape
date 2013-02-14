@@ -6,10 +6,12 @@ struct Player;
 
 #include "Camera.h"
 #include "Console.h"
+#include <string>
 
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console);
 
+void Player_set_status(Player *self, std::string type, int plus, bool on_off);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
 
