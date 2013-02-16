@@ -49,7 +49,7 @@ struct Effect
 	std::string text;
 	std::string tag;
 	//actŠÖ˜A
-	std::string action;
+	Words action;
 };
 
 struct Script
@@ -105,7 +105,8 @@ void pack_words(Script *self, Words &line)
 			else if(line[2] == "act")
 			{
 				e.effect_type = "act";
-				e.action = line[3].c_str();
+				// eff ‚Æ act ‚Í”ò‚Î‚µ‚Ä‹L˜^
+				e.action = Words(line.begin() + 2, line.end());
 			}
 
 			if(line[2] == "draw" || line[2] == "text")
@@ -184,7 +185,7 @@ bool condition_match(const Condition &c, Player *player, Words &words)
 		   c.object == words[1];
 }
 
-void action_match(Script *self, std::string act)
+void action_match(Script *self, Words &act)
 {
 	Room_act(self->room, act);
 	Player_act(self->player, act);
@@ -209,7 +210,7 @@ void call_effect(Script *self, const Condition &c)
 			}
 			else if(e.effect_type == "act")
 			{
-				action_match(self, e.action.c_str() );
+				action_match(self, e.action);
 			}
 		}
 
