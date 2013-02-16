@@ -2,6 +2,9 @@
 #include "Room.h"
 #include "Player.h"
 #include "Pad.h"
+#include <string>
+#include <vector>
+
 
 #define OPEN 1.658064
 #define SLIDE 505
@@ -41,7 +44,7 @@ Room *Room_Initialize(Player *player)
 	return self;
 }
 
-void Room_set_door(Room *self)
+void Room_act(Room *self, std::vector<std::string> &act)
 {
 	if(self->rotY != OPEN)
 	{
@@ -91,7 +94,7 @@ void Room_Update( Room *self )
 	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) 
 	{ 
 		self->swit = -1;
-		Player_set_status(self->player, "open_door", 0, false);
+		
 	}
 
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }

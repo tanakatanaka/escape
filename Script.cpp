@@ -186,12 +186,9 @@ bool condition_match(const Condition &c, Player *player, Words &words)
 
 void action_match(Script *self, std::string act)
 {
-	if(act == "open_door")
-	{
-		Room_set_door(self->room);
-		Player_set_status(self->player, "open_door", 0, true);
-	}
-
+	Room_act(self->room, act);
+	Player_act(self->player, act);
+	
 }
 
 void call_effect(Script *self, const Condition &c)
@@ -232,7 +229,8 @@ void word_act(Script *self, Words &words)
 
 			if(area_match(c, self->player, words) && condition_match(c, self->player, words))
 			{
-				call_effect(self, c);
+
+				call_effect(self, words);
 			}
 		}
 

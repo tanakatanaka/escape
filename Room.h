@@ -5,11 +5,13 @@
 struct Room;
 
 #include "Player.h"
+#include <string>
+#include <vector>
 
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize(Player *player);
 
-void Room_set_door(Room *self);
+void Room_act(Room *self, std::vector<std::string> &act);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *Room );

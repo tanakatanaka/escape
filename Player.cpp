@@ -4,6 +4,7 @@
 #include "Console.h"
 #include "Player.h"
 #include <string>
+#include <vector>
 
 struct Player
 {
@@ -33,13 +34,9 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	return self;
 }
 
-void Player_set_status(Player *self, std::string type, int plus, bool on_off)
+void Player_act(Player *self,  std::vector<std::string> &act)
 {
-	if(type == "open_door")
-	{
-		self->door_open = on_off;
-	}
-
+	self->door_open;
 }
 
 int Player_get_area(Player *self)
