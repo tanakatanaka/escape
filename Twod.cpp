@@ -9,8 +9,6 @@ struct Image
 	int	x;
 	int y;
 	int id;
-	std::string tag;
-
 };
 
 struct Twod
@@ -29,7 +27,7 @@ Twod *Twod_Initialize()
 	return self;
 }
 
-void Twod_add_image(Twod *self, int x, int y, int id, const char *tag)
+void Twod_add_image(Twod *self, int x, int y, int id)
 {
 	Image i;
 
@@ -38,7 +36,6 @@ void Twod_add_image(Twod *self, int x, int y, int id, const char *tag)
 		i.id = id;
 		i.x = x;
 		i.y = y;
-		i.tag = tag;
 	}
 	
 	self->image.push_back(i);

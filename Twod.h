@@ -7,7 +7,7 @@ struct Twod;
 // 初期化をする
 Twod *Twod_Initialize();
 //画像を描画モードにする
-void Twod_add_image(Twod *self, int x, int y, int id , const char *tag);
+void Twod_add_image(Twod *self, int x, int y, int id);
 //画像の描画モードを解除
 void twod_erase_image(Twod *self, const char *tag);
 // 動きを計算する

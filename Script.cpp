@@ -47,7 +47,6 @@ struct Effect
 	std::string draw_name;
 	//•¶ŽšŠÖ˜A
 	std::string text;
-	std::string tag;
 	//actŠÖ˜A
 	Words action;
 };
@@ -95,7 +94,7 @@ void pack_words(Script *self, Words &line)
 			{
 				e.effect_type = "draw";
 				e.draw_name = line[3].c_str();
-				e.draw_id = std::stoi(line[7]);
+				e.draw_id = std::stoi(line[6]);
 			}
 			else if(line[2] == "text")
 			{
@@ -113,7 +112,6 @@ void pack_words(Script *self, Words &line)
 			{
 				e.x = std::stoi(line[4]);
 				e.y = std::stoi(line[5]);
-				e.tag = line[6].c_str();
 			}
 			self->effect.push_back(e);
 		}
@@ -202,11 +200,11 @@ void call_effect(Script *self, const Condition &c)
 
 			if(e.effect_type == "draw")
 			{
-				Twod_add_image(self->twod, e.x, e.y, e.draw_id, e.tag.c_str());
+				Twod_add_image(self->twod, e.x, e.y, e.draw_id);
 			}
 			else if(e.effect_type == "text")
 			{
-				Mess_add_word(self->mess, e.x, e.y, e.text.c_str() , e.tag.c_str() );
+				Mess_add_word(self->mess, e.x, e.y, e.text.c_str());
 			}
 			else if(e.effect_type == "act")
 			{

@@ -1,10 +1,10 @@
 (con)・管理文字・場所・方角・命令内容・命令対象・特別命令 (6or7)
-(eff)・管理文字・(draw:画像表示)・(画像タグ名)・x・y・(識別文字)・id (8)
-(eff)・管理文字・(text:文字表示)・(表示したい文)・x・y・(識別文字) (7)
+(eff)・管理文字・(draw:画像表示)・(画像タグ名)・x・y・id (7)
+(eff)・管理文字・(text:文字表示)・(表示したい文)・x・y (6)
 (eff)・管理文字・(act: 行動[物を動かす door等 ])・呼びたい関数名(open_door)
 
 con check_door 0 0 check door 
-eff check_door text please__"open__door" 10 10 test
+eff check_door text please__"open__door" 10 10 
 
 con open_door 0 0 open door
 eff open_door act open_door

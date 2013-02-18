@@ -13,7 +13,6 @@ struct Word
    int x; //メッセージボックスのx座標に加える数
    int y; //メッセージボックスのy座標に加える数
    int on_off;
-   std::string tag;
 };
 
 struct Mess
@@ -42,7 +41,7 @@ std::string alteration_word(std::string word)
 	return word;
 }
 
-void Mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
+void Mess_add_word(Mess *self,int x, int y, const char *word)
 {
 	Word m;
 
@@ -52,7 +51,6 @@ void Mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 	m.x = x;
 	m.y = y;
 	m.word = alteration_word(word);
-	m.tag = tag;
 	self->mess.push_back(m);
 }
 
