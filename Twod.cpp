@@ -2,6 +2,7 @@
 #include "Twod.h"
 #include <string>
 #include <vector>
+#include "Pad.h"
 
 struct Image
 {
@@ -43,15 +44,11 @@ void Twod_add_image(Twod *self, int x, int y, int id, const char *tag)
 	self->image.push_back(i);
 }
 
-void twod_erase_image(Twod *self, const char *tag)
+void twod_erase_image(Twod *self)
 {
 	for (int i=0; i < self->image.size(); i++)
 	{
-		if(self->image[i].tag == tag)
-		{
-			self->image[i].id = -1;
-			break;
-		}
+		self->image[i].id = -1;	
 	}
 }
 
@@ -59,6 +56,10 @@ void twod_erase_image(Twod *self, const char *tag)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Twod_Update( Twod *self )
 {
+	if(Pad_Get( KEY_INPUT_DELETE ) == -1)
+	{
+		twod_erase_image(self);
+	}
 	
 }
 

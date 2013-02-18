@@ -85,8 +85,6 @@ void Mess_Update( Mess *self )
 		mess_erase_word(self);
 	}
 
-
-
 }		
 
 // •`‰æ‚·‚é
