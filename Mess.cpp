@@ -3,6 +3,7 @@
 #include "Mess.h"
 #include <string>
 #include <vector>
+#include "Pad.h"
 
 struct Word
 {
@@ -55,15 +56,11 @@ void Mess_add_word(Mess *self,int x, int y, const char *word, const char *tag)
 	self->mess.push_back(m);
 }
 
-void mess_erase_word(Mess *self, const char *tag)
+void mess_erase_word(Mess *self)
 {
 	for (int i = 0; i < self->mess.size(); i++)
 	{
-		if (self->mess[i].tag == tag)
-		{
-			self->mess[i].on_off = -1;
-			break;
-		}
+		self->mess[i].on_off = -1;	
 	}
 }
 
@@ -83,6 +80,12 @@ void draw_words(Word *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Mess_Update( Mess *self )
 {
+	if(Pad_Get( KEY_INPUT_DELETE ) == -1)
+	{
+		mess_erase_word(self);
+	}
+
+
 
 }		
 

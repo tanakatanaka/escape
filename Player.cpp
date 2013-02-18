@@ -36,8 +36,13 @@ Player *Player_Initialize(Camera *camera, Console *console)
 
 void Player_act(Player *self,  std::vector<std::string> &act)
 {
-	self->door_open;
+	if(act[1] == "open_door")
+	{
+		self->door_open = TRUE;
+	}
+
 }
+
 
 int Player_get_area(Player *self)
 {
@@ -97,7 +102,7 @@ void Player_Update( Player *self )
 		}
 	}
 
-	if(Pad_Get( KEY_INPUT_L ) == -1){ printf("\n hougaku = %d \n",self->hougaku); }
+	if(self->area > 0){ self->door_open = false; }
 
 	self->hougaku = Camera_set_hougaku(self->camera, 0);
 	self->count++;

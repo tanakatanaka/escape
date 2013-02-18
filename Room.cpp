@@ -46,9 +46,12 @@ Room *Room_Initialize(Player *player)
 
 void Room_act(Room *self, std::vector<std::string> &act)
 {
-	if(self->rotY != OPEN)
+	if(act[1] == "open_door")
 	{
-		self->swit = 1;
+		if(self->rotY != OPEN)
+		{
+			self->swit = 1;
+		}
 	}
 }
 
@@ -91,11 +94,7 @@ void slide_glass(Room *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Room_Update( Room *self )
 {
-	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) 
-	{ 
-		self->swit = -1;
-		
-	}
+	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1; }
 
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 
