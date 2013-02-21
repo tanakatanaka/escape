@@ -54,7 +54,7 @@ void Mess_add_word(Mess *self,int x, int y, const char *word)
 	self->mess.push_back(m);
 }
 
-void mess_erase_word(Mess *self)
+void Mess_erase_word(Mess *self)
 {
 	for (int i = 0; i < self->mess.size(); i++)
 	{
@@ -68,10 +68,12 @@ void draw_words(Word *self)
 {
 	int white = GetColor(255,255,255);
 	
+	DrawBox( self->x, self->y, self->x + self->line_cursor * 10, self->y + 15, GetColor( 0 , 200 , 0 ), TRUE) ;
+
 	std::string now_word = self->word.substr( 0, self->line_cursor);
 	DrawFormatString( self->x, self->y, white, "%s", now_word.c_str()); 
 	
-	self->line_cursor++;
+	if(self->word.size() > self->line_cursor){ self->line_cursor++; }
 }
 
 
@@ -80,7 +82,7 @@ void Mess_Update( Mess *self )
 {
 	if(Pad_Get( KEY_INPUT_DELETE ) == -1)
 	{
-		mess_erase_word(self);
+		Mess_erase_word(self);
 	}
 
 }		

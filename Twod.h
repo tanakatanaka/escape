@@ -8,6 +8,8 @@ struct Twod;
 Twod *Twod_Initialize();
 //‰æ‘œ‚ğ•`‰æƒ‚[ƒh‚É‚·‚é
 void Twod_add_image(Twod *self, int x, int y, int id);
+//‰æ‘œ‚ğÁ‚·
+void Twod_erase_image(Twod *self);
 // “®‚«‚ğŒvZ‚·‚é
 void Twod_Update( Twod *Twod );
 // •`‰æ‚·‚é

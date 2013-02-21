@@ -41,7 +41,7 @@ void Twod_add_image(Twod *self, int x, int y, int id)
 	self->image.push_back(i);
 }
 
-void twod_erase_image(Twod *self)
+void Twod_erase_image(Twod *self)
 {
 	for (int i=0; i < self->image.size(); i++)
 	{
@@ -55,7 +55,7 @@ void Twod_Update( Twod *self )
 {
 	if(Pad_Get( KEY_INPUT_DELETE ) == -1)
 	{
-		twod_erase_image(self);
+		Twod_erase_image(self);
 	}
 	
 }
