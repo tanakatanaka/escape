@@ -7,7 +7,8 @@
 ////////////////////////////
 
 not intro 0 0
-eff intro text please__"check__door" 10 10 
+eff intro text Intro__message 10 10 
+eff intro text please__"check__door" 10 26 
 
 con check_door 0 0 check door 
 eff check_door text please__"open__door" 10 10 
