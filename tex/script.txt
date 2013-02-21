@@ -6,7 +6,6 @@
 (eff)・管理文字・(act: 行動[物を動かす door等 ])・呼びたい関数名(open_door)
 ////////////////////////////
 
-
 not intro 0 0
 eff intro text please__"check__door" 10 10 
 

@@ -65,7 +65,8 @@ struct Script
 	std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;
-	//
+	
+
 	std::string last_memo;
 
 };
