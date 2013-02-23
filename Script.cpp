@@ -44,9 +44,7 @@ struct Effect
 	int x;
 	int y;
 	std::string effect_type;
-	//•`‰æŠÖ˜A
-	int draw_id;
-	std::string draw_name;
+	int draw_id; //•`‰æŠÖ˜A
 	//•¶ŽšŠÖ˜A
 	std::string text;
 	//actŠÖ˜A
@@ -84,8 +82,8 @@ void pack_conditon_words(Script *self, Words &line)
 		c.order = line[4].c_str();
 		c.object = line[5].c_str();
 
-		if(line.size() > 6){ c.special = line[6].c_str(); }
-		else{ c.special = "none"; }
+		if(line.size() > 6){ c.special = line[6]; }
+		else{ c.special = "non"; }
 
 		self->condition.push_back(c);
 	}
@@ -107,8 +105,7 @@ void pack_effect_words(Script *self, Words &line)
 	if(line[2] == "draw")
 	{
 		e.effect_type = "draw";
-		e.draw_name = line[3].c_str();
-		e.draw_id = std::stoi(line[6]);
+		e.draw_id = std::stoi(line[3]);
 	}
 	else if(line[2] == "text")
 	{

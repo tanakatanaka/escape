@@ -24,6 +24,7 @@ Twod *Twod_Initialize()
 	self = new Twod();
 
 	self->dx[0] = LoadGraph( "‰æ‘œ/test.jpg" ) ;
+	self->dx[1] = LoadGraph( "meta/stussy.png" ) ;
 	return self;
 }
 
@@ -31,7 +32,9 @@ void Twod_add_image(Twod *self, int x, int y, int id)
 {
 	Image i;
 
-	if(i.id < 0)
+	printf("\n x = %d\n",x);
+
+	if(id > 0)
 	{
 		i.id = id;
 		i.x = x;

@@ -14,6 +14,7 @@ struct Player
 	Console *console;
 	int count;
 	bool door_open;
+	int slide_open;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -31,6 +32,7 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	
 	//status
 	self->door_open = false;
+	self->slide_open = 0;
 	return self;
 }
 
@@ -40,7 +42,16 @@ void Player_act(Player *self,  std::vector<std::string> &act)
 	{
 		self->door_open = TRUE;
 	}
+	
+	if(act[1] == "un_lock")
+	{
+		self->slide_open = 1;
+	}
 
+	if(act[1] == "open_slide" && self->slide_open == 1)
+	{
+		self->slide_open = 2;
+	}
 }
 
 
@@ -65,7 +76,8 @@ void move_area(Player *self)
 	}
 	else if(self->hougaku == 1)
 	{
-		if(self->area > 2 && self->area < 5 ){ self->area++; }
+		if(self->area == 3 && self->slide_open == 2){ self->area++; }
+		else if(self->area > 3 && self->area < 5 ){ self->area++; }
 	}
 	else if(self->hougaku == 2)
 	{
@@ -75,7 +87,8 @@ void move_area(Player *self)
 	}
 	else if(self->hougaku == 3)
 	{
-		if(self->area > 3 && self->area < 6 ){ self->area--; }
+		if(self->area == 4 && self->slide_open == 2){ self->area--; }
+		else if(self->area > 4 && self->area < 6 ){ self->area--; }
 	}
 
 	Camera_set_area(self->camera, self->area);

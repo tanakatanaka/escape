@@ -16,12 +16,16 @@ struct Room
     int room;
 	int door;
 	int glass;
+	int hammer;
+	int pot;
+	
 	double rotY;
 	int swit; //door—p
 	int count;
 	int s_swit; //glass—p
 	int s_count;
 	double slide;
+	bool slide_lock;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -34,24 +38,35 @@ Room *Room_Initialize(Player *player)
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
+	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
+	self->pot = MV1LoadModel("meta/pot.mqo") ;
+
 	self->rotY = 0.0f;
 	self->swit = 0;
 	self->count = 0;
 	self->s_swit = 0;
 	self->s_count = 0;
 	self->slide = 0;
+	self->slide_lock = false;
 
 	return self;
 }
 
 void Room_act(Room *self, std::vector<std::string> &act)
 {
-	if(act[1] == "open_door")
+	if(act[1] == "open_door" && self->rotY != OPEN)
 	{
-		if(self->rotY != OPEN)
-		{
 			self->swit = 1;
-		}
+	}
+	
+	if(act[1] == "un_lock")
+	{
+		self->slide_lock = true;
+	}
+
+	if(self->slide_lock == true && act[1] == "open_slide" && self->slide != SLIDE)
+	{
+		self->s_swit = 1;
 	}
 }
 
@@ -91,18 +106,17 @@ void slide_glass(Room *self)
 
 
 
+
+
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *self )
 {
-	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1; }
-
+	//ŠJ‚­
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
+	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
 
-	//glassŠÖ˜A
-	if(Pad_Get( KEY_INPUT_X ) == -1){ self->s_swit = 1;}
-	else if(Pad_Get( KEY_INPUT_Z ) == -1){self->s_swit = -1;}
-
-	if(self->s_swit == 1 || self->s_swit == -1){slide_glass(self);}
+	// •Â‚¶‚é
+	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1; }
 }		
 
 // •`‰æ‚·‚é
@@ -113,10 +127,16 @@ void Room_Draw( Room *self)
 	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
+	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
+	MV1DrawModel(self->hammer);
+	MV1DrawModel(self->pot);
 	MV1DrawModel(self->glass);
+	
+	
 }
 
 // I—¹ˆ—‚ğ‚·‚é
