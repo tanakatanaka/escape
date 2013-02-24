@@ -73,7 +73,6 @@ void Twod_Update( Twod *self )
 		Twod_erase_image(self);
 	}
 	
-	display_time(self);
 }
 
 // •`‰æ‚·‚é
@@ -86,6 +85,8 @@ void Twod_Draw( Twod *self)
 			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].id], TRUE );
 		}
 	}
+
+	display_time(self);
 }
 
 // I—¹ˆ—‚ğ‚·‚é
