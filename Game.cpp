@@ -33,8 +33,8 @@ Game *Game_Initialize()
 	self = new Game();
 	self->console = Console_Initialize();
 	self->camera = Camera_Initialize(self->console);
-	self->player = Player_Initialize(self->camera, self->console);
-	self->room = Room_Initialize(self->player);
+	self->room = Room_Initialize();
+	self->player = Player_Initialize(self->camera, self->console, self->room);
 	self->script = Script_Initialize(self->camera, self->console, self->player, self->room);
 	self->opening = Opening_Initialize();
 	//gameisŠÖŒW

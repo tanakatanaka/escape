@@ -6,12 +6,13 @@ struct Player;
 
 #include "Camera.h"
 #include "Console.h"
+#include "Room.h"
 #include <string>
 #include <vector>
 
 
 // ‰Šú‰»‚ğ‚·‚é
-Player *Player_Initialize(Camera *camera, Console *console);
+Player *Player_Initialize(Camera *camera, Console *console, Room *room);
 
 void Player_act(Player *self,  std::vector<std::string> &act);
 int Player_get_area(Player *self);

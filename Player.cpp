@@ -3,57 +3,46 @@
 #include "Camera.h"
 #include "Console.h"
 #include "Player.h"
+#include "Room.h"
 #include <string>
 #include <vector>
 
 struct Player
 {
-    int area;
-    int hougaku;
 	Camera *camera;
 	Console *console;
+	Room *room;
+    int area;
+    int hougaku;
 	int count;
-	bool door_open;
-	int slide_open;
 	int time_limit;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
-Player *Player_Initialize(Camera *camera, Console *console)
+Player *Player_Initialize(Camera *camera, Console *console, Room *room)
 {
 	Player *self;
 	self = new Player();
 	
 	self->camera = camera;
 	self->console = console;
+	self->room = room;
 	//player—p
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
 	self->time_limit = 18000;
 	
-	//status
-	self->door_open = false;
-	self->slide_open = 0;
+
 	return self;
 }
 
 void Player_act(Player *self,  std::vector<std::string> &act)
 {
-	if(act[1] == "open_door")
-	{
-		self->door_open = TRUE;
-	}
 	
-	if(act[1] == "un_lock")
-	{
-		self->slide_open = 1;
-	}
 
-	if(act[1] == "open_slide" && self->slide_open == 1)
-	{
-		self->slide_open = 2;
-	}
+	
+
 }
 
 
@@ -76,24 +65,24 @@ void move_area(Player *self)
 {
 	if(self->hougaku == 0)
 	{
-		if(self->area == 0 && self->door_open == true){ self->area++; }
+		if(self->area == 0 && Room_get_door(self->room) ){ self->area++; }
 		else if(self->area > 0 && self->area < 3 ){ self->area++; }
 		else if(self->area > 5 && self->area < 8 ){ self->area--; }
 	}
 	else if(self->hougaku == 1)
 	{
-		if(self->area == 3 && self->slide_open == 2){ self->area++; }
+		if(self->area == 3 && Room_get_slide(self->room)){ self->area++; }
 		else if(self->area > 3 && self->area < 5 ){ self->area++; }
 	}
 	else if(self->hougaku == 2)
 	{
 		if(self->area > 4 && self->area < 7 ){ self->area++; }
 		else if(self->area > 1 && self->area < 4 ){ self->area--; }
-		else if(self->area == 1 && self->door_open == true){ self->area--; }
+		else if(self->area == 1 && Room_get_door(self->room)){ self->area--; }
 	}
 	else if(self->hougaku == 3)
 	{
-		if(self->area == 4 && self->slide_open == 2){ self->area--; }
+		if(self->area == 4 && Room_get_slide(self->room)){ self->area--; }
 		else if(self->area > 4 && self->area < 6 ){ self->area--; }
 	}
 
@@ -121,8 +110,9 @@ void Player_Update( Player *self )
 		}
 	}
 
-	if(self->area > 0){ self->door_open = false; }
+	if(self->area > 0){ Room_get_door(self->room) == false; }
 
+	Room_set_are(self->room, self->area);
 	self->hougaku = Camera_set_hougaku(self->camera, 0);
 	self->count++;
 	self->time_limit--;

@@ -29,7 +29,7 @@ eff check_pict_2 text pict__B 10 10
 con check_pict_3 3 3 check pict
 eff check_pict_3 text pict__C 10 10
 
-			*
+			*3*
 
 con check_slide 3 1 check slide
 eff check_slide text please__enter__the__code 10 10
@@ -40,5 +40,29 @@ eff code_slide text The__slide__unlocked 10 10
 
 con open_slide 3 1 open slide
 eff open_slide act open_slide
+
+			*5*
+
+con check_pot 5 1 check pot
+eff check_pot text pot__sugoi 10 10
+
+con break_pot 5 1 break pot
+eff break_pot act break_pot
+
+			*6*
+
+con check_table 6 3 check table
+eff check_table text cup__and__hammer__on__the__table 10 10 
+
+con get_hammer 6 3 get hammer
+eff get_hammer act get_hammer
+
+
+con check_hanmmer 6 3 check hammer
+eff check_hanmmer text hammer__sugoi 10 10 
+
+
+
+
 
 

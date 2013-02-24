@@ -1,9 +1,9 @@
 #include "DxLib.h"
 #include "Room.h"
-#include "Player.h"
 #include "Pad.h"
 #include <string>
 #include <vector>
+
 
 
 #define OPEN 1.658064
@@ -11,14 +11,12 @@
 
 struct Room
 {
-	Player *player;
-
+	int area;
     int room;
 	int door;
 	int glass;
 	int hammer;
 	int pot;
-	
 	double rotY;
 	int swit; //door—p
 	int count;
@@ -26,14 +24,17 @@ struct Room
 	int s_count;
 	double slide;
 	bool slide_lock;
+	bool get_hammer;
+	bool break_pot;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
-Room *Room_Initialize(Player *player)
+Room *Room_Initialize()
 {
 	Room *self;
 	self = (Room *)malloc(sizeof(Room));
-	self->player = player;
+
+	self->area = 0;
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
@@ -48,6 +49,8 @@ Room *Room_Initialize(Player *player)
 	self->s_count = 0;
 	self->slide = 0;
 	self->slide_lock = false;
+	self->get_hammer = false;
+	self->break_pot = false;
 
 	return self;
 }
@@ -56,7 +59,7 @@ void Room_act(Room *self, std::vector<std::string> &act)
 {
 	if(act[1] == "open_door" && self->rotY != OPEN)
 	{
-			self->swit = 1;
+		self->swit = 1;
 	}
 	
 	if(act[1] == "un_lock")
@@ -68,6 +71,36 @@ void Room_act(Room *self, std::vector<std::string> &act)
 	{
 		self->s_swit = 1;
 	}
+
+	if(act[1] == "get_hammer")
+	{
+		self->get_hammer = true;
+	}
+
+	if(self->get_hammer == true && act[1] == "break_pot")
+	{
+		self->break_pot = true;
+	}
+}
+
+bool Room_get_door(Room *self)
+{
+	if(self->rotY == OPEN)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Room_get_slide(Room *self)
+{
+	if(self->slide == SLIDE)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void door_open(Room *self)
@@ -104,9 +137,10 @@ void slide_glass(Room *self)
 	}
 }
 
-
-
-
+void Room_set_are(Room *self, int area)
+{
+	self->area = area;
+}
 
 // “®‚«‚ðŒvŽZ‚·‚é
 void Room_Update( Room *self )
@@ -116,7 +150,7 @@ void Room_Update( Room *self )
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
 
 	// •Â‚¶‚é
-	if(Player_get_area(self->player) > 0 && self->rotY == OPEN) { self->swit = -1; }
+	if(self->area > 0 && self->rotY == OPEN) { self->swit = -1; }
 }		
 
 // •`‰æ‚·‚é
@@ -132,8 +166,8 @@ void Room_Draw( Room *self)
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
-	MV1DrawModel(self->hammer);
-	MV1DrawModel(self->pot);
+	if(!self->get_hammer){ MV1DrawModel(self->hammer); }
+	if(!self->break_pot){ MV1DrawModel(self->pot); }
 	MV1DrawModel(self->glass);
 	
 	

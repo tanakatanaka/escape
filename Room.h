@@ -4,14 +4,17 @@
 
 struct Room;
 
-#include "Player.h"
 #include <string>
 #include <vector>
 
 // ‰Šú‰»‚ğ‚·‚é
-Room *Room_Initialize(Player *player);
+Room *Room_Initialize();
 
 void Room_act(Room *self, std::vector<std::string> &act);
+void Room_set_are(Room *self, int area);
+bool Room_get_door(Room *self);
+bool Room_get_slide(Room *self);
+
 
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *Room );
