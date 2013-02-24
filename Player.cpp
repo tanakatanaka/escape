@@ -15,6 +15,7 @@ struct Player
 	int count;
 	bool door_open;
 	int slide_open;
+	int time_limit;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
@@ -29,6 +30,7 @@ Player *Player_Initialize(Camera *camera, Console *console)
 	self->hougaku = 0;
 	self->area = 0;
 	self->count = 30;
+	self->time_limit = 18000;
 	
 	//status
 	self->door_open = false;
@@ -65,6 +67,10 @@ int Player_get_hougaku(Player *self)
 	return self->hougaku;
 }
 
+int Player_get_time(Player *self)
+{
+	return self->time_limit / 60;
+}
 
 void move_area(Player *self)
 {
@@ -119,6 +125,7 @@ void Player_Update( Player *self )
 
 	self->hougaku = Camera_set_hougaku(self->camera, 0);
 	self->count++;
+	self->time_limit--;
 }
 
 // •`‰æ‚·‚é

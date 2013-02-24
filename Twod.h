@@ -4,8 +4,10 @@
 
 struct Twod;
 
+#include "Player.h"
+
 // ‰Šú‰»‚ğ‚·‚é
-Twod *Twod_Initialize();
+Twod *Twod_Initialize(Player *player);
 //‰æ‘œ‚ğ•`‰æƒ‚[ƒh‚É‚·‚é
 void Twod_add_image(Twod *self, int x, int y, int id);
 //‰æ‘œ‚ğÁ‚·

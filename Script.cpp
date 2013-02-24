@@ -168,10 +168,11 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 
 	self->camera = camera;
 	self->room = room;
-	self->mess = Mess_Initialize( );
-	self->twod = Twod_Initialize( );
-	self->console = console;
 	self->player = player;
+	self->mess = Mess_Initialize( );
+	self->twod = Twod_Initialize( self->player );
+	self->console = console;
+	
 
 	self->last_memo = "non";
 

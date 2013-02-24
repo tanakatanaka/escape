@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Twod.h"
+#include "Player.h"
 #include <string>
 #include <vector>
 #include "Pad.h"
@@ -13,15 +14,17 @@ struct Image
 
 struct Twod
 {
+	Player *player;
 	std::vector<Image> image;
 	int dx[100];
 };
 
 // ‰Šú‰»‚ð‚·‚é
-Twod *Twod_Initialize()
+Twod *Twod_Initialize(Player *player)
 {
 	Twod *self;
 	self = new Twod();
+	self->player = player;
 
 	self->dx[0] = LoadGraph( "‰æ‘œ/test.jpg" ) ;
 	self->dx[1] = LoadGraph( "meta/stussy.png" ) ;
@@ -52,6 +55,15 @@ void Twod_erase_image(Twod *self)
 	}
 }
 
+void display_time(Twod *self)
+{
+	int time = Player_get_time(self->player);
+
+	SetFontSize( 30 ) ;
+	DrawFormatString( 590, 30, GetColor( 255, 0, 0 ), "%d", time); 
+	SetFontSize( 16 ) ;
+}
+
 
 // “®‚«‚ðŒvŽZ‚·‚é
 void Twod_Update( Twod *self )
@@ -61,6 +73,7 @@ void Twod_Update( Twod *self )
 		Twod_erase_image(self);
 	}
 	
+	display_time(self);
 }
 
 // •`‰æ‚·‚é
