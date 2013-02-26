@@ -18,9 +18,9 @@
 #include "Pad.h"
 
 typedef std::vector<std::string> Words;
-void search_tag(Script *self, std::string tag, bool change);
 
 Words split(const std::string &str);
+
 
 struct Condition
 {
@@ -31,10 +31,9 @@ struct Condition
 	int hougaku;
 	std::string order;
 	std::string object;
-	bool on_off;
-	std::string tag;
-
-
+	std::string special;
+	bool one_time;
+	
 };
 
 struct Effect
@@ -64,7 +63,8 @@ struct Script
 	std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;
-	//
+	
+
 	std::string last_memo;
 
 };
@@ -81,20 +81,19 @@ void pack_conditon_words(Script *self, Words &line)
 	{
 		c.order = line[4].c_str();
 		c.object = line[5].c_str();
-		
-		if(line.size() > 7)
-		{
-			if(line[7] == "true"){ c.on_off = true; }
-			else{ c.on_off = false; }
-			c.tag = line[8];
-		}
+
+		if(line.size() > 6){ c.special = line[6]; }
+		else{ c.special = "non"; }
+
 		self->condition.push_back(c);
 	}
 	else if(line[0] == "not")
 	{
-		c.on_off = true;
+		c.one_time = true;
 		self->notice.push_back(c);
-	}	
+	}
+
+	
 }
 
 void pack_effect_words(Script *self, Words &line)
@@ -116,6 +115,8 @@ void pack_effect_words(Script *self, Words &line)
 	else if(line[2] == "act")
 	{
 		e.effect_type = "act";
+		// eff ‚Æ act ‚Í”ò‚Î‚µ‚Ä‹L˜^
+		e.action = Words(line.begin() + 2, line.end());
 	}
 
 	if(line[2] == "draw" || line[2] == "text")
@@ -207,38 +208,11 @@ bool condition_match(const Condition &c, Words &words)
 		   c.object == words[1];
 }
 
-void swit_on_off(Script *self,  Condition &c)
-{
-	if(c.tag == "un_open")
-	{
-		c.on_off = false;
-		search_tag(self, "open", false);
-	}
-}
-
-void search_tag(Script *self, std::string tag, int change)
-{
-	if(tag != "none")
-	{
-		for(int i = 0; i < (int)self->condition.size(); i++)
-		{
-			Condition &c = self->condition[i];
-			
-			if(c.tag == tag)
-			{
-				if(change == true){ swit_on_off(self, c); }
-				else{ c.on_off = true; }
-			}
-		}
-	}
-}
-
 void action_match(Script *self, Words &act)
 {
 	Room_act(self->room, act);
 	Player_act(self->player, act);
 	
-	search_tag( self, Room_get_tag(self->room), false);
 }
 
 void call_effect(Script *self, const Condition &c)
@@ -286,7 +260,7 @@ void word_act(Script *self, Words &words)
 		{
 			Condition &c = self->condition[i];
 
-			if(c.on_off != false && area_match(c, self->player) && condition_match(c , words))
+			if(area_match(c, self->player) && condition_match(c , words))
 			{
 				call_effect(self, c);
 			}
@@ -300,10 +274,10 @@ void check_notice(Script *self)
 	{
 		Condition &n = self->notice[i];
 
-		if(area_match(n, self->player) && n.on_off != false)
+		if(area_match(n, self->player) && n.one_time == true)
 		{
 			call_effect(self, n);
-			n.on_off = false;
+			n.one_time = false;
  		}
 	}
 }
