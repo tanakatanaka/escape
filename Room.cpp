@@ -36,7 +36,7 @@ struct Room
 Room *Room_Initialize()
 {
 	Room *self;
-	self = (Room *)malloc(sizeof(Room));
+	self = new Room();
 
 	self->area = 0;
 
@@ -66,35 +66,48 @@ Room *Room_Initialize()
 
 void Room_act(Room *self, std::vector<std::string> &act)
 {
+	bool on = false;
+
 	if(act[3] == "open_door" && self->rotY != OPEN)
 	{
+		on = true;
 		self->swit = 1;
 	}
 	
 	if(act[3] == "un_lock")
 	{
+		on = true;
 		self->slide_lock = true;
 	}
 
 	if(self->slide_lock == true && act[3] == "open_slide" && self->slide != SLIDE)
 	{
+		on = true;
 		self->s_swit = 1;
 	}
 
 	if(act[3] == "get_hammer")
 	{
+		on = true;
 		self->get_hammer = true;
 	}
 
 	if(self->get_hammer == true && act[3] == "break_pot")
 	{
+		on = true;
 		self->break_pot = true;
 	}
 
 	if(self->break_pot == true && act[3] == "get_item")
 	{
+		on = true;
 		self->get_paper++;
 	}
+
+	if(on == true){ self->tag = act[3]; }
+	else{ self->tag = "non"; }
+	
+
 }
 
 bool Room_get_door(Room *self)

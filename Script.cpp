@@ -18,6 +18,7 @@
 #include "Pad.h"
 
 typedef std::vector<std::string> Words;
+void search_tag(Script *self, std::string tag, bool change);
 
 Words split(const std::string &str);
 
@@ -206,12 +207,29 @@ bool condition_match(const Condition &c, Words &words)
 		   c.object == words[1];
 }
 
-void swit_on_off(Script *self, std::string &tag)
+void swit_on_off(Script *self,  Condition &c)
+{
+	if(c.tag == "un_open")
+	{
+		c.on_off = false;
+		search_tag(self, "open", false);
+	}
+}
+
+void search_tag(Script *self, std::string tag, int change)
 {
 	if(tag != "none")
 	{
-
-
+		for(int i = 0; i < (int)self->condition.size(); i++)
+		{
+			Condition &c = self->condition[i];
+			
+			if(c.tag == tag)
+			{
+				if(change == true){ swit_on_off(self, c); }
+				else{ c.on_off = true; }
+			}
+		}
 	}
 }
 
@@ -220,7 +238,7 @@ void action_match(Script *self, Words &act)
 	Room_act(self->room, act);
 	Player_act(self->player, act);
 	
-	swit_on_off(self, Room_get_tag(self->room));
+	search_tag( self, Room_get_tag(self->room), false);
 }
 
 void call_effect(Script *self, const Condition &c)
