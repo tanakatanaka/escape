@@ -17,6 +17,7 @@ struct Room
 	int glass;
 	int hammer;
 	int pot;
+	int paper;
 	double rotY;
 	int swit; //door—p
 	int count;
@@ -26,6 +27,9 @@ struct Room
 	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
+	int get_paper;
+
+	std::string tag;
 }; 
 
 // ‰Šú‰»‚ð‚·‚é
@@ -41,45 +45,55 @@ Room *Room_Initialize()
 	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
-
+	self->paper = MV1LoadModel("meta/paper.mqo") ;
+	//
 	self->rotY = 0.0f;
 	self->swit = 0;
 	self->count = 0;
 	self->s_swit = 0;
 	self->s_count = 0;
 	self->slide = 0;
+	//
 	self->slide_lock = false;
 	self->get_hammer = false;
 	self->break_pot = false;
+	self->get_paper = 0;
+	//
+	self->tag = "non";
 
 	return self;
 }
 
 void Room_act(Room *self, std::vector<std::string> &act)
 {
-	if(act[1] == "open_door" && self->rotY != OPEN)
+	if(act[3] == "open_door" && self->rotY != OPEN)
 	{
 		self->swit = 1;
 	}
 	
-	if(act[1] == "un_lock")
+	if(act[3] == "un_lock")
 	{
 		self->slide_lock = true;
 	}
 
-	if(self->slide_lock == true && act[1] == "open_slide" && self->slide != SLIDE)
+	if(self->slide_lock == true && act[3] == "open_slide" && self->slide != SLIDE)
 	{
 		self->s_swit = 1;
 	}
 
-	if(act[1] == "get_hammer")
+	if(act[3] == "get_hammer")
 	{
 		self->get_hammer = true;
 	}
 
-	if(self->get_hammer == true && act[1] == "break_pot")
+	if(self->get_hammer == true && act[3] == "break_pot")
 	{
 		self->break_pot = true;
+	}
+
+	if(self->break_pot == true && act[3] == "get_item")
+	{
+		self->get_paper++;
 	}
 }
 
@@ -99,8 +113,17 @@ bool Room_get_slide(Room *self)
 	{
 		return true;
 	}
-
 	return false;
+}
+
+std::string Room_get_tag(Room *self)
+{
+	return self->tag;
+}
+
+int Room_get_paper(Room *self)
+{
+	return self->get_paper;
 }
 
 void door_open(Room *self)
@@ -163,11 +186,13 @@ void Room_Draw( Room *self)
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->paper, VGet( 200, 0, 300 ) );
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
-	if(!self->get_hammer){ MV1DrawModel(self->hammer); }
-	if(!self->break_pot){ MV1DrawModel(self->pot); }
+	if(self->get_hammer == false){ MV1DrawModel(self->hammer); }
+	if(!self->break_pot == false){ MV1DrawModel(self->pot); }
+	if(!self->get_paper == false){ MV1DrawModel(self->paper); }
 	MV1DrawModel(self->glass);
 	
 	

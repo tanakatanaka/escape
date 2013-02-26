@@ -16,6 +16,7 @@ struct Player
     int hougaku;
 	int count;
 	int time_limit;
+	int get_paper;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -60,6 +61,7 @@ int Player_get_time(Player *self)
 {
 	return self->time_limit / 60;
 }
+
 
 void move_area(Player *self)
 {
@@ -114,6 +116,7 @@ void Player_Update( Player *self )
 
 	Room_set_are(self->room, self->area);
 	self->hougaku = Camera_set_hougaku(self->camera, 0);
+	self->get_paper = Room_get_paper(self->room);
 	self->count++;
 	self->time_limit--;
 }

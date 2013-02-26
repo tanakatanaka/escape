@@ -21,7 +21,6 @@ typedef std::vector<std::string> Words;
 
 Words split(const std::string &str);
 
-
 struct Condition
 {
 	//–½—ßğŒ‚Ì\‘¢‘Ì
@@ -31,9 +30,10 @@ struct Condition
 	int hougaku;
 	std::string order;
 	std::string object;
-	std::string special;
-	bool one_time;
-	
+	bool on_off;
+	std::string tag;
+
+
 };
 
 struct Effect
@@ -63,8 +63,7 @@ struct Script
 	std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;
-	
-
+	//
 	std::string last_memo;
 
 };
@@ -81,19 +80,20 @@ void pack_conditon_words(Script *self, Words &line)
 	{
 		c.order = line[4].c_str();
 		c.object = line[5].c_str();
-
-		if(line.size() > 6){ c.special = line[6]; }
-		else{ c.special = "non"; }
-
+		
+		if(line.size() > 7)
+		{
+			if(line[7] == "true"){ c.on_off = true; }
+			else{ c.on_off = false; }
+			c.tag = line[8];
+		}
 		self->condition.push_back(c);
 	}
 	else if(line[0] == "not")
 	{
-		c.one_time = true;
+		c.on_off = true;
 		self->notice.push_back(c);
-	}
-
-	
+	}	
 }
 
 void pack_effect_words(Script *self, Words &line)
@@ -115,8 +115,6 @@ void pack_effect_words(Script *self, Words &line)
 	else if(line[2] == "act")
 	{
 		e.effect_type = "act";
-		// eff ‚Æ act ‚Í”ò‚Î‚µ‚Ä‹L˜^
-		e.action = Words(line.begin() + 2, line.end());
 	}
 
 	if(line[2] == "draw" || line[2] == "text")
@@ -208,11 +206,21 @@ bool condition_match(const Condition &c, Words &words)
 		   c.object == words[1];
 }
 
+void swit_on_off(Script *self, std::string &tag)
+{
+	if(tag != "none")
+	{
+
+
+	}
+}
+
 void action_match(Script *self, Words &act)
 {
 	Room_act(self->room, act);
 	Player_act(self->player, act);
 	
+	swit_on_off(self, Room_get_tag(self->room));
 }
 
 void call_effect(Script *self, const Condition &c)
@@ -260,7 +268,7 @@ void word_act(Script *self, Words &words)
 		{
 			Condition &c = self->condition[i];
 
-			if(area_match(c, self->player) && condition_match(c , words))
+			if(c.on_off != false && area_match(c, self->player) && condition_match(c , words))
 			{
 				call_effect(self, c);
 			}
@@ -274,10 +282,10 @@ void check_notice(Script *self)
 	{
 		Condition &n = self->notice[i];
 
-		if(area_match(n, self->player) && n.one_time == true)
+		if(area_match(n, self->player) && n.on_off != false)
 		{
 			call_effect(self, n);
-			n.one_time = false;
+			n.on_off = false;
  		}
 	}
 }

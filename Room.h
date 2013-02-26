@@ -14,6 +14,8 @@ void Room_act(Room *self, std::vector<std::string> &act);
 void Room_set_are(Room *self, int area);
 bool Room_get_door(Room *self);
 bool Room_get_slide(Room *self);
+std::string Room_get_tag(Room *self);
+int Room_get_paper(Room *self);
 
 
 // “®‚«‚ðŒvŽZ‚·‚é

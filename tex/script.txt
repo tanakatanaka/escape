@@ -10,8 +10,12 @@ not intro 0 0
 eff intro text Please__push__'Esc__key' 10 10 
 eff intro text and__type__"check__door" 10 26 
 
-con check_door 0 0 check door 
+con check_door 0 0 check door * true un_open
 eff check_door text please__"open__door"__and__enter__the_room 10 10 
+
+con check_door 0 0 check door * false open
+eff check_door text please__enter__the_room 10 10 
+
 
 con open_door 0 0 open door
 eff open_door act open_door
@@ -30,37 +34,40 @@ con check_pict_3 3 3 check pict
 eff check_pict_3 text pict__C 10 10
 
 			*3*
-
-con check_slide 3 1 check slide
+con check_slide 3 1 check slide * true locked  
 eff check_slide text please__enter__the__code 10 10
 
-con code_slide 3 1 code 100
+con code_slide 3 1 code 100 * true locked
 eff code_slide act un_lock
 eff code_slide text The__slide__unlocked 10 10
 
-con open_slide 3 1 open slide
+con open_slide 3 1 open slide 
 eff open_slide act open_slide
 
 			*5*
-
-con check_pot 5 1 check pot
+			
+con check_pot 5 1 check pot * true un_break
 eff check_pot text pot__sugoi 10 10
 
-con break_pot 5 1 break pot
+con break_pot 5 1 break pot * true un_break
 eff break_pot act break_pot
 
-			*6*
+con check_item 5 1 check item * false break
+eff check_item text item__sugoi 10 10
 
-con check_table 6 3 check table
+con get_item 5 1 get item
+eff get_item act get_item
+
+			*6*
+			
+con check_table 6 3 check table * true un_hammer
 eff check_table text cup__and__hammer__on__the__table 10 10 
 
-con get_hammer 6 3 get hammer
-eff get_hammer act get_hammer
-
-
-con check_hanmmer 6 3 check hammer
+con check_hanmmer 6 3 check hammer * true un_hammer
 eff check_hanmmer text hammer__sugoi 10 10 
 
+con get_hammer 6 3 get hammer * true un_hammer
+eff get_hammer act get_hammer
 
 
 
