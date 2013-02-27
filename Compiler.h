@@ -4,14 +4,45 @@
 
 struct Compiler;
 
+struct Condition
+{
+	//命令条件の構造体
+	//管理番号・場所・方角・命令内容・命令対象
+	std::string effect_name;
+	int area;
+	int hougaku;
+	std::string order;
+	std::string object;
+	std::string special;
+	bool one_time;
+	
+};
+
+struct Effect
+{
+	//命令効果の構造体
+	//管理番号・y・効果番号(0:画像表示・1:文字表示)・画像管理番号・画像の名前・文字・画像文字の管理タグ
+	std::string name;
+	int x;
+	int y;
+	std::string effect_type;
+	int draw_id; //描画関連
+	//文字関連
+	std::string text;
+	//act関連
+	Words action;
+};
+
+struct CompilerResult
+{
+    std::vector<Condition> condition;
+	std::vector<Condition> notice;
+	std::vector<Effect> effect;
+};
+
+
 // 初期化をする
 Compiler *Compiler_Initialize();
-
-// 動きを計算する
-void Compiler_Update( Compiler *Compiler );
-
-// 描画する
-void Compiler_Draw( Compiler *Compiler );
 
 // 終了処理をする
 void Compiler_Finalize( Compiler *Compiler );
