@@ -1,0 +1,19 @@
+#ifndef DEF_ENDING_H //“ñdinclude–h~
+
+#define DEF_ENDING_H
+
+struct Ending;
+
+// ‰Šú‰»‚ğ‚·‚é
+Ending *Ending_Initialize();
+
+// “®‚«‚ğŒvZ‚·‚é
+void Ending_Update( Ending *Ending );
+
+// •`‰æ‚·‚é
+void Ending_Draw( Ending *Ending );
+
+// I—¹ˆ—‚ğ‚·‚é
+void Ending_Finalize( Ending *Ending );
+
+#endif

@@ -6,6 +6,7 @@
 #include "Opening.h"
 #include "Player.h"
 #include "Room.h"
+#include "Ending.h"
 
 
 struct Game
@@ -16,6 +17,7 @@ struct Game
 	Player *player;
 	Opening *opening;
 	Room *room;
+	Ending *ending;
 	
 	//game進行関係
 	int game_state;
@@ -37,12 +39,13 @@ Game *Game_Initialize()
 	self->player = Player_Initialize(self->camera, self->console, self->room);
 	self->script = Script_Initialize(self->camera, self->console, self->player, self->room);
 	self->opening = Opening_Initialize();
+	self->ending = Ending_Initialize();
 	//game進行関係
 	self->game_state = 0;
 	return self;
 }
 
-void game_play_tick(Game *self)
+void game_play_Update(Game *self)
 {
 	Player_Update( self->player );
 	Room_Update( self->room );
@@ -51,13 +54,22 @@ void game_play_tick(Game *self)
 	Console_Update( self->console );
 }
 
-void game_play_draw(Game *self)
+void game_play_Draw(Game *self)
 {
 	Player_Draw( self->player);
 	Room_Draw(self->room);
 	Script_Draw( self->script );
 	Camera_Draw(self->camera);
 	Console_Draw( self->console );
+}
+
+void game_play_Finalize(Game *self)
+{
+	Player_Finalize( self->player);
+	Room_Finalize(self->room);
+	Script_Finalize( self->script );
+	Camera_Finalize(self->camera);
+	Console_Finalize( self->console );
 }
 
 
@@ -72,7 +84,16 @@ void Game_Update(Game *self)
 	}
 	else if(self->game_state  == 1)
 	{
-		game_play_tick(self);
+		game_play_Update(self);
+		if(Player_get_time(self->player) < 0)
+		{
+			game_play_Finalize(self);
+			self->game_state++;
+		}
+	}
+	else if(self->game_state  == 2)
+	{
+		Ending_Update( self->ending );
 	}
 }
 
@@ -85,8 +106,13 @@ void Game_Draw(Game *self)
 	}
 	else if(self->game_state  == 1)	
 	{
-		game_play_draw(self);
+		game_play_Draw(self);
 	}
+	else if(self->game_state  == 2)
+	{
+		Ending_Draw( self->ending );
+	}
+
 }
 
 // 終了処理をする
