@@ -1,1 +1,1 @@
-@msbuild GameProg.sln /p:Platform=Win32
+@msbuild GameProg.sln /p:Platform=Win32 /p:BuildInParallel=true /m:2
