@@ -1,4 +1,5 @@
 #include "lua_script.h"
+#include "windows.h"
 
 extern "C" {
 #include "lua.h"
@@ -16,7 +17,8 @@ extern "C" {
 
 static void show_error(const char *msg)
 {
-    // MessageBox(NULL, msg, "ゲームのエラー", 0);
+    if (msg == NULL) { return; }
+    MessageBox(NULL, msg, "ゲームのエラー", 0);
     fprintf(stderr, "lua error: %s\n", msg);
 }
 
@@ -39,7 +41,6 @@ static int report(lua_State *L, int status) {
   if (status != LUA_OK && !lua_isnil(L, -1))
   {
     const char *msg = lua_tostring(L, -1);
-    if (msg == NULL) { msg = "(error object is not a string)"; }
     show_error(msg);
     lua_pop(L, 1);
     lua_gc(L, LUA_GCCOLLECT, 0);
@@ -98,11 +99,6 @@ LuaScript *LuaScript_Load(const char *filename)
     if (!result || status != LUA_OK)
     {
         const char *msg = (lua_type(self->lua, -1) == LUA_TSTRING) ? lua_tostring(self->lua, -1) : NULL;
-        
-        if (msg == NULL)
-        {
-            msg = "(error object is not a string)";
-        }
         
         show_error(msg);
         
