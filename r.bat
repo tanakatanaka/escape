@@ -1,0 +1,1 @@
+@m && debug\GameProg.exe
