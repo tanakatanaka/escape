@@ -22,11 +22,6 @@ typedef std::vector<std::string> Words;
 
 Words split(const std::string &str);
 
-struct State
-{
-	int a;
-	int b;
-};
 
 struct Script
 {
@@ -44,7 +39,6 @@ struct Script
 	std::vector<Effect> effect;
 
 	std::string last_memo;
-	State state;
 };
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -68,8 +62,6 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->notice = result.notice;
 	self->effect = result.effect;
 	self->last_memo = "non";
-	self->state.a = 0;
-	self->state.b = 0;
 	return self;
 }
 
