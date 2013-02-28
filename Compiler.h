@@ -2,6 +2,7 @@
 
 #define DEF_COMPILER_H
 
+typedef std::vector<std::string> Words;
 struct Compiler;
 
 struct Condition

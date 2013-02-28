@@ -56,6 +56,10 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	
 	CompilerResult result = Compiler_compile(compiler, "tex/script.txt");
 
+	self->condition = result.condition;
+	self->notice = result.notice;
+	self->effect = result.effect;
+
 	self->last_memo = "non";
 	
 	return self;
