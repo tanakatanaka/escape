@@ -5,6 +5,13 @@
 typedef std::vector<std::string> Words;
 struct Compiler;
 
+struct When
+{
+	std::string condition_name;
+	std::string state_name;
+	int state;
+};
+
 struct Condition
 {
 	//–½—ßğŒ‚Ì\‘¢‘Ì
@@ -34,6 +41,7 @@ struct Effect
 
 struct CompilerResult
 {
+	std::vector<When> when;
     std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;

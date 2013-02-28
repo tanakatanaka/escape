@@ -22,6 +22,12 @@ typedef std::vector<std::string> Words;
 
 Words split(const std::string &str);
 
+struct State
+{
+	int a;
+	int b;
+};
+
 struct Script
 {
 	Room *room;
@@ -32,12 +38,13 @@ struct Script
 	Player *player;
 
 	//–½—ß\‘¢‘Ì•Ï” 
+	std::vector<When> when;
 	std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;
 
 	std::string last_memo;
-
+	State state;
 };
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -56,12 +63,13 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	
 	CompilerResult result = Compiler_compile(compiler, "tex/script.txt");
 
+	self->when = result.when;
 	self->condition = result.condition;
 	self->notice = result.notice;
 	self->effect = result.effect;
-
 	self->last_memo = "non";
-	
+	self->state.a = 0;
+	self->state.b = 0;
 	return self;
 }
 

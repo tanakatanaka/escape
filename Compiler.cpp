@@ -16,10 +16,21 @@ typedef std::vector<std::string> Words;
 struct Compiler
 {
 	//命令構造体変数 
+	std::vector<When> when;
 	std::vector<Condition> condition;
 	std::vector<Condition> notice;
 	std::vector<Effect> effect;
 };
+
+void pack_when_words(Compiler *self, Words &line)
+{
+	When w;
+
+	w.condition_name = line[3];
+	w.state_name = line[1];
+	w.state = std::stoi(line[2]);
+
+}
 
 void pack_conditon_words(Compiler *self, Words &line)
 {
@@ -108,14 +119,9 @@ int load_script(Compiler *self, const char *filename)
 		if(word_line.size() > 0)
 		{
 			// １行をブロックにして構造体に代入
-			if(word_line[0] == "con" || word_line[0] == "not")
-			{
-				pack_conditon_words(self, word_line);
-			}
-			else if(word_line[0] == "eff")
-			{
-				pack_effect_words(self, word_line); 	
-			}
+			if(word_line[0] == "when"){ pack_when_words(self, word_line); }
+			else if(word_line[0] == "con" || word_line[0] == "not"){ pack_conditon_words(self, word_line); }
+			else if(word_line[0] == "eff"){ pack_effect_words(self, word_line); }
 		}
 	}
 	return 0;
@@ -132,6 +138,7 @@ CompilerResult Compiler_compile(Compiler *self, const char *filename)
 
 	CompilerResult com;
 
+	com.when = self->when;
 	com.condition = self->condition;
 	com.notice = self->notice;
 	com.effect = self->effect;
