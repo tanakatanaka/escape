@@ -1,2 +1,2 @@
 
-rint("hello from lua!")
+print("hello from lua!")
