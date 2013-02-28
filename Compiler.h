@@ -27,10 +27,8 @@ struct Effect
 	int y;
 	std::string effect_type;
 	int draw_id; //描画関連
-	//文字関連
-	std::string text;
-	//act関連
-	Words action;
+	std::string text;//文字関連
+	Words action;//act関連
 };
 
 struct CompilerResult

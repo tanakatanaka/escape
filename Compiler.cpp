@@ -130,10 +130,50 @@ CompilerResult Compiler_compile(Compiler *self, const char *filename)
 		MessageBox(NULL,"ファイルが読み込みませんでした","ゲームのエラー", 0);
 	}
 
-	
+	CompilerResult com;
+
+	for(int i = 0; i > self->condition.size(); i++)
+	{
+		Condition &con = self->condition[i];
+		Condition &c = com.condition[i];
+
+		c.effect_name = con.effect_name;
+		c.area = con.area;
+		c.hougaku = con.hougaku;
+		c.order = con.order;
+		c.special = con.special;
+		c.one_time = con.one_time;
+	}
+
+	for(int i = 0; i > self->notice.size(); i++)
+	{
+		Condition &not = self->notice[i];
+		Condition &n = com.notice[i];
+
+		n.effect_name = not.effect_name;
+		n.area = not.area;
+		n.hougaku = not.hougaku;
+		n.order = not.order;
+		n.special = not.special;
+		n.one_time = not.one_time;
+	}
+
+	for(int i = 0; i > self->effect.size(); i++)
+	{
+		Effect &eff = self->effect[i];
+		Effect &e = com.effect[i];
+
+		e.name = eff.name;
+		e.x = eff.x;
+		e.y = eff.y;
+		e.effect_type = eff.effect_type;
+		e.draw_id = eff.draw_id;
+		e.text = eff.text;
+		e.action = eff.action;
+	}
 
 
-
+	return com;
 }
 
 // 初期化をする
