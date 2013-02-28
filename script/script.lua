@@ -1,1 +1,2 @@
-1
+
+print("hello from lua!")

@@ -1,4 +1,3 @@
-#define LUA_ANSI
 #define LUA_LIB
 
 #define ltable_c

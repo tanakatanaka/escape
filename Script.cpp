@@ -17,12 +17,7 @@
 #include "Twod.h"
 #include "Pad.h"
 #include "Compiler.h"
-
-extern "C" {
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+#include "lua_script.h"
 
 struct Script
 {
@@ -32,7 +27,7 @@ struct Script
 	Twod *twod;
 	Console *console;
 	Player *player;
-  lua_State *lua;
+	LuaScript *lua_script;
 };
 
 // 初期化をする
@@ -48,17 +43,13 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->twod = Twod_Initialize( self->player );
 	self->console = console;
 	
-	fprintf(stderr, "a\n");
+	self->lua_script = LuaScript_Load("script/script.lua");
 	
-	self->lua = luaL_newstate();
-	luaL_openlibs(self->lua);
+	if (self->lua_script == NULL)
+	{
+	    exit(1);
+	}
 	
-  if (luaL_loadfile(self->lua, "script\\script.lua") == LUA_ERRFILE)
-  {
-		  MessageBox(NULL, "script/script.lua が読み込めませんでした", "ゲームのエラー", 0);
-		  exit(1);
-  }
-  
 	return self;
 }
 
@@ -105,5 +96,5 @@ void Script_Draw( Script *self)
 // 終了処理をする
 void Script_Finalize( Script *self )
 {
-    lua_close(self->lua);
+    LuaScript_Finalize(self->lua_script);
 }

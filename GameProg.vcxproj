@@ -102,6 +102,7 @@
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Twod.cpp" />
     <ClCompile Include="lua_one.c" />
+    <ClCompile Include="lua_script.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Script.h" />
     <ClInclude Include="Twod.h" />
     <ClInclude Include="lua.h" />
+    <ClInclude Include="lua_script.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
