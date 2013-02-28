@@ -30,7 +30,6 @@ void pack_when_words(Compiler *self, Words &line)
 	w.state_name = line[1];
 	w.state = std::stoi(line[2]);
 
-	self->when.push_back(w);
 }
 
 void pack_conditon_words(Compiler *self, Words &line)
