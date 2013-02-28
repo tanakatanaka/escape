@@ -125,7 +125,7 @@ CompilerResult Compiler_compile(Compiler *self, const char *filename)
 {
 	printf("\nスクリプト読み込み　開始\n\n");
 
-	if(load_script(self, "tex/script.txt") == -1)
+	if(load_script(self, filename) == -1)
 	{
 		MessageBox(NULL,"ファイルが読み込みませんでした","ゲームのエラー", 0);
 	}

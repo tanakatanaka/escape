@@ -38,6 +38,7 @@ struct CompilerResult
 	std::vector<Effect> effect;
 };
 
+CompilerResult Compiler_compile(Compiler *self, const char *filename);
 
 // ‰Šú‰»‚ğ‚·‚é
 Compiler *Compiler_Initialize();
