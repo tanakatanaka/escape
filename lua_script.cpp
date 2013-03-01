@@ -1,10 +1,19 @@
 #include "lua_script.h"
 #include "windows.h"
+#include "Console.h"
+#include "Script.h"
+#include "Camera.h"
+#include "Room.h"
+#include "Player.h"
+#include "Mess.h"
+#include "Twod.h"
+#include "Pad.h"
 
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#include "lua_header.h"
 }
 
 struct LuaScript
@@ -89,6 +98,8 @@ LuaScript *LuaScript_Load(const char *filename)
     
     self->filename = filename;
     self->lua = luaL_newstate();
+
+	  tolua_lua_header_open(self->lua);
 
     lua_pushcfunction(self->lua, &load_lua_script);
     lua_pushlightuserdata(self->lua, self);
