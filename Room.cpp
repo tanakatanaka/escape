@@ -55,29 +55,31 @@ Room *Room_Initialize()
 	return self;
 }
 
-void Room_act(Room *self, std::vector<std::string> &act)
+void Room_act(Room *self, const char *action)
 {
-	if(act[1] == "open_door" && self->rotY != OPEN)
+  std::string act(action);
+  
+	if(act == "open_door" && self->rotY != OPEN)
 	{
 		self->swit = 1;
 	}
 	
-	if(act[1] == "un_lock")
+	if(act == "un_lock")
 	{
 		self->slide_lock = true;
 	}
 
-	if(self->slide_lock == true && act[1] == "open_slide" && self->slide != SLIDE)
+	if(self->slide_lock == true && act == "open_slide" && self->slide != SLIDE)
 	{
 		self->s_swit = 1;
 	}
 
-	if(act[1] == "get_hammer")
+	if(act == "get_hammer")
 	{
 		self->get_hammer = true;
 	}
-
-	if(self->get_hammer == true && act[1] == "break_pot")
+  
+	if(self->get_hammer == true && act == "break_pot")
 	{
 		self->break_pot = true;
 	}
