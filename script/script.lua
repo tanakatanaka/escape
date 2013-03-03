@@ -1,15 +1,19 @@
 
 function text(msg, x, y)
-  Mess_add_word(mess, x, y, msg);
+	Mess_add_word(mess, x, y, msg)
 end
 
 function area_hougaku(x, y)
-  local area = Player_get_area(player)
-  local hougaku = Player_get_hougaku(player)
+	local area = Player_get_area(player)
+	local hougaku = Player_get_hougaku(player)
 
-  return area == x and hougaku == y
+	return area == x and hougaku == y
 end
 
+function get_command()
+	local command = console_d_bag(console)
+	return string.gsub(command, "%s+", " ")
+end
 
 --[[
   条件用の変数
@@ -24,12 +28,14 @@ end
 
 function on_move()
 	if area_hougaku(0, 0) then
-	  text('Please push "Esc__key"', 10, 10)
-	  text('and type "check door"', 10, 26)
+		text('Please push "Esc__key"', 10, 10)
+		text('and type "check door"', 10, 26)
 	end
 end
 
 function on_command()
+	local command = get_command()
+
 	if area_hougaku(0, 0) then
 	  if command == "open door" then
 	    room_open_door()
