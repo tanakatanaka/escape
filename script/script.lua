@@ -10,19 +10,37 @@ function area_hougaku(x, y)
 	return area == x and hougaku == y
 end
 
+function execute_debug_command(command)
+	if not string.match(command, ";$") then
+	  return false
+	end
+	
+  local ok, err = load(command, "command", "t")
+  if err then
+    ok, err = load("return " .. command, "command-expr", "t")
+    if err then
+      print(err)
+      return true
+    else
+	    print(">> " .. command)
+	    print("=> " .. tostring(ok()))
+    end
+  else
+    print("!> " .. command)
+    ok()
+    print("=> ok")
+  end
+  
+  return true
+end
+
 function get_command()
 	local command = console_d_bag(console)
 	
-	if string.match(command, ";$") then
-	  local ok, err = load(command, "command", "t")
-	  if err then
-	    print(err)
-	  else
-	    print("exec: " .. command)
-	    ok()
-	  end
+	-- デバッグコマンド
+	if execute_debug_command(command) then
 	  return nil
-	end
+	ebd
 	
 	command = string.gsub(command, "^%s+", "") -- 先頭の空白を消す
 	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
