@@ -29,7 +29,6 @@ void pack_when_words(Compiler *self, Words &line)
 	w.condition_name = line[3];
 	w.state_name = line[1];
 	w.state = std::stoi(line[2]);
-
 }
 
 void pack_conditon_words(Compiler *self, Words &line)

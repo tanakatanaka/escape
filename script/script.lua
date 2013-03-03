@@ -1,4 +1,8 @@
 
+local area = Player_get_area(player)
+local hougaku = Player_get_hougaku(player)
+
+
 function area_hougaku(x, y)
         return area == x and hougaku == y
 end
