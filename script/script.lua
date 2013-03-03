@@ -12,7 +12,10 @@ end
 
 function get_command()
 	local command = console_d_bag(console)
-	return string.gsub(command, "%s+", " ")
+	command = string.gsub(command, "^%s+", "") -- 先頭の空白を消す
+	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
+	command = string.gsub(command, "%s+", " ") -- 間の空白は一個に統一
+	return command
 end
 
 --[[
