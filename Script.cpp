@@ -74,11 +74,11 @@ void decode_command(Script *self)
 		
 	if(command != NULL)
 	{
-		//コンソールのほうにあるコマンドをログに移動
-		console_shift_log(self->console);
 		//分解したwordを解読関数にかける
 		// Luaのon_command関数を呼び出す
 		LuaScript_Call(self->lua_script, "on_command");
+		//コンソールのほうにあるコマンドをログに移動
+		console_shift_log(self->console);
 	}
 }
 

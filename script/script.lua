@@ -88,7 +88,3 @@ function on_command()
 	end
 end
 
-function on_anything()
-	on_move()
-	on_command()
-end
