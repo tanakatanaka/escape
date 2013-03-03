@@ -4,3 +4,6 @@ int Player_get_hougaku(Player *self);
 void Twod_add_image(Twod *self, int x, int y, int id);
 void Mess_add_word(Mess *self, int x, int y, const char *word);
 void Room_act(Room *self, const char *act);
+
+
+
