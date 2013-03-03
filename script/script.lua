@@ -17,7 +17,7 @@ function execute_debug_command(command)
 	
   local ok, err = load(command, "command", "t")
   if err then
-    ok, err = load("return " .. command, "command-expr", "t")
+    ok, err = load("return (" .. command .. ")", "command-expr", "t")
     if err then
       print(err)
       return true
@@ -40,7 +40,7 @@ function get_command()
 	-- デバッグコマンド
 	if execute_debug_command(command) then
 	  return nil
-	ebd
+	end
 	
 	command = string.gsub(command, "^%s+", "") -- 先頭の空白を消す
 	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
