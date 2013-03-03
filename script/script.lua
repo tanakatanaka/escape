@@ -1,14 +1,13 @@
 
-local area = Player_get_area(player)
-local hougaku = Player_get_hougaku(player)
-
 function text(msg, x, y)
-
-	Mess_add_word(mess, x, y, msg);
+  Mess_add_word(mess, x, y, msg);
 end
 
 function area_hougaku(x, y)
-        return area == x and hougaku == y
+  local area = Player_get_area(player)
+  local hougaku = Player_get_hougaku(player)
+
+  return area == x and hougaku == y
 end
 
 
