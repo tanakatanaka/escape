@@ -47,7 +47,8 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	
 	LuaScript_Set(self->lua_script, "hoge", "fuga");
 	
-	if (!LuaScript_Load(self->lua_script, "script/script.lua"))
+	if (!LuaScript_Load(self->lua_script, "script/setup/strict.lua") ||
+	    !LuaScript_Load(self->lua_script, "script/script.lua"))
 	{
 	    exit(1);
 	}
