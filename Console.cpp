@@ -95,6 +95,9 @@ void Console_Update( Console *self )
 	if(self->is_input % 2 == 1)
 	{
 		int bag = get_chara();
+		
+		// N.B. リターンキーを押した時の処理はここではなくScriptにある
+		
 		if(bag == -1)
 		{
 			//入力がない場合
