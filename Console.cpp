@@ -65,6 +65,19 @@ void console_shift_log(Console *self)
 static int get_chara()
 {
   static const char NUM_SYMBOLS[] = " !\"#$%&'()";
+  static const char NUMKEY_NUM[] =
+  {
+      KEY_INPUT_NUMPAD0,
+      KEY_INPUT_NUMPAD1,
+      KEY_INPUT_NUMPAD2,
+      KEY_INPUT_NUMPAD3,
+      KEY_INPUT_NUMPAD4,
+      KEY_INPUT_NUMPAD5,
+      KEY_INPUT_NUMPAD6,
+      KEY_INPUT_NUMPAD7,
+      KEY_INPUT_NUMPAD8,
+      KEY_INPUT_NUMPAD9,
+  };
 
   // シフト押してたらtrue
   const bool shift = Pad_Get(KEY_INPUT_LSHIFT) > 0 || Pad_Get(KEY_INPUT_RSHIFT) > 0;
@@ -78,7 +91,7 @@ static int get_chara()
 	//数値入力があった場合
 	for (int i = 0; i < 10; i++)
 	{
-		if (Pad_Get( KEYNUM[i] ) == -1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
+		if (Pad_Get( KEYNUM[i] ) == -1 || Pad_Get(NUMKEY_NUM[i]) == -1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
 	}
 
 	//スペース入力があった場合
@@ -90,7 +103,7 @@ static int get_chara()
 	//したキー入力があった場合
 	if(Pad_Get( KEY_INPUT_DOWN ) == -1) { return -4; }
 	
-	// 記号類
+	// 記号類 (106)
 	if (Pad_Get(KEY_INPUT_MINUS) == -1) { return shift ? '=' : '-'; }
 	if (Pad_Get(KEY_INPUT_PREVTRACK) == -1) { return shift ? '~' : '^'; }
 	if (Pad_Get(KEY_INPUT_YEN) == -1) { return shift ? '|' : '\\'; }
@@ -106,6 +119,12 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_PERIOD) == -1) { return shift ? '>' : '.'; }
 	if (Pad_Get(KEY_INPUT_SLASH) == -1) { return shift ? '?' : '/'; }
 	if (Pad_Get(KEY_INPUT_BACKSLASH) == -1) { return '_'; } // my preference
+	
+	if (Pad_Get(KEY_INPUT_MULTIPLY) == -1) { return '*'; }
+	if (Pad_Get(KEY_INPUT_DIVIDE) == -1) { return '/'; }
+	if (Pad_Get(KEY_INPUT_ADD) == -1) { return '+'; }
+	if (Pad_Get(KEY_INPUT_SUBTRACT) == -1) { return '-'; }
+	if (Pad_Get(KEY_INPUT_DECIMAL) == -1) { return '.'; }
 
   //入力がなかった場合
   return -1;
