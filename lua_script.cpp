@@ -8,6 +8,7 @@
 #include "Mess.h"
 #include "Twod.h"
 #include "Pad.h"
+#include <memory>
 
 extern "C" {
 #include "lua.h"
@@ -22,14 +23,38 @@ struct LuaScript
     const char *filename;
 };
 
-extern "C" {
+std::unique_ptr<WCHAR []> utf8_to_wstr(const char *ansi)
+{
+  const int length = strlen(ansi);
+  const int unicode_length = MultiByteToWideChar(CP_UTF8, 0, ansi, length, NULL, 0);
+  std::unique_ptr<WCHAR []> unicode(new WCHAR[unicode_length + 1]);
+  MultiByteToWideChar(CP_UTF8, 0, ansi, length, unicode.get(), unicode_length);
+  unicode[unicode_length] = 0;
+  return unicode;
+}
+
+std::unique_ptr<char []> wstr_to_ansi(WCHAR *wstr)
+{
+  const int wstr_length = wcslen(wstr);
+  const int ansi_length = WideCharToMultiByte(CP_ACP, 0, wstr, wstr_length, NULL, 0, " ", NULL);
+  std::unique_ptr<char []> ansi(new char[ansi_length + 1]);
+  WideCharToMultiByte(CP_ACP, 0, wstr, wstr_length, ansi.get(), ansi_length, " ", NULL);
+  ansi[ansi_length] = 0;
+  return ansi;
+}
 
 static void show_error(const char *msg)
 {
     if (msg == NULL) { return; }
-    MessageBox(NULL, msg, "ゲームのエラー", 0);
-    fprintf(stderr, "lua error: %s\n", msg);
+    
+    std::unique_ptr<WCHAR []> msgw(utf8_to_wstr(msg));
+    std::unique_ptr<char []> msga(wstr_to_ansi(msgw.get()));
+    
+    printf("lua error: %s\n", msga.get());
+    MessageBoxW(NULL, msgw.get(), L"ゲームのエラー", 0);
 }
+
+extern "C" {
 
 static int traceback(lua_State *L)
 {
@@ -77,8 +102,6 @@ static int load_lua_script(lua_State *L)
 {
     const char *filename = (const char *)lua_touserdata(L, 1);
   	
-  	printf("loading \"%s\"", filename);
-  	
   	if (dofile(L, filename) != LUA_OK)
     {
   		  return 0;
@@ -124,10 +147,10 @@ bool LuaScript_Load(LuaScript *self, const char *filename)
     }
 }
 
-void LuaScript_Set(LuaScript *self, const char *name, void *data)
+void LuaScript_Set(LuaScript *self, const char *type, const char *name, void *data)
 {
     lua_State *L = self->lua;
-    lua_pushlightuserdata(L, data);
+    tolua_pushusertype(L, data, type);
     lua_setglobal(L, name);
 }
 
