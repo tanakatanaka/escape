@@ -23,9 +23,8 @@ end
     room_act("命令")
 ]]--
 
-function on_anything()
-{
-
+function on_move()
+then
 	if area_hougaku(0, 0) then
 	  text('Please push "Esc__key"', 10, 10)
 	  text('and type "check door"', 10, 26)
@@ -34,7 +33,10 @@ function on_anything()
 	    room_open_door()
 	  end
 	end
+end
 
+function on_command()
+then
 	if command == "check pict" then
 	  if area_hougaku(1, 3) then
 	    text("title stussy", 10, 10)
@@ -84,5 +86,12 @@ function on_anything()
 	  elseif command == "check cup" then
 	    text("cup sugoi", 10, 10)
 	  end
+end
+
+function on_anything()
+{
+	on_move()
+	on_command()
+	
 } 
 end
