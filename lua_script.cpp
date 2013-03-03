@@ -120,14 +120,44 @@ static int load_lua_script(lua_State *L)
     return 1;
 }
 
+/** UTF8からSJISにエンコード。Lua用 */
+static int encode_to_c(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isstring(tolua_S,1,0,&tolua_err))
+    goto tolua_lerror;
+    else
+#endif
+    {
+        const char *msg = tolua_tostring(tolua_S, 1, 0);
+
+        std::unique_ptr<WCHAR []> msgw(utf8_to_wstr(msg));
+        std::unique_ptr<char []> msga(wstr_to_ansi(msgw.get()));
+        
+        tolua_pushstring(tolua_S, msga.get());
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'encode_to_c'.",&tolua_err);
+    return 0;
+#endif
+}
+
 } /* extern "C" */
 
 LuaScript *LuaScript_Initialize()
 {
     LuaScript *self = new LuaScript();
+    
     self->lua = luaL_newstate();
+    
   	luaL_openlibs(self->lua);
 	  tolua_lua_header_open(self->lua);
+	  
+    lua_pushcfunction(self->lua, &encode_to_c);
+    lua_setglobal(self->lua, "encode_to_c");
 	  
 	  return self;
 }
