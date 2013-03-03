@@ -41,7 +41,7 @@ function on_command()
 
 	if area_hougaku(0, 0) then
 	  if command == "open door" then
-	    room_open_door()
+	  	Room_act(room, "open_door")
 	  end
 	end
 	
@@ -50,9 +50,9 @@ function on_command()
 	    text("title stussy", 10, 10)
 	    text("memo", 10, 26)
 	    draw("meta/stussy.png")
-	  elseif area == 2 and hougaku == 3 then
+	  elseif area_hougaku(2, 3) then
 	    text("pict B", 10, 10)
-	  elseif area == 3 and hougaku == 3 then
+	  elseif area_hougaku(3, 3) then
 	    text("pict C", 10, 10)
 	  end
 	end
