@@ -43,9 +43,11 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->twod = Twod_Initialize( self->player );
 	self->console = console;
 	
-	self->lua_script = LuaScript_Load("script/script.lua");
+	self->lua_script = LuaScript_Initialize();
 	
-	if (self->lua_script == NULL)
+	LuaScript_Set(self->lua_script, "hoge", "fuga");
+	
+	if (!LuaScript_Load(self->lua_script, "script/script.lua"))
 	{
 	    exit(1);
 	}

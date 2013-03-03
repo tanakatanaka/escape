@@ -75,13 +75,11 @@ static int dofile(lua_State *L, const char *name)
 
 static int load_lua_script(lua_State *L)
 {
-    LuaScript *self = (LuaScript *)lua_touserdata(L, 1);
+    const char *filename = (const char *)lua_touserdata(L, 1);
   	
-  	luaL_openlibs(L);
+  	printf("loading \"%s\"", filename);
   	
-  	fprintf(stderr, "loading \"%s\"", self->filename);
-  	
-  	if (dofile(L, self->filename))
+  	if (dofile(L, filename) != LUA_OK)
     {
   		  return 0;
     }
@@ -92,38 +90,53 @@ static int load_lua_script(lua_State *L)
 
 } /* extern "C" */
 
-LuaScript *LuaScript_Load(const char *filename)
+LuaScript *LuaScript_Initialize()
 {
     LuaScript *self = new LuaScript();
-    
-    self->filename = filename;
     self->lua = luaL_newstate();
-
+  	luaL_openlibs(self->lua);
 	  tolua_lua_header_open(self->lua);
+	  
+	  return self;
+}
 
+bool LuaScript_Load(LuaScript *self, const char *filename)
+{
+  	printf("loading \"%s\"\n", filename);
     lua_pushcfunction(self->lua, &load_lua_script);
-    lua_pushlightuserdata(self->lua, self);
+    lua_pushlightuserdata(self->lua, const_cast<char *>(filename));
     
     int status = lua_pcall(self->lua, 1, 1, 0);
     int result = lua_toboolean(self->lua, -1);
     
-    if (!result || status != LUA_OK)
+    if (result && status == LUA_OK)
     {
-        const char *msg = (lua_type(self->lua, -1) == LUA_TSTRING) ? lua_tostring(self->lua, -1) : NULL;
-        
-        show_error(msg);
-        
-        lua_pop(self->lua, 1);
-        
-        LuaScript_Finalize(self);
-        self = NULL;
+      	printf("loaded successfully\n", filename);
+        return true;
     }
-    
-    return self;
+    else
+    {
+      	printf("loading failed\n");
+        const char *msg = (lua_type(self->lua, -1) == LUA_TSTRING) ? lua_tostring(self->lua, -1) : NULL;
+        show_error(msg);
+        lua_pop(self->lua, 1);
+        return false;
+    }
+}
+
+void LuaScript_Set(LuaScript *self, const char *name, void *data)
+{
+    lua_State *L = self->lua;
+    lua_pushlightuserdata(L, data);
+    lua_setglobal(L, name);
 }
 
 void LuaScript_Finalize(LuaScript *self)
 {
-    lua_close(self->lua);
+    if (self->lua)
+    {
+        lua_close(self->lua);
+    }
+    
     delete self;
 }
