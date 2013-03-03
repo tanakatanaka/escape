@@ -18,6 +18,11 @@ bool LuaScript_Load(LuaScript *self, const char *filename);
 */
 void LuaScript_Set(LuaScript *self, const char *type, const char *name, void *data);
 
+/**
+  スクリプトで定義されたはずの関数を呼ぶ。引数はなし。
+*/
+void LuaScript_Call(LuaScript *self, const char *name);
+
 /** ファイルを閉じる。 */
 void LuaScript_Finalize(LuaScript *);
 

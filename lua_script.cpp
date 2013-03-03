@@ -154,6 +154,19 @@ void LuaScript_Set(LuaScript *self, const char *type, const char *name, void *da
     lua_setglobal(L, name);
 }
 
+void LuaScript_Call(LuaScript *self, const char *name)
+{
+    lua_State *L = self->lua;
+    lua_getglobal(L, name);
+    
+    int status = report(L, lua_pcall(L, 0, 0, 0));
+    
+    if (status != LUA_OK)
+    {
+        printf("failed to call function \"%s\"\n", name);
+    }
+}
+
 void LuaScript_Finalize(LuaScript *self)
 {
     if (self->lua)

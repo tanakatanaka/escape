@@ -77,6 +77,8 @@ void decode_command(Script *self)
 		//コンソールのほうにあるコマンドをログに移動
 		console_shift_log(self->console);
 		//分解したwordを解読関数にかける
+		// Luaのon_command関数を呼び出す
+		LuaScript_Call(self->lua_script, "on_command");
 	}
 }
 
@@ -86,11 +88,12 @@ void Script_Update( Script *self )
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 
-	if( Console_is_input(self->console) == 1 && Pad_Get( KEY_INPUT_RETURN ) == -1)
+	if (Console_is_input(self->console) == 1 && Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
 		decode_command(self);
 	}
-}	
+	
+}
 
 // 描画する
 void Script_Draw( Script *self)
