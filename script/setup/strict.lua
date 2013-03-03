@@ -34,7 +34,7 @@ end
   
 mt.__index = function (t, n)
   if not mt.__declared[n] and what() ~= "C" then
-    error("'" .. n .. "' という変数を使おうとしましたが、宣言がありません", 2)
+    error("'" .. n .. "' という変数か関数を使おうとしましたが、宣言がありません", 2)
   end
   return rawget(t, n)
 end
