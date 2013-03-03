@@ -47,6 +47,15 @@ static void show_error(const char *msg)
 {
     if (msg == NULL) { return; }
     
+    /*
+    LuaスクリプトはUTF8で統一しているので、日本語混じりのメッセージを
+    printfで表示するにはANSI(Shift JIS)に変換する必要がある。
+    Windows標準でUTF8からSJISに直接変換する方法がわからなかったので、一旦ワイド文字を挟んである。
+    MessageBoxのほうは折角ワイド文字にしたのでそのままUnicode版を使った。
+    
+    LuaスクリプトをSJISで統一してもいいのだが、
+    おそらく'ソ'とか'表'でバックスラッシュ問題が起こる。
+    */
     std::unique_ptr<WCHAR []> msgw(utf8_to_wstr(msg));
     std::unique_ptr<char []> msga(wstr_to_ansi(msgw.get()));
     
