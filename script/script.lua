@@ -1,4 +1,9 @@
 
+function area_hougaku(x, y)
+        return area == x and hougaku == y
+end
+
+
 --[[
   条件用の変数
     command
@@ -10,7 +15,7 @@
     room_act("命令")
 ]]--
 
-if area == 0 and hougaku == 0 then
+if area_hougaku(0, 0) then
   text('Please push "Esc__key"', 10, 10)
   text('and type "check door"', 10, 26)
   
@@ -20,7 +25,7 @@ if area == 0 and hougaku == 0 then
 end
 
 if command == "check pict" then
-  if area == 1 and hougaku == 3 then
+  if area_hougaku(1, 3) then
     text("title stussy", 10, 10)
     text("memo", 10, 26)
     draw("meta/stussy.png")
@@ -33,7 +38,8 @@ end
 
 slide_unlocked = false
 slide_opened = false
-if area == 3 and hougaku == 1 and not slide_opened then
+
+if area_hougaku(3, 1) and not slide_opened then
   if command == "check slide" then
     text("plead enter the code", 10, 10)
   elseif command == "code 100" and not slide_unlocked then
@@ -45,7 +51,7 @@ if area == 3 and hougaku == 1 and not slide_opened then
   end
 end
 
-if area == 5 and hougaku == 1 then
+if area_hougaku(5, 1) then
   if command == "check pot" then
     text("pot sugoi", 10, 10)
   elseif command == "break pot" then
@@ -54,7 +60,7 @@ if area == 5 and hougaku == 1 then
 end
 
 hammer_time = false
-if area == 6 and hougaku == 3 then
+if area_hougaku(6, 3) then
   if command == "check table" then
     text("cup and hammer on the table", 10, 10)
     room_get_hammer()
