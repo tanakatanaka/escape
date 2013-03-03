@@ -17,7 +17,7 @@ function execute_debug_command(command)
 	
   local ok, err = load(command, "command", "t")
   if err then
-    ok, err = load("return (" .. command .. ")", "command-expr", "t")
+    ok, err = load("return (" .. command:sub(0, -2) .. ")", "command-expr", "t")
     if err then
       print(err)
       return true
