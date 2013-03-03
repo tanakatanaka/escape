@@ -12,9 +12,23 @@ end
 
 function get_command()
 	local command = console_d_bag(console)
+	
+	if string.match(command, ";$") then
+	  local ok, err = load(command, "command", "t")
+	  if err then
+	    print(err)
+	  else
+	    print("exec: " .. command)
+	    ok()
+	  end
+	  return nil
+	end
+	
 	command = string.gsub(command, "^%s+", "") -- 先頭の空白を消す
 	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
 	command = string.gsub(command, "%s+", " ") -- 間の空白は一個に統一
+	command = string.lower(command) -- 小文字に統一
+	
 	return command
 end
 
@@ -38,7 +52,11 @@ end
 
 function on_command()
 	local command = get_command()
-
+	
+	if not command then
+	  return
+	end
+  
 	if area_hougaku(0, 0) then
 	  if command == "open door" then
 	  	Room_act(room, "open_door")
