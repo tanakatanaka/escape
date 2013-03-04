@@ -60,7 +60,7 @@ void Camera_set_area(Camera *self, int area)
 	self->area = area;
 }
 
-int Camera_set_hougaku(Camera *self, int play_cam)
+int Camera_get_hougaku(Camera *self, int play_cam)
 {
 	//play_cam 0:playerから　1:cameraから
 
@@ -135,16 +135,14 @@ void move_cam(Camera *self)
 // 動きを計算する
 void Camera_Update( Camera *self )
 {
-	if(self->look_at % 2 == 0)
+	if(self->look_at % 2 == 0 && Console_is_input(self->console) == 0)
 	{
 		if(self->role_swit == 0)
 		{
-			int turn = 0;
-
 			if(Pad_Get( KEY_INPUT_RIGHT ) == -1){ self->role_swit = 1; }
 			else if(Pad_Get( KEY_INPUT_LEFT ) == -1){ self->role_swit = -1; }
 		}
-		else if(self->role_swit != 0){ role_cam(self); }
+		else { role_cam(self); }
 
 
 		//移動スイッチについて
@@ -164,7 +162,7 @@ void Camera_Update( Camera *self )
 
 		if(self->zero_one == 1 && new_zero_one == 0)
 		{ 
-			self->pt.y = Camera_set_hougaku(self, 1) * ROTE;
+			self->pt.y = Camera_get_hougaku(self, 1) * ROTE;
 			self->pt.x = 0;
 		}
 		self->zero_one = new_zero_one;

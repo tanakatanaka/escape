@@ -7,5 +7,22 @@ void Mess_add_word(Mess *self, int x, int y, const char *word);
 void Mess_erase_word(Mess *self);
 void Room_act(Room *self, const char *act);
 
-
+struct Room 
+{
+	int area;
+    int room;
+	int door;
+	int glass;
+	int hammer;
+	int pot;
+	double rotY;
+	int swit; //door用
+	int count;
+	int s_swit; //glass用
+	int s_count;
+	double slide;
+	bool slide_lock;
+	bool get_hammer;
+	bool break_pot;
+};
 

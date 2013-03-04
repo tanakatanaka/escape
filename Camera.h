@@ -12,7 +12,7 @@ Camera *Camera_Initialize( Console *console );
 //gameから現在の位置をもらう関数
 void Camera_set_area(Camera *self, int area);
 //左右回転を返す関数(player_cameraによって返り値が変化)
-int Camera_set_hougaku(Camera *self, int play_cam);
+int Camera_get_hougaku(Camera *self, int play_cam);
 //カメラの視点モードの有無を返す
 int Camera_is_look_at(Camera *self);
 

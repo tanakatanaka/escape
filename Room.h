@@ -7,6 +7,26 @@ struct Room;
 #include <string>
 #include <vector>
 
+struct Room
+{
+	int area;
+    int room;
+	int door;
+	int glass;
+	int hammer;
+	int pot;
+	double rotY;
+	int swit; //door—p
+	int count;
+	int s_swit; //glass—p
+	int s_count;
+	double slide;
+	bool slide_lock;
+	bool get_hammer;
+	bool break_pot;
+};
+
+
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize();
 

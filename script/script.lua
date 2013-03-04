@@ -65,8 +65,6 @@ function on_command()
 	  end
 	end
 
-	
-
 	if area_hougaku(3, 1) and not slide_opened then
 	  if command == "check slide" then
 	    text("plead enter the code", 10, 10)
