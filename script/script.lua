@@ -60,6 +60,25 @@ function get_command()
 end
 
 --[[
+  一回だけしか実行しない処理をつくる。
+  こんな感じで書く。
+
+    only_once(function()
+      一回だけしか実行したくない処理
+    end)
+]]--
+do
+  local funcs = {}
+  
+  function only_once(func)
+    if not funcs[func] then
+      funcs[func] = true
+      func()
+    end
+  end
+end
+
+--[[
   条件用の変数
     command
     area
@@ -76,8 +95,10 @@ function on_move()
 	Mess_erase_word(mess) 
 	
 	if area_hougaku(0, 0) then
-		text('Please push "Esc__key"', 10, 10)
-		text('and type "check door"', 10, 26)
+		only_once(function()
+			text('Please push "Esc__key"', 10, 10)
+			text('and type "check door"', 10, 26)
+		end)
 	end
 end
 
