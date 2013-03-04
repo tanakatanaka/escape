@@ -93,7 +93,7 @@ void Twod_Draw( Twod *self)
 	{
 		if(self->image[i].id != -1)
 		{
-			DrawGraph(self->image[i].x, self->image[i].y, self->image[i].id, TRUE );
+			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].id], TRUE );
 		}
 	}
 
