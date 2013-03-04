@@ -5,10 +5,12 @@
 #include <vector>
 #include "Pad.h"
 
+
 struct Image
 {
 	int	x;
 	int y;
+	const char *name;
 	int id;
 };
 
@@ -31,18 +33,16 @@ Twod *Twod_Initialize(Player *player)
 	return self;
 }
 
-void Twod_add_image(Twod *self, int x, int y, int id)
+void Twod_add_image(Twod *self, int x, int y, const char *name)
 {
 	Image i;
 
 	printf("\n x = %d\n",x);
 
-	if(id > 0)
-	{
-		i.id = id;
-		i.x = x;
-		i.y = y;
-	}
+	i.name = name;
+	i.x = x;
+	i.y = y;
+	i.id = 1;
 	
 	self->image.push_back(i);
 }
@@ -82,7 +82,7 @@ void Twod_Draw( Twod *self)
 	{
 		if(self->image[i].id != -1)
 		{
-			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].id], TRUE );
+			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].name], TRUE );
 		}
 	}
 
