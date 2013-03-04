@@ -53,9 +53,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	LuaScript_Set(self->lua_script, "Room", "room", self->room);
 	LuaScript_Set(self->lua_script, "Console", "console", self->console);
 
-
-	if (!LuaScript_Load(self->lua_script, "script/setup/strict.lua") ||
-	    !LuaScript_Load(self->lua_script, "script/script.lua"))
+	if (!LuaScript_Load(self->lua_script, "script/script.lua"))
 	{
 	    exit(1);
 	}
