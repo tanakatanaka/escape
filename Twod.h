@@ -9,7 +9,7 @@ struct Twod;
 // ‰Šú‰»‚ğ‚·‚é
 Twod *Twod_Initialize(Player *player);
 //‰æ‘œ‚ğ•`‰æƒ‚[ƒh‚É‚·‚é
-void Twod_add_image(Twod *self, int x, int y, int id);
+void Twod_add_image(Twod *self, int x, int y, const char *name);
 //‰æ‘œ‚ğÁ‚·
 void Twod_erase_image(Twod *self);
 // “®‚«‚ğŒvZ‚·‚é

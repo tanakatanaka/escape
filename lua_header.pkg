@@ -2,7 +2,9 @@ const char *console_d_bag(Console *self);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
 void Twod_add_image(Twod *self, int x, int y, const char *name);
+void Twod_erase_image(Twod *self);
 void Mess_add_word(Mess *self, int x, int y, const char *word);
+void Mess_erase_word(Mess *self);
 void Room_act(Room *self, const char *act);
 
 

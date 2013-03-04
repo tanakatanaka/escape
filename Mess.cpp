@@ -28,19 +28,6 @@ Mess *Mess_Initialize()
 	return self;
 }
 
-std::string alteration_word(std::string word)
-{
-	for(int i = 0; i < word.size(); i++)
-	{
-		if(i != word.size() - 1 && word[i] == '_' && word[i + 1] == '_')
-		{
-			word.replace(i, 2, " ");
-		}	
-	}
-
-	return word;
-}
-
 void Mess_add_word(Mess *self,int x, int y, const char *word)
 {
 	Word m;
@@ -50,7 +37,7 @@ void Mess_add_word(Mess *self,int x, int y, const char *word)
 	m.line_cursor = 0;
 	m.x = x;
 	m.y = y;
-	m.word = alteration_word(word);
+	m.word = word;
 	self->mess.push_back(m);
 }
 

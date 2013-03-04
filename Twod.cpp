@@ -33,16 +33,27 @@ Twod *Twod_Initialize(Player *player)
 	return self;
 }
 
+int image_num(std::string name)
+{
+	printf("\n name = %s \n",name.c_str());
+
+	if(name == "test"){return 0;}
+	else if(name == "stussy"){return 1;}
+
+	return -1;
+}
+
 void Twod_add_image(Twod *self, int x, int y, const char *name)
 {
 	Image i;
 
-	printf("\n x = %d\n",x);
+	printf("\n name = %s \n",name);
 
-	i.name = name;
 	i.x = x;
 	i.y = y;
-	i.id = 1;
+	i.id = image_num(name);
+
+	printf("\n id = %d\n",i.id);
 	
 	self->image.push_back(i);
 }
@@ -82,7 +93,7 @@ void Twod_Draw( Twod *self)
 	{
 		if(self->image[i].id != -1)
 		{
-			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].name], TRUE );
+			DrawGraph(self->image[i].x, self->image[i].y, self->image[i].id, TRUE );
 		}
 	}
 

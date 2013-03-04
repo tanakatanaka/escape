@@ -1,6 +1,15 @@
+--[[ 変数宣言 ]]--
+local slide_unlocked = false
+local slide_opened = false
+local hammer_time = false
+
 
 function text(msg, x, y)
 	Mess_add_word(mess, x, y, msg)
+end
+
+function draw(name, x, y)
+	Twod_add_image(twod, x, y, name)
 end
 
 function area_hougaku(x, y)
@@ -62,6 +71,10 @@ end
 ]]--
 
 function on_move()
+	
+	Twod_erase_image(twod)
+	Mess_erase_word(mess) 
+	
 	if area_hougaku(0, 0) then
 		text('Please push "Esc__key"', 10, 10)
 		text('and type "check door"', 10, 26)
@@ -69,15 +82,25 @@ function on_move()
 end
 
 function on_command()
+	
+	Twod_erase_image(twod)
+	Mess_erase_word(mess)
+	
 	local command = get_command()
 	
 	if not command then
 	  return
 	end
-  
+  	
+  	if area_hougaku(0, 0) then
+	  if command == "check door" then
+	     text("please open door", 10, 10)
+	  end
+	end
+  	
 	if area_hougaku(0, 0) then
 	  if command == "open door" then
-	  	Room_act(room, "open_door")
+	  	 Room_act(room, "open_door")
 	  end
 	end
 	
@@ -85,7 +108,7 @@ function on_command()
 	  if area_hougaku(1, 3) then
 	    text("title stussy", 10, 10)
 	    text("memo", 10, 26)
-	    draw("meta/stussy.png")
+	    draw("stussy", 50 , 10)
 	  elseif area_hougaku(2, 3) then
 	    text("pict B", 10, 10)
 	  elseif area_hougaku(3, 3) then
@@ -93,8 +116,7 @@ function on_command()
 	  end
 	end
 
-	slide_unlocked = false
-	slide_opened = false
+	
 
 	if area_hougaku(3, 1) and not slide_opened then
 	  if command == "check slide" then
@@ -116,7 +138,7 @@ function on_command()
 	  end
 	end
 
-	hammer_time = false
+	
 	if area_hougaku(6, 3) then
 	  if command == "check table" then
 	    text("cup and hammer on the table", 10, 10)
