@@ -20,6 +20,15 @@ static const int KEYNUM[] =
 	D_DIK_5, D_DIK_6, D_DIK_7, D_DIK_8, D_DIK_9
 };
 
+static const char NUM_SYMBOLS[] = " !\"#$%&'()";
+
+static const int NUMKEY_NUM[] =
+{
+	KEY_INPUT_NUMPAD0, KEY_INPUT_NUMPAD1, KEY_INPUT_NUMPAD2,
+	KEY_INPUT_NUMPAD3, KEY_INPUT_NUMPAD4, KEY_INPUT_NUMPAD5,
+	KEY_INPUT_NUMPAD6, KEY_INPUT_NUMPAD7, KEY_INPUT_NUMPAD8,
+	KEY_INPUT_NUMPAD9,
+};
 
 struct Console
 {
@@ -64,35 +73,22 @@ void console_shift_log(Console *self)
 
 static int get_chara()
 {
-  static const char NUM_SYMBOLS[] = " !\"#$%&'()";
-  static const char NUMKEY_NUM[] =
-  {
-      KEY_INPUT_NUMPAD0,
-      KEY_INPUT_NUMPAD1,
-      KEY_INPUT_NUMPAD2,
-      KEY_INPUT_NUMPAD3,
-      KEY_INPUT_NUMPAD4,
-      KEY_INPUT_NUMPAD5,
-      KEY_INPUT_NUMPAD6,
-      KEY_INPUT_NUMPAD7,
-      KEY_INPUT_NUMPAD8,
-      KEY_INPUT_NUMPAD9,
-  };
+	// シフト押してたらtrue
+	const bool shift = Pad_Get(KEY_INPUT_LSHIFT) > 0 || Pad_Get(KEY_INPUT_RSHIFT) > 0;
 
-  // シフト押してたらtrue
-  const bool shift = Pad_Get(KEY_INPUT_LSHIFT) > 0 || Pad_Get(KEY_INPUT_RSHIFT) > 0;
-  
+	// アルファベット入力
 	for (int i = 0; i < 26; i++)
 	{
-	    if (Pad_Get( KEYCODES[i] ) == -1) { return (shift ? 'A' : 'a') + i; }
+		if (Pad_Get( KEYCODES[i] ) == -1) { return (shift ? 'A' : 'a') + i; }
 	}
-  
-  
+
 	//数値入力があった場合
 	for (int i = 0; i < 10; i++)
 	{
 		if (Pad_Get( KEYNUM[i] ) == -1 || Pad_Get(NUMKEY_NUM[i]) == -1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
 	}
+
+	// N.B. リターンキーを押した時の処理はここではなくScriptにある
 
 	//スペース入力があった場合
 	if(Pad_Get( KEY_INPUT_SPACE ) == -1) { return ' '; }
@@ -110,11 +106,11 @@ static int get_chara()
 	
 	if (Pad_Get(KEY_INPUT_AT) == -1) { return shift ? '`' : '@'; }
 	if (Pad_Get(KEY_INPUT_LBRACKET) == -1) { return shift ? ' { ' : '['; }
-	
+
 	if (Pad_Get(KEY_INPUT_SEMICOLON) == -1) { return shift ? '+' : ';'; }
 	if (Pad_Get(KEY_INPUT_COLON) == -1) { return shift ? '*' : ':'; }
 	if (Pad_Get(KEY_INPUT_RBRACKET) == -1) { return shift ? ' }' : ']'; }
-	
+
 	if (Pad_Get(KEY_INPUT_COMMA) == -1) { return shift ? '<' : ','; }
 	if (Pad_Get(KEY_INPUT_PERIOD) == -1) { return shift ? '>' : '.'; }
 	if (Pad_Get(KEY_INPUT_SLASH) == -1) { return shift ? '?' : '/'; }
@@ -126,8 +122,8 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_SUBTRACT) == -1) { return '-'; }
 	if (Pad_Get(KEY_INPUT_DECIMAL) == -1) { return '.'; }
 
-  //入力がなかった場合
-  return -1;
+	//入力がなかった場合
+	return -1;
 }
 
 // 動きを計算する
@@ -173,7 +169,6 @@ void Console_Update( Console *self )
 				self->d_bag.append(self->log[in]);
 				if(self->back_count > 0){self->back_count--;}
 			}
-			
 		}
 		else
 		{

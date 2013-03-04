@@ -89,7 +89,7 @@ void Script_Update( Script *self )
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 
-	if (Console_is_input(self->console) == 1 && (Pad_Get( KEY_INPUT_RETURN ) == -1 || Pad_Get(KEY_INPUT_NUMPADENTER) == -1)
+	if (Console_is_input(self->console) == 1 && (Pad_Get( KEY_INPUT_RETURN ) == -1 || Pad_Get(KEY_INPUT_NUMPADENTER) == -1))
 	{
 		decode_command(self);
 	}
