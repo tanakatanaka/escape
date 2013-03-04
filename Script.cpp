@@ -28,6 +28,7 @@ struct Script
 	Console *console;
 	Player *player;
 	LuaScript *lua_script;
+	int area;
 };
 
 // ‰Šú‰»‚ð‚·‚é
@@ -43,6 +44,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->twod = Twod_Initialize( self->player );
 	self->console = console;
 	
+	self->area = -100;
 	self->lua_script = LuaScript_Initialize();
 	
 	LuaScript_Set(self->lua_script, "Player", "player", self->player);
@@ -61,13 +63,6 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	return self;
 }
 
-
-bool area_match(const Condition &c, Player *player)
-{
-	return c.area == Player_get_area(player) &&
-		   c.hougaku == Player_get_hougaku(player);
-}
-
 void decode_command(Script *self)
 {
 	//’PŒêŒã‚É•ª‰ð
@@ -83,6 +78,16 @@ void decode_command(Script *self)
 	}
 }
 
+void on_move(Script *self)
+{
+	if(self->area != Player_get_area(self->player))
+	{
+		LuaScript_Call(self->lua_script, "on_move");
+	}
+
+	self->area = Player_get_area(self->player);
+}
+
 // “®‚«‚ðŒvŽZ‚·‚é
 void Script_Update( Script *self )
 {
@@ -94,6 +99,7 @@ void Script_Update( Script *self )
 		decode_command(self);
 	}
 	
+	on_move(self);
 }
 
 // •`‰æ‚·‚é
