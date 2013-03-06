@@ -96,8 +96,6 @@ void moving( Player *self )
 		self->count = 0;
 		move_area(self);
 	}
-
-	self->hougaku = Camera_get_hougaku(self->camera, 0);
 }
 
 // “®‚«‚ğŒvZ‚·‚é
@@ -115,6 +113,7 @@ void Player_Update( Player *self )
 	if(self->area > 0){ Room_get_door(self->room) == false; }
 
 	Room_set_are(self->room, self->area);
+	self->hougaku = Camera_get_hougaku(self->camera, 0);
 	self->count++;
 	self->time_limit--;
 }
