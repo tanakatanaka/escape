@@ -71,7 +71,7 @@ function on_command()
 	  elseif command == "code 100" and not slide_unlocked then
 	    text("the slide unlocked", 10, 10)
 	    slide_unlocked = true
-	  elseif command == "open slide" then
+	  elseif slide_unlocked and command == "open slide" then
 	    room_act("open_slide")
 	    slide_opened = true
 	  end
