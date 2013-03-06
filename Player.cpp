@@ -53,7 +53,7 @@ int Player_get_area(Player *self)
 
 int Player_get_hougaku(Player *self)
 {
-	return self->hougaku;
+	return Camera_get_hougaku(self->camera, 0);
 }
 
 int Player_get_time(Player *self)
