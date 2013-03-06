@@ -135,39 +135,40 @@ void move_cam(Camera *self)
 // 動きを計算する
 void Camera_Update( Camera *self )
 {
-	if(self->look_at % 2 == 0 && Console_is_input(self->console) == 0)
+	if(Console_is_input(self->console) == 0)
 	{
-		if(self->role_swit == 0)
+		if(self->look_at % 2 == 0)
 		{
-			if(Pad_Get( KEY_INPUT_RIGHT ) == -1){ self->role_swit = 1; }
-			else if(Pad_Get( KEY_INPUT_LEFT ) == -1){ self->role_swit = -1; }
+			if(self->role_swit == 0)
+			{
+				if(Pad_Get( KEY_INPUT_RIGHT ) == -1){ self->role_swit = 1; }
+				else if(Pad_Get( KEY_INPUT_LEFT ) == -1){ self->role_swit = -1; }
+			}
+			else { role_cam(self); }
+
+			//移動スイッチについて
+			if(self->move_swit == 0 && self->area != self->old_area){self->move_swit = 1;}
+			move_cam(self);
 		}
-		else { role_cam(self); }
-
-
-		//移動スイッチについて
-		if(self->move_swit == 0 && self->area != self->old_area){self->move_swit = 1;}
-		move_cam(self);
-	}
-	else if(self->look_at % 2 == 1)
-	{
-		//カメラ操作状態
-		look_out_over(self);
-	}
-
-	if(Console_is_input(self->console) == 0 && Pad_Get( KEY_INPUT_Z ) == -1)
-	{
-		self->look_at++;
-		int new_zero_one = Camera_is_look_at(self);
-
-		if(self->zero_one == 1 && new_zero_one == 0)
-		{ 
-			self->pt.y = Camera_get_hougaku(self, 1) * ROTE;
-			self->pt.x = 0;
+		else
+		{
+			//カメラ操作状態
+			look_out_over(self);
 		}
-		self->zero_one = new_zero_one;
-	}
+	
+		if(Pad_Get( KEY_INPUT_Z ) == -1)
+		{
+			self->look_at++;
+			int new_zero_one = Camera_is_look_at(self);
 
+			if(self->zero_one == 1 && new_zero_one == 0)
+			{ 
+				self->pt.y = Camera_get_hougaku(self, 1) * ROTE;
+				self->pt.x = 0;
+			}
+			self->zero_one = new_zero_one;
+		}
+	}
 }
 
 // 描画する
