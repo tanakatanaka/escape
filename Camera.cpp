@@ -188,6 +188,7 @@ void Camera_Draw( Camera *self)
        cam += (next - old) * (self->move_count / (float)MOVE_CUT);
     }
     
+	DrawFormatString( 540, 120, GetColor( 255, 255, 0 ), "%lf", self->pt.y);
     SetCameraPositionAndAngle(cam, self->pt.x, self->pt.y, 0.0f);
 }
 
