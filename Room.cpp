@@ -47,12 +47,7 @@ void Room_act(Room *self, const char *action)
 		self->swit = 1;
 	}
 	
-	if(act == "un_lock")
-	{
-		self->slide_lock = true;
-	}
-
-	if(self->slide_lock == true && act == "open_slide" && self->slide != SLIDE)
+	if(act == "open_slide" && self->slide != SLIDE)
 	{
 		self->s_swit = 1;
 	}
@@ -62,7 +57,7 @@ void Room_act(Room *self, const char *action)
 		self->get_hammer = true;
 	}
   
-	if(self->get_hammer == true && act == "break_pot")
+	if(act == "break_pot")
 	{
 		self->break_pot = true;
 	}

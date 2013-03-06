@@ -49,7 +49,7 @@ function on_command()
   	
 	if area_hougaku(0, 0) then
 	  if command == "open door" then
-	  	 Room_act(room, "open_door")
+	  	 room_act("open_door")
 	  end
 	end
 	
@@ -80,7 +80,7 @@ function on_command()
 	if area_hougaku(5, 1) then
 	  if command == "check pot" then
 	    text("pot sugoi", 10, 10)
-	  elseif command == "break pot" then
+	  elseif  hammer_time and command == "break pot" then
 	    room_act("break_pot")
 	  end
 	end

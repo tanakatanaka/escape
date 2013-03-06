@@ -20,6 +20,11 @@ function area_hougaku(x, y)
 	return area == x and hougaku == y
 end
 
+-- Room_act関連
+function room_act(msg)
+	 Room_act(room, msg)
+end
+
 -- デバッグコマンドの実行
 local function execute_debug_command(command)
 	if not string.match(command, ";$") then
