@@ -6,9 +6,19 @@
 #include "console.h"
 #include "vector_operator.h"
 
-#define ROTE 1.570796
-#define MOVE_CUT 50
+#ifndef M_PI
+#  define M_PI (atanf(1.0) * 4)
+#endif
 
+#define MOVE_CUT 50.0f
+#define ROLE_CUT 15
+
+/*
+0: 前向き -X方向 270度
+1: 右向き -Z方向 0度
+2: 後向き +X方向 90度
+3: 左向き +Z方向 180度
+*/
 struct Camera 
 {
 	Console *console;
@@ -41,7 +51,7 @@ Camera *Camera_Initialize(Console *console)
 
 	self->area = 0;
 	self->old_area = 0;
-	self->pt = VGet(0, -ROTE, 0);
+	self->pt = VGet(0, 0, 0);
 	self->move_swit = 0;
 	self->move_count = 0;
 	self->role_swit= 0;
@@ -63,27 +73,7 @@ void Camera_set_area(Camera *self, int area)
 int Camera_get_hougaku(Camera *self, int play_cam)
 {
 	//play_cam 0:playerから　1:cameraから
-
-	float y = fmodf(self->pt.y, ROTE * 4);
-	int back = 3;
-
-	if (y < 0)
-	{
-		y += ROTE * 4;
-	}
-  
-	if (y < ROTE / 2) { back = 0; }
-	else if (y < ROTE * 3 / 2) { back = 1; }
-	else if (y < ROTE * 5 / 2) { back = 2; }
-	else if (y < ROTE * 7 / 2) { back = 3; }
-
-	if(play_cam == 0)
-	{
-		back++;
-		if(back == 4){back = 0;}
-	}
-
-	return back;
+	return ((int)(self->pt.y + 0.5f)) % 4;
 }
 
 
@@ -95,25 +85,24 @@ int Camera_is_look_at(Camera *self)
 
 void look_out_over(Camera *self)
 {
-	float move_point = 0.04;
+	float move_point_x = 0.04f;
+	float move_point_y = move_point_x / (M_PI / 2);
 
-	if(CheckHitKey(KEY_INPUT_UP)){self->pt.x -= move_point;}
-	else if(CheckHitKey(KEY_INPUT_DOWN)){self->pt.x += move_point;}
+	if(CheckHitKey(KEY_INPUT_UP)){self->pt.x -= move_point_x;}
+	else if(CheckHitKey(KEY_INPUT_DOWN)){self->pt.x += move_point_x;}
 
-	if(CheckHitKey(KEY_INPUT_RIGHT)){self->pt.y +=move_point;}
-	else if(CheckHitKey(KEY_INPUT_LEFT)){self->pt.y -=move_point;}
+	if(CheckHitKey(KEY_INPUT_RIGHT)){self->pt.y += move_point_y;}
+	else if(CheckHitKey(KEY_INPUT_LEFT)){self->pt.y -= move_point_y;}
 }
 
 void role_cam(Camera *self)
 {
-	int cut = 15;
-
-	if(self->count < cut)
+	if(self->count < ROLE_CUT)
 	{
-		self->pt.y += (float) (self->role_swit * ROTE / cut);
+		self->pt.y += self->role_swit / (float)ROLE_CUT;
 		self->count++;
 	}
-	else
+	else if (self->count == ROLE_CUT)
 	{
 		self->count = 0; 
 		self->role_swit = 0;
@@ -163,11 +152,19 @@ void Camera_Update( Camera *self )
 
 			if(self->zero_one == 1 && new_zero_one == 0)
 			{ 
-				self->pt.y = Camera_get_hougaku(self, 1) * ROTE;
 				self->pt.x = 0;
 			}
 			self->zero_one = new_zero_one;
 		}
+	}
+
+	if (self->pt.y < 0)
+	{
+		self->pt.y += 4;
+	}
+	else if (self->pt.y > 4)
+	{
+		self->pt.y -= 4;
 	}
 }
 
@@ -188,8 +185,8 @@ void Camera_Draw( Camera *self)
        cam += (next - old) * (self->move_count / (float)MOVE_CUT);
     }
     
-	DrawFormatString( 540, 120, GetColor( 255, 255, 0 ), "%lf", self->pt.y);
-    SetCameraPositionAndAngle(cam, self->pt.x, self->pt.y, 0.0f);
+	DrawFormatString( 540, 120, GetColor( 255, 255, 0 ), "%f", self->pt.y);
+    SetCameraPositionAndAngle(cam, self->pt.x, (self->pt.y + 3) * M_PI / 2, 0.0f);
 }
 
 // 終了処理をする
