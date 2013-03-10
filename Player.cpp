@@ -15,6 +15,7 @@ struct Player
     int area;
 	int count;
 	int time_limit;
+	int get_paper;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -30,17 +31,19 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room)
 	self->area = 0;
 	self->count = 30;
 	self->time_limit = 18000;
-	
+	self->get_paper = 0;
 
 	return self;
 }
 
-void Player_act(Player *self,  std::vector<std::string> &act)
+void Player_act(Player *self,  const char *action)
 {
-	
+	std::string act(action);
 
-	
-
+	if(act == "get_paper")
+	{
+		self->get_paper++;
+	}
 }
 
 
