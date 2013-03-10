@@ -4,11 +4,29 @@
 #include <string>
 #include <vector>
 
-
-
 #define OPEN 1.658064
 #define SLIDE 505
 
+struct Room
+{
+	int area;
+    int room;
+	int door;
+	int glass;
+	int hammer;
+	int pot;
+	int paper1;
+	double rotY;
+	int swit; //door—p
+	int count;
+	int s_swit; //glass—p
+	int s_count;
+	double slide;
+	bool slide_lock;
+	bool get_hammer;
+	bool break_pot;
+	bool paper1_f;
+};
  
 
 // ‰Šú‰»‚ð‚·‚é
@@ -24,6 +42,8 @@ Room *Room_Initialize()
 	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
+	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
+	
 
 	self->rotY = 0.0f;
 	self->swit = 0;
@@ -34,6 +54,7 @@ Room *Room_Initialize()
 	self->slide_lock = false;
 	self->get_hammer = false;
 	self->break_pot = false;
+	self->paper1_f = false;
 
 	return self;
 }
@@ -60,6 +81,11 @@ void Room_act(Room *self, const char *action)
 	if(act == "break_pot")
 	{
 		self->break_pot = true;
+	}
+	
+	if(act == "get_paper")
+	{
+		self->paper1_f = true;
 	}
 }
 
@@ -143,11 +169,14 @@ void Room_Draw( Room *self)
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->paper1, VGet( 200, 0, 300 ) );
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
 	if(!self->get_hammer){ MV1DrawModel(self->hammer); }
 	if(!self->break_pot){ MV1DrawModel(self->pot); }
+	if(self->break_pot && !self->paper1_f){ MV1DrawModel(self->paper1); }
+
 	MV1DrawModel(self->glass);
 	
 	

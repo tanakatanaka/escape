@@ -5,6 +5,8 @@ require "script/lib"
 local slide_unlocked = false
 local slide_opened = false
 local hammer_time = false
+local break_pot = false
+local get_paper1 = false
 
 --[[
   条件用の変数
@@ -78,11 +80,14 @@ function on_command()
 	end
 
 	if area_hougaku(5, 1) then
-	  if command == "check pot" then
-	    text("pot sugoi", 10, 10)
-	  elseif  hammer_time and command == "break pot" then
-	    room_act("break_pot")
-	  end
+		if not break_pot and command == "check pot" then
+		   text("pot sugoi", 10, 10)
+		elseif  hammer_time and command == "break pot" then
+		   room_act("break_pot")
+		   break_pot = true 
+		elseif break_pot and not get_paper1 and command == "get paper" then
+			room_act("get_paper")
+	  	end
 	end
 
 	
@@ -90,9 +95,9 @@ function on_command()
 	  if command == "check table" then
 	    text("cup and hammer on the table", 10, 10)
 	    room_get_hammer()
-	  elseif command == "check hammer" then
+	  elseif not hammer_time and command == "check hammer" then
 	    text("hammer sugoi", 10, 10)
-	  elseif command == "get hammer" then
+	  elseif not hammer_time and command == "get hammer" then
 	    text("you get a hammer", 10, 10)
 	    room_act("get_hammer")
 	    hammer_time = true
@@ -101,4 +106,3 @@ function on_command()
 	  end
 	end
 end
-
