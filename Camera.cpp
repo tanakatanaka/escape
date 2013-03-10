@@ -33,7 +33,6 @@ struct Camera
 
 	//Ž‹“_ŠÖŒW‚Ì•Ï”
 	int look_at;
-	int zero_one;
 };
 
 static const VECTOR cam_pos[8] =
@@ -60,7 +59,6 @@ Camera *Camera_Initialize(Console *console)
 	
 	//Ž‹“_ŠÖŒW‚Ì‰Šú’l
 	self->look_at = 0;
-	self->zero_one = 0;
 
 	return self;
 }
@@ -70,7 +68,7 @@ void Camera_set_area(Camera *self, int area)
 	self->area = area;
 }
 
-int Camera_get_hougaku(Camera *self, int play_cam)
+int Camera_get_hougaku(Camera *self)
 {
 	//play_cam 0:player‚©‚ç@1:camera‚©‚ç
 	return ((int)(self->pt.y + 0.5f)) % 4;
@@ -145,16 +143,15 @@ void Camera_Update( Camera *self )
 			look_out_over(self);
 		}
 	
-		if(Pad_Get( KEY_INPUT_Z ) == -1)
+		if (Pad_Get( KEY_INPUT_Z ) == -1)
 		{
 			self->look_at++;
-			int new_zero_one = Camera_is_look_at(self);
 
-			if(self->zero_one == 1 && new_zero_one == 0)
+			if (Camera_is_look_at(self) == 0)
 			{ 
 				self->pt.x = 0;
+				self->pt.y = Camera_get_hougaku(self); 
 			}
-			self->zero_one = new_zero_one;
 		}
 	}
 
