@@ -57,20 +57,25 @@ function on_command()
 	
 	if command == "check pict" then
 	  if area_hougaku(1, 3) then
-	    text("title stussy", 10, 10)
-	    text("memo", 10, 26)
-	    draw("stussy", 50 , 10)
+	  	text("pict1", 10, 10)
+	    text("title : the O", 10, 26)
+	    draw("o", 50 , 10)
 	  elseif area_hougaku(2, 3) then
-	    text("pict B", 10, 10)
+	  	text("pict2", 10, 10)
+	    text("title : the V", 10, 26)
+	    draw("v", 50 , 10)
 	  elseif area_hougaku(3, 3) then
-	    text("pict C", 10, 10)
+	  	 text("pict3", 10, 10)
+	     text("title : the X", 10, 26)
+	     draw("x", 50 , 10)
 	  end
 	end
 
 	if area_hougaku(3, 1) and not slide_opened then
 	  if command == "check slide" then
 	    text("plead enter the code", 10, 10)
-	  elseif command == "code 100" and not slide_unlocked then
+	    text("hint  PICT pict1 + pict2 + pict3", 10, 26)
+	  elseif command == "code 15" and not slide_unlocked then
 	    text("the slide unlocked", 10, 10)
 	    slide_unlocked = true
 	  elseif slide_unlocked and command == "open slide" then
