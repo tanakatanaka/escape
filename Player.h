@@ -14,7 +14,7 @@ struct Player;
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console, Room *room);
 
-void Player_act(Player *self,  std::vector<std::string> &act);
+void Player_act(Player *self,  const char *action);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
 int Player_get_time(Player *self);

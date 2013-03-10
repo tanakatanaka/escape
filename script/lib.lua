@@ -25,6 +25,11 @@ function room_act(msg)
 	 Room_act(room, msg)
 end
 
+--Player_act関連
+function player_act(msg)
+	Player_act(player, msg)
+end	
+
 -- デバッグコマンドの実行
 local function execute_debug_command(command)
 	if not string.match(command, ";$") then

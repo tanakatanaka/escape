@@ -86,7 +86,8 @@ function on_command()
 		   room_act("break_pot")
 		   break_pot = true 
 		elseif break_pot and not get_paper1 and command == "get paper" then
-			room_act("get_paper")
+			room_act("get_paper1")
+			player_act("get_paper")
 	  	end
 	end
 

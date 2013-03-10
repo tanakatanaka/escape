@@ -83,7 +83,7 @@ void Room_act(Room *self, const char *action)
 		self->break_pot = true;
 	}
 	
-	if(act == "get_paper")
+	if(act == "get_paper1")
 	{
 		self->paper1_f = true;
 	}
