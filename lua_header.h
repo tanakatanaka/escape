@@ -18,15 +18,16 @@
 TOLUA_API int tolua_lua_header_open (lua_State* tolua_S);
 LUALIB_API int luaopen_lua_header (lua_State* tolua_S);
 
+#include "DxLib.h"
 
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Room");
  tolua_usertype(tolua_S,"Twod");
  tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"Player");
- tolua_usertype(tolua_S,"Room");
 }
 
 /* function: console_d_bag */

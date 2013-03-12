@@ -74,7 +74,8 @@ function on_command()
 	if area_hougaku(3, 1) and not slide_opened then
 	  if command == "check slide" then
 	    text("plead enter the code", 10, 10)
-	    text("hint  PICT pict1 + pict2 + pict3", 10, 26)
+	    text("please 'input code X'", 10, 26)
+	    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
 	  elseif command == "code 15" and not slide_unlocked then
 	    text("the slide unlocked", 10, 10)
 	    slide_unlocked = true
