@@ -88,7 +88,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Ending.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -100,6 +99,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Twod.cpp" />
     <ClCompile Include="lua_one.c" />
     <ClCompile Include="tolua_one.c" />
@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Compiler.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Ending.h" />
     <ClInclude Include="Game.h" />
@@ -118,6 +117,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Twod.h" />
     <ClInclude Include="lua.h" />
     <ClInclude Include="lua_script.h" />
@@ -127,6 +127,6 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <Target Name="BeforeBuild">
-      <Exec Command="make_lua_header.bat" />
+    <Exec Command="make_lua_header.bat" />
   </Target>
 </Project>

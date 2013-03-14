@@ -16,7 +16,6 @@
 #include "Mess.h"
 #include "Twod.h"
 #include "Pad.h"
-#include "Compiler.h"
 #include "lua_script.h"
 
 struct Script

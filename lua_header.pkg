@@ -1,11 +1,3 @@
-// サウンド再生形態指定用定義
-#define DX_PLAYTYPE_LOOPBIT							(0x0002)		// ループ再生ビット
-#define DX_PLAYTYPE_BACKBIT							(0x0001)		// バックグラウンド再生ビット
-
-#define DX_PLAYTYPE_NORMAL							(0)												// ノーマル再生
-#define DX_PLAYTYPE_BACK				  			( DX_PLAYTYPE_BACKBIT )							// バックグラウンド再生
-#define DX_PLAYTYPE_LOOP							( DX_PLAYTYPE_LOOPBIT | DX_PLAYTYPE_BACKBIT )	// ループ再生
-
 const char *console_d_bag(Console *self);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
@@ -16,8 +8,6 @@ void Mess_add_word(Mess *self, int x, int y, const char *word);
 void Mess_erase_word(Mess *self);
 void Room_act(Room *self, const char *act);
 
-int LoadSoundMem( const char *FileName ) ;
-int PlaySoundMem( int SoundHandle , int PlayType , int TopPositionFlag ) ;
  
 
 

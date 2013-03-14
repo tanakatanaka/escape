@@ -153,10 +153,7 @@ static void move_cam(Camera *self)
         self->move_count = 0;
     }
 
-    if (self->move_count < 0)
-    {
-        // ƒAƒjƒ’†‚Å‚È‚¢‚Ì‚Å‰½‚à‚µ‚È‚¢
-    }
+    if (self->move_count < 0){ }
     else if (self->move_count < MOVE_CUT)
     {
         self->move_count++;

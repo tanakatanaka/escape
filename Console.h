@@ -4,8 +4,10 @@
 
 struct Console;
 
+#include "Sound.h"
+
 // 初期化をする
-Console *Console_Initialize( );
+Console *Console_Initialize( Sound *sound);
 
 //入力モードか歩行モード化を返す
 int Console_is_input(Console *self);

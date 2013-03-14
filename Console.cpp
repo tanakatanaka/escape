@@ -2,6 +2,7 @@
 #include <string>
 #include <deque>
 #include "Console.h"
+#include "Sound.h"
 #include "Pad.h"
 
 static const int KEYCODES[] =
@@ -32,6 +33,7 @@ static const int NUMKEY_NUM[] =
 
 struct Console
 {
+	Sound *sound;
 	int is_input;
 	int x;
 	int y;
@@ -43,10 +45,11 @@ struct Console
 }; 
 
 // 初期化をする
-Console *Console_Initialize()
+Console *Console_Initialize(Sound *sound)
 {
 	Console *self;
 	self =  new Console();
+	self->sound = sound;
 	self->is_input = 0;
 	self->x = 0;
 	self->y = 420;
@@ -76,25 +79,25 @@ static void reverse_concat(std::string &src, std::string &dst)
 	src.erase();
 }
 
-/** 右矢印キー押した時の動作。 */
+//右キーでの動作
 static void cursor_to_right(Console *self)
 {
 	reverse_push(self->after_cursor, self->d_bag);
 }
 
-/** 左キー押した時の動作。 */
+//左キーでの動作
 static void cursor_to_left(Console *self)
 {
 	reverse_push(self->d_bag, self->after_cursor);
 }
 
-/** Endキー押した時の動作。 */
+//endキーでの動作
 static void cursor_to_end(Console *self)
 {
 	reverse_concat(self->after_cursor, self->d_bag);
 }
 
-/** Homeキー押した時の動作。 */
+//homeキーでの動作
 static void cursor_to_home(Console *self)
 {
 	reverse_concat(self->d_bag, self->after_cursor);
@@ -187,7 +190,7 @@ static int get_chara()
 	return -1;
 }
 
-/** カーソル移動の処理。キー入力が反応するキーでなかったらfalse。反応したらtrueを返す。 */
+// カーソル移動の処理。キー入力が反応するキーでなかったらfalse。反応したらtrueを返す。 
 static bool move_cursor(Console *self, int input)
 {
 	if (input == -6) // 左矢印
@@ -222,55 +225,56 @@ void Console_Update( Console *self )
 	{
 		int bag = get_chara();
 		
-		// N.B. リターンキーを押した時の処理はここではなくScriptにある
-		
 		if(bag == -1)
 		{
 			//入力がない場合
 		}
-		else if(bag == -2)
+		else
 		{
-			//バックスペース入力があった場合
-			//最後の文字を消去
-			if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
-		}
-		else if(bag == -3)
-		{
-			//上キー入力があった場合
-			int in = self->log.size()- 1 - self->back_count;
-			if(self->log.size() > self->back_count)
+			if(bag == -2)
 			{
-				// TODO: 入力しかけのやつをログに退避
-				self->after_cursor.erase();
-				self->d_bag.assign(self->log[in]);
-				if(in > 0){self->back_count++;}
+				//バックスペース入力があった場合
+				//最後の文字を消去
+				if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
 			}
+			else if(bag == -3)
+			{
+				//上キー入力があった場合
+				int in = self->log.size()- 1 - self->back_count;
+				if(self->log.size() > self->back_count)
+				{
+					self->after_cursor.erase();
+					self->d_bag.assign(self->log[in]);
+					if(in > 0){self->back_count++;}
+				}
 			
-		}
-		else if(bag == -4)
-		{
-			//下キー入力があった場合
-			int in = self->log.size()- 1 - self->back_count;
-			if(in > -1)
-			{
-				// TODO: 入力しかけのやつをログに退避
-				self->after_cursor.erase();
-				self->d_bag.assign(self->log[in]);
-				if(self->back_count > 0){self->back_count--;}
 			}
+			else if(bag == -4)
+			{
+				//下キー入力があった場合
+				int in = self->log.size()- 1 - self->back_count;
+				if(in > -1)
+				{
+					self->after_cursor.erase();
+					self->d_bag.assign(self->log[in]);
+					if(self->back_count > 0){self->back_count--;}
+				}
+			}
+			else if(bag == -5)
+			{
+				// Deleteキー入力があった場合
+				// カーソル直後の文字を消去
+				if(!self->after_cursor.empty()){self->after_cursor.erase(self->after_cursor.size() - 1);}
+			}
+			else if (!move_cursor(self, bag))
+			{
+				//文字・数値入力があった場合追加
+				self->d_bag += (char) bag;
+			}
+			self->signal++;
 		}
-		else if(bag == -5)
-		{
-			// Deleteキー入力があった場合
-			// カーソル直後の文字を消去
-			if(!self->after_cursor.empty()){self->after_cursor.erase(self->after_cursor.size() - 1);}
-		}
-		else if (!move_cursor(self, bag))
-		{
-			//文字・数値入力があった場合追加
-			self->d_bag += (char) bag;
-		}
-		self->signal++;
+
+		Sound_type_lite( self->sound);
 	}
 	//入力モード以外
 	else{self->back_count = 0;}

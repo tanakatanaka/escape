@@ -6,6 +6,7 @@
 #include "Opening.h"
 #include "Player.h"
 #include "Room.h"
+#include "Sound.h"
 #include "Ending.h"
 
 
@@ -17,8 +18,9 @@ struct Game
 	Player *player;
 	Opening *opening;
 	Room *room;
+	Sound *sound;
 	Ending *ending;
-	
+
 	//gameisŠÖŒW
 	int game_state;
 	
@@ -34,7 +36,8 @@ Game *Game_Initialize()
 
 	Game *self;
 	self = new Game();
-	self->console = Console_Initialize();
+	self->sound = Sound_Initialize();
+	self->console = Console_Initialize(self->sound);
 	self->camera = Camera_Initialize(self->console);
 	self->room = Room_Initialize();
 	self->player = Player_Initialize(self->camera, self->console, self->room);
@@ -77,6 +80,11 @@ void game_play_Finalize(Game *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
+	if(Pad_Get( KEY_INPUT_UP ) == -1)
+	{
+		Sound_se( self->sound, "enter");
+	}
+
 	if(self->game_state  == 0)
 	{
 		Opening_Update(self->opening);
