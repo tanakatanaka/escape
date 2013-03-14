@@ -80,11 +80,6 @@ void game_play_Finalize(Game *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
-	if(Pad_Get( KEY_INPUT_UP ) == -1)
-	{
-		Sound_se( self->sound, "enter");
-	}
-
 	if(self->game_state  == 0)
 	{
 		Opening_Update(self->opening);

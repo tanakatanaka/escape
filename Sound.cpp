@@ -27,10 +27,9 @@ Sound *Sound_Initialize()
 	return self;
 }
 
-void Sound_type_lite( Sound *self)
+void Sound_type( Sound *self)
 {
-	srand((unsigned)time( NULL ));
-	PlaySoundMem(  self->se[rand() % 4] , DX_PLAYTYPE_BACK , FALSE ) ;
+	PlaySoundMem(  self->se[0] , DX_PLAYTYPE_BACK , FALSE ) ;
 }
 
 int num_combert(std::string name)

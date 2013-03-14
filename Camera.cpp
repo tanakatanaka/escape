@@ -175,7 +175,6 @@ static void look_at_switch(Camera *self)
         if (Camera_is_look_at(self) == 0)
         {
             self->pt.x = 0;
-            // TODO ñ‚Ì‚©‚­‚Â‚«‚ğ’¼‚·
             self->pt.y = (float)Camera_get_hougaku(self);
         }
     }

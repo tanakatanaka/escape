@@ -71,7 +71,6 @@ static void reverse_push(std::string &src, std::string &dst)
 	src.erase(src.end() - 1);
 }
 
-/** srcをひっくり返してdstにくっつけ、srcを消去する。 */
 static void reverse_concat(std::string &src, std::string &dst)
 {
 	if (src.empty()) { return; }
@@ -140,7 +139,7 @@ static int get_chara()
 		if (Pad_Get( KEYNUM[i] ) == -1 || Pad_Get(NUMKEY_NUM[i]) == -1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
 	}
 
-	// N.B. リターンキーを押した時の処理はここではなくScriptにある
+	// リターンキーを押した時の処理はここではなくScriptにある
 
 	//スペース入力があった場合
 	if(Pad_Get( KEY_INPUT_SPACE ) == -1) { return ' '; }
@@ -186,11 +185,13 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_SUBTRACT) == -1) { return '-'; }
 	if (Pad_Get(KEY_INPUT_DECIMAL) == -1) { return '.'; }
 
+	if (Pad_Get(KEY_INPUT_RETURN) == -1) { return 10000; }
+
 	//入力がなかった場合
 	return -1;
 }
 
-// カーソル移動の処理。キー入力が反応するキーでなかったらfalse。反応したらtrueを返す。 
+// カーソル移動の処理。キー入力が反応するキーでなかったらfalse。反応したらtrueを返す
 static bool move_cursor(Console *self, int input)
 {
 	if (input == -6) // 左矢印
@@ -231,6 +232,9 @@ void Console_Update( Console *self )
 		}
 		else
 		{
+			if(bag == 10000){Sound_se( self->sound, "enter"); }
+			Sound_type(self->sound);
+
 			if(bag == -2)
 			{
 				//バックスペース入力があった場合
@@ -273,8 +277,6 @@ void Console_Update( Console *self )
 			}
 			self->signal++;
 		}
-
-		Sound_type_lite( self->sound);
 	}
 	//入力モード以外
 	else{self->back_count = 0;}
