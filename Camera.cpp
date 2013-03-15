@@ -71,7 +71,12 @@ void Camera_set_area(Camera *self, int area)
 /** •ûŠp‚ÌŒvZ */
 static int round_hougaku(float y)
 {
-    return ((int)(y + 0.5f)) % 4;
+    int n = ((int)(y + 0.5f)) % 4;
+    if (y < 0)
+    {
+        n += 3;
+    }
+    return n;
 }
 
 int Camera_get_hougaku(Camera *self)
