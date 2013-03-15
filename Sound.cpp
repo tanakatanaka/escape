@@ -19,17 +19,14 @@ Sound *Sound_Initialize()
 	self = new Sound();
 
 	self->se[0] = LoadSoundMem( "sound/se/type1.mp3" ) ;
-	self->se[1] = LoadSoundMem( "sound/se/type2.mp3" ) ;
-	self->se[2] = LoadSoundMem( "sound/se/type3.mp3" ) ;
-	self->se[3] = LoadSoundMem( "sound/se/type4.mp3" ) ;
-	self->se[4] = LoadSoundMem( "sound/se/enter.mp3" ) ;
+	self->se[1] = LoadSoundMem( "sound/se/enter.mp3" ) ;
 
 	return self;
 }
 
-void Sound_type( Sound *self)
+void Sound_type( Sound *self, int type)
 {
-	PlaySoundMem(  self->se[0] , DX_PLAYTYPE_BACK , FALSE ) ;
+	PlaySoundMem(  self->se[type] , DX_PLAYTYPE_BACK , FALSE ) ;
 }
 
 int num_combert(std::string name)

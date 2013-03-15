@@ -7,7 +7,7 @@ struct Sound;
 // ‰Šú‰»‚ğ‚·‚é
 Sound *Sound_Initialize();
 
-void Sound_type( Sound *self);
+void Sound_type( Sound *self, int type);
 void Sound_se( Sound *self, const char *name);
 
 // I—¹ˆ—‚ğ‚·‚é

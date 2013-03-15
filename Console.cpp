@@ -162,6 +162,8 @@ static int get_chara()
 	//End
 	if(Pad_Get( KEY_INPUT_END ) == -1) { return -9; }
 
+	if (Pad_Get(KEY_INPUT_RETURN) == -1) { return -10; }
+
 	// ‹L†—Ş (106)
 	if (Pad_Get(KEY_INPUT_MINUS) == -1) { return shift ? '=' : '-'; }
 	if (Pad_Get(KEY_INPUT_PREVTRACK) == -1) { return shift ? '~' : '^'; }
@@ -184,8 +186,6 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_ADD) == -1) { return '+'; }
 	if (Pad_Get(KEY_INPUT_SUBTRACT) == -1) { return '-'; }
 	if (Pad_Get(KEY_INPUT_DECIMAL) == -1) { return '.'; }
-
-	if (Pad_Get(KEY_INPUT_RETURN) == -1) { return 10000; }
 
 	//“ü—Í‚ª‚È‚©‚Á‚½ê‡
 	return -1;
@@ -232,8 +232,8 @@ void Console_Update( Console *self )
 		}
 		else
 		{
-			if(bag == 10000){Sound_se( self->sound, "enter"); }
-			Sound_type(self->sound);
+			if(bag == -10){Sound_type(self->sound, 0); }
+			else{Sound_type(self->sound, 1);}
 
 			if(bag == -2)
 			{
