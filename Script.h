@@ -10,7 +10,7 @@
 struct Script;
 
 // ‰Šú‰»‚ğ‚·‚é
-Script *Script_Initialize(Camera *camera, Console *console, Player *player, Room *room);
+Script *Script_Initialize(Camera *camera, Console *console, Player *player, Room *room, Sound *sound);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Script_Update( Script *Script );

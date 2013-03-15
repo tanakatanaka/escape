@@ -41,7 +41,7 @@ Game *Game_Initialize()
 	self->camera = Camera_Initialize(self->console);
 	self->room = Room_Initialize();
 	self->player = Player_Initialize(self->camera, self->console, self->room);
-	self->script = Script_Initialize(self->camera, self->console, self->player, self->room);
+	self->script = Script_Initialize(self->camera, self->console, self->player, self->room, self->sound);
 	self->opening = Opening_Initialize();
 	self->ending = Ending_Initialize();
 	//gameisŠÖŒW

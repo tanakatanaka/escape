@@ -84,6 +84,9 @@ function on_command()
 	    slide_opened = true
 	  end
 	end
+	
+	
+	
 
 	if area_hougaku(5, 1) then
 		if not break_pot and command == "check pot" then

@@ -232,8 +232,7 @@ void Console_Update( Console *self )
 		}
 		else
 		{
-			if(bag == -10){Sound_type(self->sound, 0); }
-			else{Sound_type(self->sound, 1);}
+			Sound_type(self->sound, 0);
 
 			if(bag == -2)
 			{
@@ -270,6 +269,7 @@ void Console_Update( Console *self )
 				// カーソル直後の文字を消去
 				if(!self->after_cursor.empty()){self->after_cursor.erase(self->after_cursor.size() - 1);}
 			}
+			else if(bag == -10){ Sound_type(self->sound, 1); }
 			else if (!move_cursor(self, bag))
 			{
 				//文字・数値入力があった場合追加

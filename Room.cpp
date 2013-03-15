@@ -15,20 +15,27 @@ struct Room
 	int glass;
 	int hammer;
 	int pot;
+	int paper0;
 	int paper1;
+	//パラメータ
 	double rotY;
 	int swit; //door用
 	int count;
 	int s_swit; //glass用
 	int s_count;
 	double slide;
+	double role;
 	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
 	bool paper1_f;
-};
- 
+	//デバック
+	int x;
+	int y;
 
+};
+
+ 
 // 初期化をする
 Room *Room_Initialize()
 {
@@ -42,9 +49,9 @@ Room *Room_Initialize()
 	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model画像ハンドルの格納
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
+	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
 	
-
 	self->rotY = 0.0f;
 	self->swit = 0;
 	self->count = 0;
@@ -55,6 +62,9 @@ Room *Room_Initialize()
 	self->get_hammer = false;
 	self->break_pot = false;
 	self->paper1_f = false;
+	self->x = 0;
+	self->y = 0;
+	self->role = 0;
 
 	return self;
 }
@@ -154,31 +164,49 @@ void Room_Update( Room *self )
 	//開く
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
-
 	// 閉じる
 	if(self->area > 0 && self->rotY == OPEN) { self->swit = -1; }
+
+	/* デバッグ用操作
+	if(Pad_Get( KEY_INPUT_W ) > 0){ self->x++; }
+	else if(Pad_Get( KEY_INPUT_S ) > 0){ self->x--; }
+
+	if(Pad_Get( KEY_INPUT_D ) > 0){ self->y++; }
+	else if(Pad_Get( KEY_INPUT_A ) > 0){ self->y--; }
+
+	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d \n",self->x,self->y);}
+	*/
+
 }		
 
 // 描画する
 void Room_Draw( Room *self)
 {
 	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );
+	
 
 	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->paper1, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
+	MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
 	if(!self->get_hammer){ MV1DrawModel(self->hammer); }
 	if(!self->break_pot){ MV1DrawModel(self->pot); }
-	if(self->break_pot && !self->paper1_f){ MV1DrawModel(self->paper1); }
+
+	MV1DrawModel(self->paper0); 
+
+	if(self->break_pot && !self->paper1_f)
+	{
+		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role + 0.1, 0 ) );
+		MV1DrawModel(self->paper1); 
+	}
 
 	MV1DrawModel(self->glass);
-	
 	
 }
 

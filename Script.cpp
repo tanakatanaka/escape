@@ -17,6 +17,7 @@
 #include "Twod.h"
 #include "Pad.h"
 #include "lua_script.h"
+#include "Sound.h"
 
 struct Script
 {
@@ -26,12 +27,13 @@ struct Script
 	Twod *twod;
 	Console *console;
 	Player *player;
+	Sound *sound;
 	LuaScript *lua_script;
 	int area;
 };
 
 // ‰Šú‰»‚ð‚·‚é
-Script *Script_Initialize(Camera *camera, Console *console , Player *player, Room *room)
+Script *Script_Initialize(Camera *camera, Console *console , Player *player, Room *room, Sound *sound)
 {
 	Script *self;
 	self = new Script();
@@ -51,6 +53,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	LuaScript_Set(self->lua_script, "Mess", "mess", self->mess);
 	LuaScript_Set(self->lua_script, "Room", "room", self->room);
 	LuaScript_Set(self->lua_script, "Console", "console", self->console);
+	LuaScript_Set(self->lua_script, "Sound", "sound", self->sound);
 
 	if (!LuaScript_Load(self->lua_script, "script/script.lua"))
 	{
