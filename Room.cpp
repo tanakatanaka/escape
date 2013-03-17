@@ -6,36 +6,6 @@
 
 #define OPEN 1.658064
 #define SLIDE 505
-
-struct Room
-{
-	int area;
-    int room;
-	int door;
-	int glass;
-	int hammer;
-	int pot;
-	int paper0;
-	int paper1;
-	//パラメータ
-	double rotY;
-	int swit; //door用
-	int count;
-	int s_swit; //glass用
-	int s_count;
-	double slide;
-	int role;
-	bool slide_lock;
-	bool get_hammer;
-	bool break_pot;
-	bool get_paper0;
-	bool get_paper1;
-	//デバック
-	int x;
-	int y;
-
-};
-
  
 // 初期化をする
 Room *Room_Initialize()
