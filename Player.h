@@ -18,6 +18,7 @@ void Player_act(Player *self,  const char *action);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
 int Player_get_time(Player *self);
+int Player_get_paper(Player *self);
 
 
 // “®‚«‚ğŒvZ‚·‚é

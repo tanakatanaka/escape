@@ -28,7 +28,8 @@ struct Room
 	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
-	bool paper1_f;
+	bool get_paper0;
+	bool get_paper1;
 	//デバック
 	int x;
 	int y;
@@ -61,7 +62,8 @@ Room *Room_Initialize()
 	self->slide_lock = false;
 	self->get_hammer = false;
 	self->break_pot = false;
-	self->paper1_f = false;
+	self->get_paper0 = false;
+	self->get_paper1 = false;
 	self->x = 0;
 	self->y = 0;
 	self->role = 0;
@@ -92,10 +94,15 @@ void Room_act(Room *self, const char *action)
 	{
 		self->break_pot = true;
 	}
+
+	if(act == "get_paper0")
+	{
+		self->get_paper0 = true;
+	}
 	
 	if(act == "get_paper1")
 	{
-		self->paper1_f = true;
+		self->get_paper1 = true;
 	}
 }
 
@@ -188,25 +195,39 @@ void Room_Draw( Room *self)
 	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
-	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
-	MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
+	
 
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
-	if(!self->get_hammer){ MV1DrawModel(self->hammer); }
-	if(!self->break_pot){ MV1DrawModel(self->pot); }
+	MV1DrawModel(self->glass);
 
-	MV1DrawModel(self->paper0); 
-
-	if(self->break_pot && !self->paper1_f)
+	if(!self->get_hammer)
 	{
-		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role + 0.1, 0 ) );
-		MV1DrawModel(self->paper1); 
+		MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
+		MV1DrawModel(self->hammer); 
 	}
 
-	MV1DrawModel(self->glass);
+	if(!self->get_paper0)
+	{
+		MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
+		MV1DrawModel(self->paper0);  
+	}
+
+	if(!self->break_pot)
+	{
+		MV1SetPosition(self->pot, VGet( 200, 0, 300 ) );
+		MV1DrawModel(self->pot); 
+	}
+	else if(self->break_pot && !self->get_paper1)
+	{
+		self->role + 0.5;
+		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role, 0 ) );
+		MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
+		MV1DrawModel(self->paper1); 
+		
+	}
+
+	
 	
 }
 

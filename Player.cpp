@@ -62,6 +62,11 @@ int Player_get_time(Player *self)
 	return self->time_limit / 60;
 }
 
+int Player_get_paper(Player *self)
+{
+	return self->get_paper;
+}
+
 void move_area(Player *self)
 {
 	int hougaku = Player_get_hougaku(self);

@@ -6,6 +6,7 @@ local slide_unlocked = false
 local slide_opened = false
 local get_hammer = false
 local break_pot = false
+local get_paper0 = false
 local get_paper1 = false
 
 --[[
@@ -72,7 +73,7 @@ function on_command()
 	end
 
 	if area_hougaku(3, 1) and not slide_opened then
-	  if command == "check slide" then
+		if command == "check slide" then
 	    text("plead enter the code", 10, 10)
 	    text("please 'input code X'", 10, 26)
 	    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
@@ -85,7 +86,16 @@ function on_command()
 	  end
 	end
 	
-	
+	if area_hougaku(4, 0) and not get_paper0 then
+		if command == "check paper" then
+			text("paper1", 10, 10)
+		elseif command == "get paper" then
+			get_paper0 = true
+			text("you got paper", 10, 10)
+			room_act("get_paper0")
+			player_act("get_paper")
+		end
+	end
 	
 
 	if area_hougaku(5, 1) then
@@ -95,6 +105,7 @@ function on_command()
 		   room_act("break_pot")
 		   break_pot = true 
 		elseif break_pot and not get_paper1 and command == "get paper" then
+			get_paper1 = true
 			room_act("get_paper1")
 			player_act("get_paper")
 	  	end
@@ -102,13 +113,12 @@ function on_command()
 
 	
 	if area_hougaku(6, 3) then
-	  if command == "check table" then
+	  if command == "check table" and not get_hammer then
 	    text("cup and hammer on the table", 10, 10)
-	    room_get_hammer()
 	  elseif not get_hammer and command == "check hammer" then
 	    text("hammer sugoi", 10, 10)
 	  elseif not get_hammer and command == "get hammer" then
-	    text("you get a hammer", 10, 10)
+	    text("you got a hammer", 10, 10)
 	    room_act("get_hammer")
 	    get_hammer = true
 	  elseif command == "check cup" then

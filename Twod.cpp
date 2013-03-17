@@ -73,12 +73,14 @@ void Twod_erase_image(Twod *self)
 void display_time(Twod *self)
 {
 	int time = Player_get_time(self->player);
+	int paper = Player_get_paper(self->player);
 	int area = Player_get_area(self->player);
 	int hougaku = Player_get_hougaku(self->player);
 
 	SetFontSize( 30 ) ;
-	DrawFormatString( 590, 30, GetColor( 255, 0, 0 ), "%d", time); 
-	DrawFormatString( 590, 60, GetColor( 0, 255, 0 ), "%d", area);
+	DrawFormatString( 590, 30, GetColor( 255, 0, 0 ), "%d", time);
+	DrawFormatString( 590, 60, GetColor( 255, 255, 0 ), "%d", paper);
+	DrawFormatString( 560, 90, GetColor( 0, 255, 0 ), "%d", area);
 	DrawFormatString( 590, 90, GetColor( 0, 0, 255 ), "%d", hougaku);
 	SetFontSize( 16 ) ;
 }
