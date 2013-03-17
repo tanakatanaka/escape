@@ -126,7 +126,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="BeforeBuild">
-    <Exec Command="make_lua_header.bat" />
+  <Target Name="Make Lua Header"
+    Inputs="lua_header.pkg"
+    Outputs="lua_header.h"
+    BeforeTargets="ClCompile">
+    <Exec Command="$(SolutionDir)make_lua_header.bat" />
   </Target>
 </Project>
