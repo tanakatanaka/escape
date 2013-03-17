@@ -50,7 +50,7 @@ function on_command()
 	end
   	
 	if area_hougaku(0, 0) then
-	  if command == "open door" and not room.swit ~= 1 then
+	  if command == "open door" and room.swit ~= 1 then
 	  	 room.swit = 1
 	  end
 	end
@@ -82,7 +82,6 @@ function on_command()
 	  elseif slide_unlocked and command == "open slide" then
 		room.s_swit = 1
 	    slide_opened = true
-	    room.s_swit = true
 	  end
 	end
 	

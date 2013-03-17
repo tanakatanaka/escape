@@ -35,7 +35,6 @@ struct Room
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize();
 
-void Room_act(Room *self, const char *act);
 void Room_set_are(Room *self, int area);
 bool Room_get_door(Room *self);
 bool Room_get_slide(Room *self);

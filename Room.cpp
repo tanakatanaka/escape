@@ -41,41 +41,6 @@ Room *Room_Initialize()
 	return self;
 }
 
-void Room_act(Room *self, const char *action)
-{
-  std::string act(action);
-  
-	if(act == "open_door" && self->rotY != OPEN)
-	{
-		self->swit = 1;
-	}
-	
-	if(act == "open_slide" && self->slide != SLIDE)
-	{
-		self->s_swit = 1;
-	}
-
-	if(act == "get_hammer")
-	{
-		self->get_hammer = true;
-	}
-  
-	if(act == "break_pot")
-	{
-		self->break_pot = true;
-	}
-
-	if(act == "get_paper0")
-	{
-		self->get_paper0 = true;
-	}
-	
-	if(act == "get_paper1")
-	{
-		self->get_paper1 = true;
-	}
-}
-
 bool Room_get_door(Room *self)
 {
 	if(self->rotY == OPEN)

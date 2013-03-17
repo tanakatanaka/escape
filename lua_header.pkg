@@ -6,7 +6,6 @@ void Twod_add_image(Twod *self, int x, int y, const char *name);
 void Twod_erase_image(Twod *self);
 void Mess_add_word(Mess *self, int x, int y, const char *word);
 void Mess_erase_word(Mess *self);
-void Room_act(Room *self, const char *act);
 void Sound_type( Sound *self, int type);
 void Sound_se( Sound *self, const char *name);
 
