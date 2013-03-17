@@ -196,6 +196,7 @@ void Room_Update( Room *self )
 	else if(self->break_pot && !self->get_paper1)
 	{
 		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
+		MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
 	}
 
 	self->role++;
@@ -241,11 +242,7 @@ void Room_Draw( Room *self)
 	}
 	else if(self->break_pot && !self->get_paper1)
 	{
-		self->role += 0.05;
-		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role, 0 ) );
-		MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
 		MV1DrawModel(self->paper1); 
-		
 	}
 
 	
