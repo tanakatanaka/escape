@@ -30,10 +30,40 @@ function player_act(msg)
 	Player_act(player, msg)
 end	
 
+-- デバッグコマンドの実行
+local function execute_debug_command(command)
+	if not string.match(command, ";$") then
+	  return false
+	end
+	
+  local ok, err = load(command, "command", "t")
+  if err then
+    ok, err = load("return (" .. command:sub(0, -2) .. ")", "command-expr", "t")
+    if err then
+      print(err)
+      return true
+    else
+	    print(">> " .. command)
+	    print("=> " .. tostring(ok()))
+    end
+  else
+    print("!> " .. command)
+    ok()
+    print("=> ok")
+  end
+  
+  return true
+end
+
 -- 入力されたコマンドの取得
 function get_command()
 	local command = console_d_bag(console)
-	
+
+	-- デバッグコマンド
+	if execute_debug_command(command) then
+	  return nil
+	end
+
 	command = string.gsub(command, "^%s+", "") -- 先頭の空白を消す
 	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
 	command = string.gsub(command, "%s+", " ") -- 間の空白は一個に統一
