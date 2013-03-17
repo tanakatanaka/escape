@@ -24,7 +24,7 @@ struct Room
 	int s_swit; //glass用
 	int s_count;
 	double slide;
-	double role;
+	int role;
 	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
@@ -168,11 +168,40 @@ void Room_set_are(Room *self, int area)
 // 動きを計算する
 void Room_Update( Room *self )
 {
+	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );
+	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
+	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
+
 	//開く
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
 	// 閉じる
 	if(self->area > 0 && self->rotY == OPEN) { self->swit = -1; }
+	
+	if(!self->get_hammer)
+	{
+		MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
+	}
+
+	if(!self->get_paper0)
+	{
+		MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
+	}
+
+	if(!self->break_pot)
+	{
+		MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
+	}
+	else if(self->break_pot && !self->get_paper1)
+	{
+		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
+	}
+
+	self->role++;
+
+
+
 
 	/* デバッグ用操作
 	if(Pad_Get( KEY_INPUT_W ) > 0){ self->x++; }
@@ -189,14 +218,6 @@ void Room_Update( Room *self )
 // 描画する
 void Room_Draw( Room *self)
 {
-	MV1SetRotationXYZ( self->door, VGet( 0, self->rotY, 0 ) );
-	
-
-	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
-	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
-	
-
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
 	MV1DrawModel(self->glass);
@@ -220,7 +241,7 @@ void Room_Draw( Room *self)
 	}
 	else if(self->break_pot && !self->get_paper1)
 	{
-		self->role + 0.5;
+		self->role += 0.05;
 		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role, 0 ) );
 		MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
 		MV1DrawModel(self->paper1); 
