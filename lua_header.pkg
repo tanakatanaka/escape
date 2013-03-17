@@ -1,3 +1,13 @@
+
+$#include "Console.h"
+$#include "Script.h"
+$#include "Camera.h"
+$#include "Room.h"
+$#include "Player.h"
+$#include "Mess.h"
+$#include "Twod.h"
+$#include "Pad.h"
+
 const char *console_d_bag(Console *self);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);

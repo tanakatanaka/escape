@@ -18,15 +18,23 @@
 TOLUA_API int tolua_lua_header_open (lua_State* tolua_S);
 LUALIB_API int luaopen_lua_header (lua_State* tolua_S);
 
+#include "Console.h"
+#include "Script.h"
+#include "Camera.h"
+#include "Room.h"
+#include "Player.h"
+#include "Mess.h"
+#include "Twod.h"
+#include "Pad.h"
 
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"Twod");
  tolua_usertype(tolua_S,"Player");
- tolua_usertype(tolua_S,"Sound");
  tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"Room");
+ tolua_usertype(tolua_S,"Sound");
  tolua_usertype(tolua_S,"Console");
 }
 

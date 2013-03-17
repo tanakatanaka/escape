@@ -1,21 +1,14 @@
 #include "lua_script.h"
 #include "windows.h"
-#include "Console.h"
-#include "Script.h"
-#include "Camera.h"
-#include "Room.h"
-#include "Player.h"
-#include "Mess.h"
-#include "Twod.h"
-#include "Pad.h"
 #include <memory>
 
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#include "lua_header.h"
 }
+
+#include "lua_header.h"
 
 struct LuaScript
 {
