@@ -17,7 +17,6 @@ local get_paper1 = false
   操作する関数
     text("文字", X, Y)
     draw(画像番号, X, Y)
-    room_act("命令")
 ]]--
 
 function on_move()
@@ -51,8 +50,8 @@ function on_command()
 	end
   	
 	if area_hougaku(0, 0) then
-	  if command == "open door" then
-	  	 room_act("open_door")
+	  if command == "open door" and not room.swit ~= 1 then
+	  	 room.swit = 1
 	  end
 	end
 	
@@ -81,8 +80,9 @@ function on_command()
 	    text("the slide unlocked", 10, 10)
 	    slide_unlocked = true
 	  elseif slide_unlocked and command == "open slide" then
-	    room_act("open_slide")
+		room.s_swit = 1
 	    slide_opened = true
+	    room.s_swit = true
 	  end
 	end
 	
@@ -92,7 +92,7 @@ function on_command()
 		elseif command == "get paper" then
 			get_paper0 = true
 			text("you got paper", 10, 10)
-			room_act("get_paper0")
+			room.get_paper0 = true
 			player_act("get_paper")
 		end
 	end
@@ -102,11 +102,11 @@ function on_command()
 		if not break_pot and command == "check pot" then
 		   text("pot sugoi", 10, 10)
 		elseif  get_hammer and command == "break pot" then
-		   room_act("break_pot")
+		   room.break_pot = true
 		   break_pot = true 
 		elseif break_pot and not get_paper1 and command == "get paper" then
 			get_paper1 = true
-			room_act("get_paper1")
+			room.get_paper1 = true
 			player_act("get_paper")
 	  	end
 	end
@@ -119,7 +119,7 @@ function on_command()
 	    text("hammer sugoi", 10, 10)
 	  elseif not get_hammer and command == "get hammer" then
 	    text("you got a hammer", 10, 10)
-	    room_act("get_hammer")
+	    room.get_hammer = true
 	    get_hammer = true
 	  elseif command == "check cup" then
 	    text("cup sugoi", 10, 10)
