@@ -11,7 +11,6 @@ $#include "Pad.h"
 const char *console_d_bag(Console *self);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
-void Player_act(Player *self,  const char *action);
 void Twod_add_image(Twod *self, int x, int y, const char *name);
 void Twod_erase_image(Twod *self);
 void Mess_add_word(Mess *self, int x, int y, const char *word);
@@ -36,7 +35,6 @@ struct Room
 	int s_count;
 	double slide;
 	int role;
-	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
 	bool get_paper0;
@@ -45,6 +43,15 @@ struct Room
 	int y;
 };
 
- 
+struct Player
+{
+	Camera *camera;
+	Console *console;
+	Room *room;
+    int area;
+	int count;
+	int time_limit;
+	int get_paper;
+}; 
 
 

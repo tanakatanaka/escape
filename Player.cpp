@@ -36,17 +36,6 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room)
 	return self;
 }
 
-void Player_act(Player *self,  const char *action)
-{
-	std::string act(action);
-
-	if(act == "get_paper")
-	{
-		self->get_paper++;
-	}
-}
-
-
 int Player_get_area(Player *self)
 {
 	return self->area;
@@ -120,7 +109,7 @@ void Player_Update( Player *self )
 
 	if(self->area > 0){ Room_get_door(self->room) == false; }
 
-	Room_set_are(self->room, self->area);
+	Room_set_area(self->room, self->area);
 	self->count++;
 	self->time_limit--;
 }

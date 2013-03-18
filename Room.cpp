@@ -29,7 +29,6 @@ Room *Room_Initialize()
 	self->s_swit = 0;
 	self->s_count = 0;
 	self->slide = 0;
-	self->slide_lock = false;
 	self->get_hammer = false;
 	self->break_pot = false;
 	self->get_paper0 = false;
@@ -95,7 +94,7 @@ void slide_glass(Room *self)
 	}
 }
 
-void Room_set_are(Room *self, int area)
+void Room_set_area(Room *self, int area)
 {
 	self->area = area;
 }
@@ -113,6 +112,7 @@ void Room_Update( Room *self )
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
 	// •Â‚¶‚é
 	if(self->area > 0 && self->rotY == OPEN) { self->swit = -1; }
+	
 	
 	if(!self->get_hammer)
 	{

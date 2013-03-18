@@ -2,6 +2,9 @@
 
 #define DEF_Room_H
 
+#include <string>
+#include <vector>
+
 struct Room
 {
 	int area;
@@ -19,7 +22,6 @@ struct Room
 	int s_count;
 	double slide;
 	int role;
-	bool slide_lock;
 	bool get_hammer;
 	bool break_pot;
 	bool get_paper0;
@@ -28,14 +30,11 @@ struct Room
 	int y;
 };
 
-#include <string>
-#include <vector>
-
 
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize();
 
-void Room_set_are(Room *self, int area);
+void Room_set_area(Room *self, int area);
 bool Room_get_door(Room *self);
 bool Room_get_slide(Room *self);
 
