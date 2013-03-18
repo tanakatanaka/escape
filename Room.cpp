@@ -17,11 +17,14 @@ Room *Room_Initialize()
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model画像ハンドルの格納
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model画像ハンドルの格納
-	self->glass = MV1GetFrameNum( 1 ); 
+	self->glass = MV1LoadModel("meta/glass.mqo") ;  
 	self->hammer = MV1LoadModel("meta/room.hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
 	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
+
+	self->table = MV1LoadModel("meta/table.mqo") ;
+	self->black_cap = MV1SearchFrame(self->table, "black_futa");
 	
 	self->rotY = 0.0f;
 	self->swit = 0;
@@ -106,6 +109,7 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->room, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
+	MV1SetPosition(self->table, VGet( 200 - 43, 0, 300 + 721) );
 
 	//開く
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
@@ -136,7 +140,6 @@ void Room_Update( Room *self )
 
 	self->role++;
 
-	/* デバッグ用操作
 	if(Pad_Get( KEY_INPUT_W ) > 0){ self->x++; }
 	else if(Pad_Get( KEY_INPUT_S ) > 0){ self->x--; }
 
@@ -144,7 +147,7 @@ void Room_Update( Room *self )
 	else if(Pad_Get( KEY_INPUT_A ) > 0){ self->y--; }
 
 	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d \n",self->x,self->y);}
-	*/
+
 
 }		
 
@@ -177,7 +180,7 @@ void Room_Draw( Room *self)
 		MV1DrawModel(self->paper1); 
 	}
 
-	
+	MV1DrawModel(self->table); 
 	
 }
 

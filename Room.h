@@ -13,6 +13,10 @@ struct Room
 	int glass;
 	int hammer;
 	int pot;
+	int table;
+	int black_cap;
+	int green_cap;
+	int yellow_cap;
 	int paper0;
 	int paper1;
 	double rotY;
