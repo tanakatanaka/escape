@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+// TOLUA_BEGIN
+
 struct Room
 {
 	int area;
@@ -34,6 +36,7 @@ struct Room
 	int y;
 };
 
+// TOLUA_END
 
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize();

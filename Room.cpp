@@ -6,7 +6,7 @@
 
 #define OPEN 1.658064
 #define SLIDE 505
- 
+
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize()
 {

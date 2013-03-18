@@ -1,60 +1,21 @@
 
 $pfile "lua_header_dx.pkg"
 
-
 $#include "Console.h"
 $#include "Script.h"
 $#include "Camera.h"
-$#include "Room.h"
-$#include "Player.h"
+$hfile "Room.h"
+$hfile "Player.h"
 $#include "Mess.h"
 $#include "Twod.h"
 $#include "Pad.h"
+$#include "Sound.h"
 
 const char *console_d_bag(Console *self);
-int Player_get_area(Player *self);
-int Player_get_hougaku(Player *self);
 void Twod_add_image(Twod *self, int x, int y, const char *name);
 void Twod_erase_image(Twod *self);
 void Mess_add_word(Mess *self, int x, int y, const char *word);
 void Mess_erase_word(Mess *self);
 void Sound_type( Sound *self, int type);
 void Sound_se( Sound *self, const char *name);
-
-struct Room
-{
-	int area;
-    int room;
-	int door;
-	int glass;
-	int hammer;
-	int pot;
-	int paper0;
-	int paper1;
-	double rotY;
-	int swit;
-	int count;
-	int s_swit;
-	int s_count;
-	double slide;
-	int role;
-	bool get_hammer;
-	bool break_pot;
-	bool get_paper0;
-	bool get_paper1;
-	int x;
-	int y;
-};
-
-struct Player
-{
-	Camera *camera;
-	Console *console;
-	Room *room;
-    int area;
-	int count;
-	int time_limit;
-	int get_paper;
-}; 
-
 

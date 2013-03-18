@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+// TOLUA_BEGIN
+
 struct Player
 {
 	Camera *camera;
@@ -19,14 +21,19 @@ struct Player
 	int get_paper;
 };
 
+// TOLUA_END
+
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console, Room *room);
+
+// TOLUA_BEGIN
 
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
 int Player_get_time(Player *self);
 int Player_get_paper(Player *self);
 
+// TOLUA_END
 
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );

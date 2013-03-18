@@ -89,14 +89,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Player");
- tolua_usertype(tolua_S,"Twod");
- tolua_usertype(tolua_S,"Camera");
- tolua_usertype(tolua_S,"Console");
- tolua_usertype(tolua_S,"Room");
  tolua_usertype(tolua_S,"VECTOR");
  tolua_usertype(tolua_S,"Sound");
  tolua_usertype(tolua_S,"Mess");
+ tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Room");
+ tolua_usertype(tolua_S,"Camera");
 }
 
 /* get function: x of class  VECTOR */
@@ -1366,259 +1366,6 @@ static int tolua_lua_header_MV1ResetFrameTextureAddressTransform00(lua_State* to
 #endif
 }
 
-/* function: console_d_bag */
-static int tolua_lua_header_console_d_bag00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Console",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Console* self = ((Console*)  tolua_tousertype(tolua_S,1,0));
- {
-  const char* tolua_ret = (const char*)  console_d_bag(self);
- tolua_pushstring(tolua_S,(const char*)tolua_ret);
- }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'console_d_bag'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Player_get_area */
-static int tolua_lua_header_Player_get_area00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
- {
-  int tolua_ret = (int)  Player_get_area(self);
- tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
- }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Player_get_area'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Player_get_hougaku */
-static int tolua_lua_header_Player_get_hougaku00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
- {
-  int tolua_ret = (int)  Player_get_hougaku(self);
- tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
- }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Player_get_hougaku'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Twod_add_image */
-static int tolua_lua_header_Twod_add_image00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Twod",0,&tolua_err) || 
- !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
- !tolua_isnumber(tolua_S,3,0,&tolua_err) || 
- !tolua_isstring(tolua_S,4,0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,5,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Twod* self = ((Twod*)  tolua_tousertype(tolua_S,1,0));
-  int x = ((int)  tolua_tonumber(tolua_S,2,0));
-  int y = ((int)  tolua_tonumber(tolua_S,3,0));
-  const char* name = ((const char*)  tolua_tostring(tolua_S,4,0));
- {
-  Twod_add_image(self,x,y,name);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Twod_add_image'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Twod_erase_image */
-static int tolua_lua_header_Twod_erase_image00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Twod",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Twod* self = ((Twod*)  tolua_tousertype(tolua_S,1,0));
- {
-  Twod_erase_image(self);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Twod_erase_image'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Mess_add_word */
-static int tolua_lua_header_Mess_add_word00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Mess",0,&tolua_err) || 
- !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
- !tolua_isnumber(tolua_S,3,0,&tolua_err) || 
- !tolua_isstring(tolua_S,4,0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,5,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Mess* self = ((Mess*)  tolua_tousertype(tolua_S,1,0));
-  int x = ((int)  tolua_tonumber(tolua_S,2,0));
-  int y = ((int)  tolua_tonumber(tolua_S,3,0));
-  const char* word = ((const char*)  tolua_tostring(tolua_S,4,0));
- {
-  Mess_add_word(self,x,y,word);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Mess_add_word'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Mess_erase_word */
-static int tolua_lua_header_Mess_erase_word00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Mess",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Mess* self = ((Mess*)  tolua_tousertype(tolua_S,1,0));
- {
-  Mess_erase_word(self);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Mess_erase_word'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Sound_type */
-static int tolua_lua_header_Sound_type00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Sound",0,&tolua_err) || 
- !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Sound* self = ((Sound*)  tolua_tousertype(tolua_S,1,0));
-  int type = ((int)  tolua_tonumber(tolua_S,2,0));
- {
-  Sound_type(self,type);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Sound_type'.",&tolua_err);
- return 0;
-#endif
-}
-
-/* function: Sound_se */
-static int tolua_lua_header_Sound_se00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Sound",0,&tolua_err) || 
- !tolua_isstring(tolua_S,2,0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Sound* self = ((Sound*)  tolua_tousertype(tolua_S,1,0));
-  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
- {
-  Sound_se(self,name);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Sound_se'.",&tolua_err);
- return 0;
-#endif
-}
-
 /* get function: area of class  Room */
 static int tolua_get_Room_Room_area(lua_State* tolua_S)
 {
@@ -1766,6 +1513,106 @@ static int tolua_set_Room_Room_pot(lua_State* tolua_S)
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
   self->pot = ((int)  tolua_tonumber(tolua_S,2,0));
+ return 0;
+}
+
+/* get function: table of class  Room */
+static int tolua_get_Room_Room_table(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'table'",NULL);
+#endif
+ tolua_pushnumber(tolua_S,(lua_Number)self->table);
+ return 1;
+}
+
+/* set function: table of class  Room */
+static int tolua_set_Room_Room_table(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'table'",NULL);
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->table = ((int)  tolua_tonumber(tolua_S,2,0));
+ return 0;
+}
+
+/* get function: black_cap of class  Room */
+static int tolua_get_Room_Room_black_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'black_cap'",NULL);
+#endif
+ tolua_pushnumber(tolua_S,(lua_Number)self->black_cap);
+ return 1;
+}
+
+/* set function: black_cap of class  Room */
+static int tolua_set_Room_Room_black_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'black_cap'",NULL);
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->black_cap = ((int)  tolua_tonumber(tolua_S,2,0));
+ return 0;
+}
+
+/* get function: green_cap of class  Room */
+static int tolua_get_Room_Room_green_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'green_cap'",NULL);
+#endif
+ tolua_pushnumber(tolua_S,(lua_Number)self->green_cap);
+ return 1;
+}
+
+/* set function: green_cap of class  Room */
+static int tolua_set_Room_Room_green_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'green_cap'",NULL);
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->green_cap = ((int)  tolua_tonumber(tolua_S,2,0));
+ return 0;
+}
+
+/* get function: yellow_cap of class  Room */
+static int tolua_get_Room_Room_yellow_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'yellow_cap'",NULL);
+#endif
+ tolua_pushnumber(tolua_S,(lua_Number)self->yellow_cap);
+ return 1;
+}
+
+/* set function: yellow_cap of class  Room */
+static int tolua_set_Room_Room_yellow_cap(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'yellow_cap'",NULL);
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->yellow_cap = ((int)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -2319,6 +2166,357 @@ static int tolua_set_Player_Player_get_paper(lua_State* tolua_S)
  return 0;
 }
 
+/* function: Player_get_area */
+static int tolua_lua_header_Player_get_area00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_area(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Player_get_area'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Player_get_hougaku */
+static int tolua_lua_header_Player_get_hougaku00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_hougaku(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Player_get_hougaku'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Player_get_time */
+static int tolua_lua_header_Player_get_time00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_time(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Player_get_time'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Player_get_paper */
+static int tolua_lua_header_Player_get_paper00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_paper(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Player_get_paper'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: console_d_bag */
+static int tolua_lua_header_console_d_bag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Console",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Console* self = ((Console*)  tolua_tousertype(tolua_S,1,0));
+ {
+  const char* tolua_ret = (const char*)  console_d_bag(self);
+ tolua_pushstring(tolua_S,(const char*)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'console_d_bag'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Player_get_area */
+static int tolua_lua_header_Player_get_area01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_area(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_lua_header_Player_get_area00(tolua_S);
+}
+
+/* function: Player_get_hougaku */
+static int tolua_lua_header_Player_get_hougaku01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  int tolua_ret = (int)  Player_get_hougaku(self);
+ tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+ }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_lua_header_Player_get_hougaku00(tolua_S);
+}
+
+/* function: Twod_add_image */
+static int tolua_lua_header_Twod_add_image00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Twod",0,&tolua_err) || 
+ !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
+ !tolua_isnumber(tolua_S,3,0,&tolua_err) || 
+ !tolua_isstring(tolua_S,4,0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Twod* self = ((Twod*)  tolua_tousertype(tolua_S,1,0));
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+  const char* name = ((const char*)  tolua_tostring(tolua_S,4,0));
+ {
+  Twod_add_image(self,x,y,name);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Twod_add_image'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Twod_erase_image */
+static int tolua_lua_header_Twod_erase_image00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Twod",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Twod* self = ((Twod*)  tolua_tousertype(tolua_S,1,0));
+ {
+  Twod_erase_image(self);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Twod_erase_image'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Mess_add_word */
+static int tolua_lua_header_Mess_add_word00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Mess",0,&tolua_err) || 
+ !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
+ !tolua_isnumber(tolua_S,3,0,&tolua_err) || 
+ !tolua_isstring(tolua_S,4,0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Mess* self = ((Mess*)  tolua_tousertype(tolua_S,1,0));
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+  const char* word = ((const char*)  tolua_tostring(tolua_S,4,0));
+ {
+  Mess_add_word(self,x,y,word);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Mess_add_word'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Mess_erase_word */
+static int tolua_lua_header_Mess_erase_word00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Mess",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Mess* self = ((Mess*)  tolua_tousertype(tolua_S,1,0));
+ {
+  Mess_erase_word(self);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Mess_erase_word'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Sound_type */
+static int tolua_lua_header_Sound_type00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Sound",0,&tolua_err) || 
+ !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Sound* self = ((Sound*)  tolua_tousertype(tolua_S,1,0));
+  int type = ((int)  tolua_tonumber(tolua_S,2,0));
+ {
+  Sound_type(self,type);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Sound_type'.",&tolua_err);
+ return 0;
+#endif
+}
+
+/* function: Sound_se */
+static int tolua_lua_header_Sound_se00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Sound",0,&tolua_err) || 
+ !tolua_isstring(tolua_S,2,0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Sound* self = ((Sound*)  tolua_tousertype(tolua_S,1,0));
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+ {
+  Sound_se(self,name);
+ }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Sound_se'.",&tolua_err);
+ return 0;
+#endif
+}
+
 /* Open lib function */
 LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
 {
@@ -2373,15 +2571,6 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_function(tolua_S,"MV1GetFrameBaseVisible",tolua_lua_header_MV1GetFrameBaseVisible00);
  tolua_function(tolua_S,"MV1SetFrameTextureAddressTransform",tolua_lua_header_MV1SetFrameTextureAddressTransform00);
  tolua_function(tolua_S,"MV1ResetFrameTextureAddressTransform",tolua_lua_header_MV1ResetFrameTextureAddressTransform00);
- tolua_function(tolua_S,"console_d_bag",tolua_lua_header_console_d_bag00);
- tolua_function(tolua_S,"Player_get_area",tolua_lua_header_Player_get_area00);
- tolua_function(tolua_S,"Player_get_hougaku",tolua_lua_header_Player_get_hougaku00);
- tolua_function(tolua_S,"Twod_add_image",tolua_lua_header_Twod_add_image00);
- tolua_function(tolua_S,"Twod_erase_image",tolua_lua_header_Twod_erase_image00);
- tolua_function(tolua_S,"Mess_add_word",tolua_lua_header_Mess_add_word00);
- tolua_function(tolua_S,"Mess_erase_word",tolua_lua_header_Mess_erase_word00);
- tolua_function(tolua_S,"Sound_type",tolua_lua_header_Sound_type00);
- tolua_function(tolua_S,"Sound_se",tolua_lua_header_Sound_se00);
  tolua_cclass(tolua_S,"Room","Room","",NULL);
  tolua_beginmodule(tolua_S,"Room");
  tolua_variable(tolua_S,"area",tolua_get_Room_Room_area,tolua_set_Room_Room_area);
@@ -2390,6 +2579,10 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_variable(tolua_S,"glass",tolua_get_Room_Room_glass,tolua_set_Room_Room_glass);
  tolua_variable(tolua_S,"hammer",tolua_get_Room_Room_hammer,tolua_set_Room_Room_hammer);
  tolua_variable(tolua_S,"pot",tolua_get_Room_Room_pot,tolua_set_Room_Room_pot);
+ tolua_variable(tolua_S,"table",tolua_get_Room_Room_table,tolua_set_Room_Room_table);
+ tolua_variable(tolua_S,"black_cap",tolua_get_Room_Room_black_cap,tolua_set_Room_Room_black_cap);
+ tolua_variable(tolua_S,"green_cap",tolua_get_Room_Room_green_cap,tolua_set_Room_Room_green_cap);
+ tolua_variable(tolua_S,"yellow_cap",tolua_get_Room_Room_yellow_cap,tolua_set_Room_Room_yellow_cap);
  tolua_variable(tolua_S,"paper0",tolua_get_Room_Room_paper0,tolua_set_Room_Room_paper0);
  tolua_variable(tolua_S,"paper1",tolua_get_Room_Room_paper1,tolua_set_Room_Room_paper1);
  tolua_variable(tolua_S,"rotY",tolua_get_Room_Room_rotY,tolua_set_Room_Room_rotY);
@@ -2416,6 +2609,19 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_variable(tolua_S,"time_limit",tolua_get_Player_Player_time_limit,tolua_set_Player_Player_time_limit);
  tolua_variable(tolua_S,"get_paper",tolua_get_Player_Player_get_paper,tolua_set_Player_Player_get_paper);
  tolua_endmodule(tolua_S);
+ tolua_function(tolua_S,"Player_get_area",tolua_lua_header_Player_get_area00);
+ tolua_function(tolua_S,"Player_get_hougaku",tolua_lua_header_Player_get_hougaku00);
+ tolua_function(tolua_S,"Player_get_time",tolua_lua_header_Player_get_time00);
+ tolua_function(tolua_S,"Player_get_paper",tolua_lua_header_Player_get_paper00);
+ tolua_function(tolua_S,"console_d_bag",tolua_lua_header_console_d_bag00);
+ tolua_function(tolua_S,"Player_get_area",tolua_lua_header_Player_get_area01);
+ tolua_function(tolua_S,"Player_get_hougaku",tolua_lua_header_Player_get_hougaku01);
+ tolua_function(tolua_S,"Twod_add_image",tolua_lua_header_Twod_add_image00);
+ tolua_function(tolua_S,"Twod_erase_image",tolua_lua_header_Twod_erase_image00);
+ tolua_function(tolua_S,"Mess_add_word",tolua_lua_header_Mess_add_word00);
+ tolua_function(tolua_S,"Mess_erase_word",tolua_lua_header_Mess_erase_word00);
+ tolua_function(tolua_S,"Sound_type",tolua_lua_header_Sound_type00);
+ tolua_function(tolua_S,"Sound_se",tolua_lua_header_Sound_se00);
  tolua_endmodule(tolua_S);
  return 1;
 }
