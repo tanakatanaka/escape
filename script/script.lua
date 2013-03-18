@@ -88,7 +88,7 @@ function on_command()
 		elseif command == "get paper" then
 			room.get_paper0 = true
 			text("you got paper", 10, 10)
-			player.get_paper++
+			player.get_paper += 1
 		end
 	end
 	
@@ -100,7 +100,7 @@ function on_command()
 		   room.break_pot = true
 		elseif room.break_pot and not room.get_paper1 and command == "get paper" then
 			room.get_paper1 = true
-			player.get_paper++
+			player.get_paper += 1
 	  	end
 	end
 
