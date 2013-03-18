@@ -8,7 +8,16 @@
 #include <string>
 #include <vector>
 
-struct Player;
+struct Player
+{
+	Camera *camera;
+	Console *console;
+	Room *room;
+    int area;
+	int count;
+	int time_limit;
+	int get_paper;
+};
 
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console, Room *room);
