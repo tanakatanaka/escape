@@ -1,4 +1,7 @@
 
+$pfile "lua_header_dx.pkg"
+
+
 $#include "Console.h"
 $#include "Script.h"
 $#include "Camera.h"

@@ -1,0 +1,96 @@
+
+/* DXの関数 */
+
+$ namespace DxLib {
+$ typedef struct tagVECTOR VECTOR; 
+$ struct tagVECTOR
+$ {
+$ 	float x, y, z;
+$ 	VECTOR(float x, float y, float z) : x(x), y(y), z(z) {}
+$ 	VECTOR operator +(const VECTOR &b) const { return VECTOR(x + b.x, y + b.y, z + b.z); }
+$ 	VECTOR operator -(const VECTOR &b) const { return VECTOR(x - b.x, y - b.y, z - b.z); }
+$ 	VECTOR operator *(float b) const { return VECTOR(x * b, y * b, z * b); }
+$ 	VECTOR operator /(float b) const { return VECTOR(x / b, y / b, z / b); }
+$ };
+$  	extern  int         MV1SetPosition(int MHandle, VECTOR Position);
+$  	extern  VECTOR      MV1GetPosition(int MHandle);
+$  	extern  int         MV1SetScale(int MHandle, VECTOR Scale);
+$  	extern  VECTOR      MV1GetScale(int MHandle);
+$  	extern  int         MV1SetRotationXYZ(int MHandle, VECTOR Rotate);
+$  	extern  VECTOR      MV1GetRotationXYZ(int MHandle);
+$  	extern  int         MV1SetVisible(int MHandle, int VisibleFlag);
+$  	extern  int         MV1GetVisible(int MHandle);
+$ 
+$ extern	int			MV1GetFrameNum( int MHandle ) ;
+$ extern	int			MV1SearchFrame( int MHandle, const char *FrameName ) ;
+$ extern	int			MV1SearchFrameChild( int MHandle, int FrameIndex = -1 , const char *ChildName = NULL ) ;
+$ extern	const char *MV1GetFrameName( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameParent( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameChildNum( int MHandle, int FrameIndex = -1 ) ;
+$ extern	int			MV1GetFrameChild( int MHandle, int FrameIndex = -1 , int ChildIndex = 0 ) ;
+$ extern	VECTOR		MV1GetFramePosition( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1ResetFrameUserLocalMatrix( int MHandle, int FrameIndex ) ;
+$ extern	VECTOR		MV1GetFrameMaxVertexLocalPosition( int MHandle, int FrameIndex ) ;
+$ extern	VECTOR		MV1GetFrameMinVertexLocalPosition( int MHandle, int FrameIndex ) ;
+$ extern	VECTOR		MV1GetFrameAvgVertexLocalPosition( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameTriangleNum( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameMeshNum( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameMesh( int MHandle, int FrameIndex, int Index ) ;
+$ extern	int			MV1SetFrameVisible( int MHandle, int FrameIndex, int VisibleFlag ) ;
+$ extern	int			MV1GetFrameVisible( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1GetFrameSemiTransState( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1SetFrameOpacityRate( int MHandle, int FrameIndex, float Rate ) ;
+$ extern	float		MV1GetFrameOpacityRate( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1SetFrameBaseVisible( int MHandle, int FrameIndex, int VisibleFlag ) ;
+$ extern	int			MV1GetFrameBaseVisible( int MHandle, int FrameIndex ) ;
+$ extern	int			MV1SetFrameTextureAddressTransform( int MHandle, int FrameIndex, float TransU, float TransV, float ScaleU, float ScaleV, float RotCenterU, float RotCenterV, float Rotate ) ;
+$ extern	int			MV1ResetFrameTextureAddressTransform( int MHandle, int FrameIndex ) ;
+
+$ }
+$ using namespace DxLib;
+
+struct VECTOR
+{
+    float x;
+    float y;
+    float z;
+    VECTOR(float x, float y, float z);
+	VECTOR operator +(VECTOR &b);
+	VECTOR operator -(VECTOR &b);
+	VECTOR operator *(float b);
+	VECTOR operator /(float b);
+};
+
+int         MV1SetPosition(int MHandle, VECTOR Position);
+VECTOR      MV1GetPosition(int MHandle);
+int         MV1SetScale(int MHandle, VECTOR Scale);
+VECTOR      MV1GetScale(int MHandle);
+int         MV1SetRotationXYZ(int MHandle, VECTOR Rotate);
+VECTOR      MV1GetRotationXYZ(int MHandle);
+int         MV1SetVisible(int MHandle, int VisibleFlag);
+int         MV1GetVisible(int MHandle);
+
+extern	int			MV1GetFrameNum( int MHandle ) ;
+extern	int			MV1SearchFrame( int MHandle, const char *FrameName ) ;
+extern	int			MV1SearchFrameChild( int MHandle, int FrameIndex = -1 , const char *ChildName = NULL ) ;
+extern	const char *MV1GetFrameName( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameParent( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameChildNum( int MHandle, int FrameIndex = -1 ) ;
+extern	int			MV1GetFrameChild( int MHandle, int FrameIndex = -1 , int ChildIndex = 0 ) ;
+extern	VECTOR		MV1GetFramePosition( int MHandle, int FrameIndex ) ;
+extern	int			MV1ResetFrameUserLocalMatrix( int MHandle, int FrameIndex ) ;
+extern	VECTOR		MV1GetFrameMaxVertexLocalPosition( int MHandle, int FrameIndex ) ;
+extern	VECTOR		MV1GetFrameMinVertexLocalPosition( int MHandle, int FrameIndex ) ;
+extern	VECTOR		MV1GetFrameAvgVertexLocalPosition( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameTriangleNum( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameMeshNum( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameMesh( int MHandle, int FrameIndex, int Index ) ;
+extern	int			MV1SetFrameVisible( int MHandle, int FrameIndex, int VisibleFlag ) ;
+extern	int			MV1GetFrameVisible( int MHandle, int FrameIndex ) ;
+extern	int			MV1GetFrameSemiTransState( int MHandle, int FrameIndex ) ;
+extern	int			MV1SetFrameOpacityRate( int MHandle, int FrameIndex, float Rate ) ;
+extern	float		MV1GetFrameOpacityRate( int MHandle, int FrameIndex ) ;
+extern	int			MV1SetFrameBaseVisible( int MHandle, int FrameIndex, int VisibleFlag ) ;
+extern	int			MV1GetFrameBaseVisible( int MHandle, int FrameIndex ) ;
+extern	int			MV1SetFrameTextureAddressTransform( int MHandle, int FrameIndex, float TransU, float TransV, float ScaleU, float ScaleV, float RotCenterU, float RotCenterV, float Rotate ) ;
+extern	int			MV1ResetFrameTextureAddressTransform( int MHandle, int FrameIndex ) ;
