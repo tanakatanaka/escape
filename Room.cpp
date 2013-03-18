@@ -17,8 +17,8 @@ Room *Room_Initialize()
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
-	self->glass = MV1LoadModel("meta/glass.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
-	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
+	self->glass = MV1GetFrameNum( 1 ); 
+	self->hammer = MV1LoadModel("meta/room.hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
 	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
@@ -135,9 +135,6 @@ void Room_Update( Room *self )
 	}
 
 	self->role++;
-
-
-
 
 	/* ƒfƒoƒbƒO—p‘€ì
 	if(Pad_Get( KEY_INPUT_W ) > 0){ self->x++; }

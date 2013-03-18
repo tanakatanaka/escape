@@ -79,7 +79,7 @@ function on_command()
 	elseif slide_unlocked and area_hougaku(3, 1) then
 		if room.s_swit ~= 1 and command == "open slide" then
 		   room.s_swit = 1
-	  	end
+	  	end 
 	end
 	
 	if area_hougaku(4, 0) and not room.get_paper0 then
@@ -88,7 +88,7 @@ function on_command()
 		elseif command == "get paper" then
 			room.get_paper0 = true
 			text("you got paper", 10, 10)
-			player.get_paper += 1
+			player.get_paper = player.get_paper + 1
 		end
 	end
 	
@@ -100,7 +100,7 @@ function on_command()
 		   room.break_pot = true
 		elseif room.break_pot and not room.get_paper1 and command == "get paper" then
 			room.get_paper1 = true
-			player.get_paper += 1
+			player.get_paper = player.get_paper + 1
 	  	end
 	end
 
