@@ -127,7 +127,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <Target Name="Make Lua Header"
-    Inputs="lua_header.pkg;lua_header_dx.pkg"
+    Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h"
     Outputs="lua_header.h"
     BeforeTargets="ClCompile">
     <Exec Command="$(SolutionDir)make_lua_header.bat" />
