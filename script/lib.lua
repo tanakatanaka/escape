@@ -2,6 +2,8 @@
   各種C言語から持ってきた関数とか
 ]]--
 
+require "script/setup/std"
+
 -- テキストの表示
 function text(msg, x, y)
 	Mess_add_word(mess, x, y, msg)
@@ -14,45 +16,36 @@ end
 
 -- エリアと方角の判断 (bool値を返す)
 function area_hougaku(x, y)
-	local area = Player_get_area(player)
-	local hougaku = Player_get_hougaku(player)
-
-	return area == x and hougaku == y
+	return player.area == x and player.hougaku == y
 end
-
--- Room_act関連
-function room_act(msg)
-	 Room_act(room, msg)
-end
-
---Player_act関連
-function player_act(msg)
-	Player_act(player, msg)
-end	
 
 -- デバッグコマンドの実行
 local function execute_debug_command(command)
-	if not string.match(command, ";$") then
-	  return false
-	end
-	
-  local ok, err = load(command, "command", "t")
-  if err then
-    ok, err = load("return (" .. command:sub(0, -2) .. ")", "command-expr", "t")
-    if err then
-      print(err)
-      return true
-    else
-	    print(">> " .. command)
-	    print("=> " .. tostring(ok()))
+    if not command:match(";$") then
+        return false
     end
-  else
-    print("!> " .. command)
-    ok()
-    print("=> ok")
-  end
+
+    local ok, err = load("return " .. command, "command-print")
+
+    if err then
+        ok, err = load(command, "command")
+    end
+
+    if ok then
+        io.write(">> " .. command .. "\n=> ")
+        local result = table.pack(ok())
+        if result.n == 0 then
+            print("ok")
+        else
+            for i = 1, result.n do
+                table.print(result[i])
+            end
+        end
+    else
+        print(err)
+    end
   
-  return true
+    return true
 end
 
 -- 入力されたコマンドの取得
@@ -76,9 +69,11 @@ end
   only_once
   
   一回だけしか実行しない処理をつくる。
+  書き方：
+  	only_once(function()
       一回だけしか実行したくない処理
     end)
-]]--
+--]]
 local funcs = {}
 
 function only_once(func)

@@ -1,4 +1,3 @@
-require "script/setup/strict"
 require "script/lib"
 
 --[[ 変数宣言 ]]--
