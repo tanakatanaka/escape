@@ -35,17 +35,19 @@ function on_command()
 	Mess_erase_word(mess)
 	
 	local command = get_command()
+	local object
 	
 	if not command then
 	  return
 	end
   	
   	if area_hougaku(0, 0) then
-	  if command == "check door" then
-	     text("please open door", 10, 10)
-	  elseif command == "open door" and room.swit ~= 1 then
-	  	 room.swit = 1
-	  end
+  		objects = {"door"}
+	  	if command == "check door" then
+	    	text("please open door", 10, 10)
+	  	elseif command == "open door" and room.swit ~= 1 then
+	  	 	room.swit = 1
+	  	end
 	end
 	
 	if command == "check pict" then
@@ -63,32 +65,39 @@ function on_command()
 	     draw("x", 50 , 10)
 	  end
 	end
-
-	if not slide_unlocked and area_hougaku(3, 1) then
-		if command == "check slide" then
-		    text("plead enter the code", 10, 10)
-		    text("please 'input code X'", 10, 26)
-		    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
-	  	elseif command == "code 15" then
-		  	slide_unlocked = true
-		    text("the slide unlocked", 10, 10)
-		end
-	elseif slide_unlocked and area_hougaku(3, 1) then
-		if room.s_swit ~= 1 and command == "open slide" then
-		   room.s_swit = 1
-	  	end 
+	--pict保存用
+	if area_hougaku(2, 3) or area_hougaku(2, 3) or area_hougaku(3, 3) then
+       objects = {"pict"}
 	end
 	
-	if area_hougaku(4, 0) and not room.get_paper0 then
-		if command == "check paper" then
-			text("paper1", 10, 10)
-		elseif command == "get paper" then
-			room.get_paper0 = true
-			text("you got paper", 10, 10)
-			player.get_paper = player.get_paper + 1
-		end
+	if area_hougaku(3, 1)
+		objects = {"slide"}
+		if not slide_unlocked then
+			if command == "check slide" then
+			    text("plead enter the code", 10, 10)
+			    text("please 'input code X'", 10, 26)
+			    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
+	  		elseif command == "code 15" then
+		  		slide_unlocked = true
+		    	text("the slide unlocked", 10, 10)
+			end
+		elseif slide_unlocked then
+			if room.s_swit ~= 1 and command == "open slide" then
+		   	   room.s_swit = 1
+	  		end 
 	end
 	
+	if area_hougaku(4, 0) then
+		if not room.get_paper0 then
+			if command == "check paper" then
+				text("paper1", 10, 10)
+			elseif command == "get paper" then
+				room.get_paper0 = true
+				text("you got paper", 10, 10)
+				player.get_paper = player.get_paper + 1
+			end
+		end
+	end
 
 	if area_hougaku(5, 1) then
 		if not room.break_pot and command == "check pot" then
