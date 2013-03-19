@@ -23,8 +23,8 @@ function on_move()
 	
 	if area_hougaku(0, 0) then
 		only_once(function()
-			text('Please push "Esc__key"', 10, 10)
-			text('and type "check door"', 10, 26)
+			text('"Esc keyをおしてください"', 10, 10)
+			text('"check door"と入力してください', 10, 26)
 		end)
 	end
 end
@@ -77,14 +77,11 @@ function on_command()
 			    text("plead enter the code", 10, 10)
 			    text("please 'input code X'", 10, 26)
 			    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
-	  		elseif command == "code 15" then
+	  		elseif command == "15" then
 		  		slide_unlocked = true
-		    	text("the slide unlocked", 10, 10)
-			end
-		elseif slide_unlocked then
-			objects = {}
-			if room.s_swit ~= 1 and command == "open slide" then
-		   	   room.s_swit = 1
+		    	text("", 10, 10)
+		    	text("スライドを開きます", 10, 26)
+		   	   	room.s_swit = 1
 	  		end 
 		end
 	end
@@ -161,7 +158,7 @@ function on_command()
 			text(encode_to_c("not found"), 10, 10)
 		else
 			for i = 1, #objects do
-	  			text(objects[i] .. encode_to_c("が見える"), 10, 10 + 26 * i)
+	  			text_val(objects[i] .. encode_to_c("が見える"), 10, 10 + 26 * i)
 			end
 		end
 	end	

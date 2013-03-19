@@ -281,7 +281,7 @@ void Console_Update( Console *self )
 	//“ü—Íƒ‚[ƒhˆÈŠO
 	else{self->back_count = 0;}
 
-	if(Pad_Get( KEY_INPUT_ESCAPE ) == -1){self->is_input++;}
+	if(Pad_Get( KEY_INPUT_RETURN  ) == -1){self->is_input++;}
 	
 
 }

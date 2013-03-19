@@ -6,10 +6,16 @@ require "script/setup/std"
 require "script/setup/strict"
 require "script/setup/debug_command"
 
--- テキストの表示
+-- テキストのみ表示
 function text(msg, x, y)
+	Mess_add_word(encode_to_c(mess), x, y, msg)
+end
+
+--テキストや数値などの表示
+function text_val(msg, x, y)
 	Mess_add_word(mess, x, y, msg)
 end
+
 
 -- 画像の表示
 function draw(name, x, y)

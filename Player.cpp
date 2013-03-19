@@ -20,7 +20,7 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room)
 	//player—p
 	self->area = 0;
 	self->count = 30;
-	self->time_limit = 18000;
+	self->time_limit = 60000;
 	self->get_paper = 0;
 
 	return self;
