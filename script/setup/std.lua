@@ -265,9 +265,52 @@ function table.tostring(t, ...)
             acc " }"
          end
       end
+
+      -- tolua-specific pretty printing for userdata
+      function x.userdata()
+         local getters = debug.getmetatable(adt)[".get"]
+
+         if not getters then return x.number() end
+         
+         tracker[adt] = true
+         local has_hash = false
+
+         -- First pass: handle hash-part
+         if PRINT_HASH then
+            for k, getter in pairs(getters) do
+               local v = getter(adt)
+               -- Is it the first time we parse a hash pair?
+               if not has_hash then acc "{ "; indent = current_offset
+               else acc ", " end
+
+               -- Determine whether a newline is required
+               local is_id, expected_len = valid_id(k)
+               if is_id then expected_len = #k + xlen (v, tracker) + #" = , "
+               else expected_len = xlen (k, tracker) + 
+                                   xlen (v, tracker) + #"[] = , " end
+               if has_hash and expected_len + current_offset > LINE_MAX
+               then acc_newline() end
+               
+               -- Print the key
+               if is_id then acc(k); acc " = " 
+               else  acc "["; rec (k, current_offset, tracker); acc "] = " end
+
+               -- Print the value
+               rec (v, current_offset, tracker)
+               has_hash = true
+            end
+         end
+
+         -- now we know whether there's a hash-part, an array-part, and a tag.
+         -- Tag and hash-part are already printed if they're present.
+         if not has_hash then return x.number() end
+         return acc " }"
+      end
+
       local y = x[type(adt)]
       if y then y() else acc(tostring(adt)) end
    end
+
    rec(t, 0, { })
    return table.concat (acc_list)
 end

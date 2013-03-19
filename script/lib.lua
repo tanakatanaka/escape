@@ -3,6 +3,7 @@
 ]]--
 
 require "script/setup/std"
+require "script/setup/strict"
 
 -- テキストの表示
 function text(msg, x, y)
@@ -16,7 +17,10 @@ end
 
 -- エリアと方角の判断 (bool値を返す)
 function area_hougaku(x, y)
-	return player.area == x and player.hougaku == y
+	local area = Player_get_area(player)
+  local hougaku = Player_get_hougaku(player)
+
+  return area == x and hougaku == y
 end
 
 function box_eff(x)
@@ -33,32 +37,36 @@ function box_eff(x)
 end
 
 -- デバッグコマンドの実行
-local function execute_debug_command(command)
-    if not command:match(";$") then
-        return false
-    end
+local execute_debug_command
+do
 
-    local ok, err = load("return " .. command, "command-print")
-
-    if err then
-        ok, err = load(command, "command")
-    end
-
-    if ok then
-        io.write(">> " .. command .. "\n=> ")
-        local result = table.pack(ok())
-        if result.n == 0 then
-            print("ok")
-        else
-            for i = 1, result.n do
-                table.print(result[i])
-            end
+    execute_debug_command = function (command)
+        if not command:match(";$") then
+            return false
         end
-    else
-        print(err)
+
+        local ok, err = load("return " .. command, "command-print")
+
+        if err then
+            ok, err = load(command, "command")
+        end
+
+        if ok then
+            io.write(">> " .. command .. "\n=> ")
+            local result = table.pack(ok())
+            if result.n == 0 then
+                print("ok")
+            else
+                for i = 1, result.n do
+                    table.print(result[i])
+                end
+            end
+        else
+            print(err)
+        end
+      
+        return true
     end
-  
-    return true
 end
 
 -- 入力されたコマンドの取得
