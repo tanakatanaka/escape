@@ -35,7 +35,7 @@ function on_command()
 	Mess_erase_word(mess)
 	
 	local command = get_command()
-	local objects
+	local objects = {}
 	
 	if not command then
 	  return
@@ -66,7 +66,7 @@ function on_command()
 	  end
 	end
 	--pict保存用
-	if area_hougaku(2, 3) or area_hougaku(2, 3) or area_hougaku(3, 3) then
+	if area_hougaku(1, 3) or area_hougaku(2, 3) or area_hougaku(3, 3) then
        objects = {"pict"}
 	end
 	
@@ -82,6 +82,7 @@ function on_command()
 		    	text("the slide unlocked", 10, 10)
 			end
 		elseif slide_unlocked then
+			objects = {}
 			if room.s_swit ~= 1 and command == "open slide" then
 		   	   room.s_swit = 1
 	  		end 
@@ -89,6 +90,7 @@ function on_command()
 	end
 	
 	if area_hougaku(4, 0) then
+		objects = {"paper"}
 		if not room.get_paper0 then
 			if command == "check paper" then
 				text("paper1", 10, 10)
@@ -101,19 +103,26 @@ function on_command()
 	end
 
 	if area_hougaku(5, 1) then
+		objects = {"pot"}
 		if not room.break_pot then
 			if command == "check pot" then
 		   		text("pot sugoi", 10, 10)
 			elseif room.get_hammer and command == "break pot" then
 		   		room.break_pot = true
-			elseif room.break_pot and not room.get_paper1 and command == "get paper" then
-				room.get_paper1 = true
-				player.get_paper = player.get_paper + 1
-	  		end
+			end
+		elseif not room.get_paper1 then
+			objects = {"paper"}
+		 	if command == "get paper" then
+			   room.get_paper1 = true
+			   player.get_paper = player.get_paper + 1
+			end
+		elseif room.break_pot and room.get_paper1 then
+			objects = {}
 		end
 	end
 	
 	if area_hougaku(6, 1) then
+		objects = {"black box", "green box", "yellow box"}
 		if command == "check box" then
 		   text("There is a box of green yellow black", 10, 10)
 		elseif command == "open black box" then 
@@ -126,6 +135,7 @@ function on_command()
 	end
 	
 	if area_hougaku(6, 3) then
+		objects = {"table", "hammer", "cup"}
 		if not room.get_hammer then
 	  		if command == "check table"  then
 	    		text("cup and hammer on the table", 10, 10)
@@ -136,15 +146,23 @@ function on_command()
 	    		room.get_hammer = true
 	    		MV1SetFrameVisible(room.table, room.black_cap, 0);
 	    	end
+	    elseif room.get_hammer then
+	    	objects = {"table", "cup"}
+	    	if command == "check table"  then
+	    		text("cup on the table", 10, 10)
+	    	end
 	 	elseif command == "check cup" then
 	    	text("cup sugoi", 10, 10)
 	  	end
 	end
 
-	if  command == "check" then	
-		for i = 1, #objects do
-	  		text(objects[i] .. "が見える", 10, 10 + 26 * i)
+	if  command == "check" then			
+		if #objects == 0 then
+			text(encode_to_c("not found"), 10, 10)
+		else
+			for i = 1, #objects do
+	  			text(objects[i] .. encode_to_c("が見える"), 10, 10 + 26 * i)
+			end
 		end
-	end
-	
+	end	
 end
