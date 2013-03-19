@@ -1,9 +1,10 @@
 --[[
   各種C言語から持ってきた関数とか
-]]--
+--]]
 
 require "script/setup/std"
 require "script/setup/strict"
+require "script/setup/debug_command"
 
 -- テキストの表示
 function text(msg, x, y)
@@ -23,7 +24,24 @@ function area_hougaku(x, y)
   return area == x and hougaku == y
 end
 
+local box = {1, 2, 3}
+
+-- 箱の中身をシャッフル
+function shuffle_box()
+  local j = math.random(3)
+  box[j], box[3] = box[3], box[j]
+  j = math.random(2)
+  box[j], box[2] = box[2], box[j]
+
+  return box
+end
+
+shuffle_box()
+
 function box_eff(x)
+  -- あみだくじ
+  x = box[x]
+
 	if x == 1 then
 		text("you got paper", 10, 10)
 		player.get_paper = player.get_paper + 1
@@ -34,39 +52,6 @@ function box_eff(x)
 	elseif x == 3 then
 		text("tokuninasi", 10, 10)
 	end
-end
-
--- デバッグコマンドの実行
-local execute_debug_command
-do
-
-    execute_debug_command = function (command)
-        if not command:match(";$") then
-            return false
-        end
-
-        local ok, err = load("return " .. command, "command-print")
-
-        if err then
-            ok, err = load(command, "command")
-        end
-
-        if ok then
-            io.write(">> " .. command .. "\n=> ")
-            local result = table.pack(ok())
-            if result.n == 0 then
-                print("ok")
-            else
-                for i = 1, result.n do
-                    table.print(result[i])
-                end
-            end
-        else
-            print(err)
-        end
-      
-        return true
-    end
 end
 
 -- 入力されたコマンドの取得
