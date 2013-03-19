@@ -132,6 +132,11 @@ static void role_cam(Camera *self)
             self->role_swit = -1;
             self->role_count = 0;
         }
+		else if (Pad_Get(KEY_INPUT_DOWN) == -1)
+        {
+            self->role_swit = 2;
+            self->role_count = 0;
+        }
     }
 
     if (self->role_count < 0)
