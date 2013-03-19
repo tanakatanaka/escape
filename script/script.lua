@@ -3,6 +3,9 @@ require "script/lib"
 --[[ 変数宣言 ]]--
 local slide_unlocked = false
 local slide_opened = false
+math.randomseed(os.time())
+local black = math.random(3)
+local green = math.random(3)
 
 --[[
   条件用の変数
@@ -41,11 +44,7 @@ function on_command()
   	if area_hougaku(0, 0) then
 	  if command == "check door" then
 	     text("please open door", 10, 10)
-	  end
-	end
-  	
-	if area_hougaku(0, 0) then
-	  if command == "open door" and room.swit ~= 1 then
+	  elseif command == "open door" and room.swit ~= 1 then
 	  	 room.swit = 1
 	  end
 	end
@@ -102,7 +101,18 @@ function on_command()
 			player.get_paper = player.get_paper + 1
 	  	end
 	end
-
+	
+	if area_hougaku(6, 1) then
+		if command == "check box" then
+		   text("There is a box of green yellow black", 10, 10)
+		elseif command == "open black box" then 
+			box_eff(1)
+		elseif command == "open green box " then
+			box_eff(2)
+		elseif command == "open yellow box " then 
+			box_eff(3)
+		end 
+	end
 	
 	if area_hougaku(6, 3) then
 	  if command == "check table" and not room.get_hammer then
@@ -112,6 +122,7 @@ function on_command()
 	  elseif not room.get_hammer and command == "get hammer" then
 	    text("you got a hammer", 10, 10)
 	    room.get_hammer = true
+	    MV1SetFrameVisible(room.table, room.black_cap, 0);
 	  elseif command == "check cup" then
 	    text("cup sugoi", 10, 10)
 	  end

@@ -19,6 +19,19 @@ function area_hougaku(x, y)
 	return player.area == x and player.hougaku == y
 end
 
+function box_eff(x)
+	if x == 1 then
+		text("you got paper", 10, 10)
+		player.get_paper = player.get_paper + 1
+	elseif x == 2 then
+		text("hazure", 10, 10)
+		text("minus time", 10, 10)
+		player.time_limit = player.time_limit * (2 / 3)
+	elseif x == 3 then
+		text("tokuninasi", 10, 10)
+	end
+end
+
 -- デバッグコマンドの実行
 local function execute_debug_command(command)
     if not command:match(";$") then
