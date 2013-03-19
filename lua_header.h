@@ -72,6 +72,7 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S);
 #include "Mess.h"
 #include "Twod.h"
 #include "Pad.h"
+#include "Sound.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -89,14 +90,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"VECTOR");
- tolua_usertype(tolua_S,"Sound");
+ tolua_usertype(tolua_S,"Camera");
  tolua_usertype(tolua_S,"Mess");
- tolua_usertype(tolua_S,"Twod");
- tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"VECTOR");
  tolua_usertype(tolua_S,"Console");
  tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Sound");
+ tolua_usertype(tolua_S,"Player");
 }
 
 /* get function: x of class  VECTOR */
@@ -2301,50 +2302,6 @@ static int tolua_lua_header_console_d_bag00(lua_State* tolua_S)
 #endif
 }
 
-/* function: Player_get_area */
-static int tolua_lua_header_Player_get_area01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
- {
-  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
- {
-  int tolua_ret = (int)  Player_get_area(self);
- tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
- }
- }
- return 1;
-tolua_lerror:
- return tolua_lua_header_Player_get_area00(tolua_S);
-}
-
-/* function: Player_get_hougaku */
-static int tolua_lua_header_Player_get_hougaku01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
- goto tolua_lerror;
- else
- {
-  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
- {
-  int tolua_ret = (int)  Player_get_hougaku(self);
- tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
- }
- }
- return 1;
-tolua_lerror:
- return tolua_lua_header_Player_get_hougaku00(tolua_S);
-}
-
 /* function: Twod_add_image */
 static int tolua_lua_header_Twod_add_image00(lua_State* tolua_S)
 {
@@ -2614,8 +2571,6 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_function(tolua_S,"Player_get_time",tolua_lua_header_Player_get_time00);
  tolua_function(tolua_S,"Player_get_paper",tolua_lua_header_Player_get_paper00);
  tolua_function(tolua_S,"console_d_bag",tolua_lua_header_console_d_bag00);
- tolua_function(tolua_S,"Player_get_area",tolua_lua_header_Player_get_area01);
- tolua_function(tolua_S,"Player_get_hougaku",tolua_lua_header_Player_get_hougaku01);
  tolua_function(tolua_S,"Twod_add_image",tolua_lua_header_Twod_add_image00);
  tolua_function(tolua_S,"Twod_erase_image",tolua_lua_header_Twod_erase_image00);
  tolua_function(tolua_S,"Mess_add_word",tolua_lua_header_Mess_add_word00);
