@@ -3,9 +3,8 @@ require "script/lib"
 --[[ 変数宣言 ]]--
 local slide_unlocked = false
 local slide_opened = false
-math.randomseed(os.time())
-local black = math.random(3)
-local green = math.random(3)
+
+shuffle_box()
 
 --[[
   条件用の変数
@@ -107,9 +106,9 @@ function on_command()
 		   text("There is a box of green yellow black", 10, 10)
 		elseif command == "open black box" then 
 			box_eff(1)
-		elseif command == "open green box " then
+		elseif command == "open green box" then
 			box_eff(2)
-		elseif command == "open yellow box " then 
+		elseif command == "open yellow box" then 
 			box_eff(3)
 		end 
 	end

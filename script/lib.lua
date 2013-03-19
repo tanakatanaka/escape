@@ -32,26 +32,31 @@ function shuffle_box()
   box[j], box[3] = box[3], box[j]
   j = math.random(2)
   box[j], box[2] = box[2], box[j]
-
   return box
 end
 
-shuffle_box()
+function show_box()
+  return box
+end
+
 
 function box_eff(x)
-  -- あみだくじ
-  x = box[x]
-
-	if x == 1 then
+	
+	local y = box[x]
+	
+	if y == 0 then
+		text("すでに開いてる", 10, 10)
+	elseif y == 1 then
 		text("you got paper", 10, 10)
 		player.get_paper = player.get_paper + 1
-	elseif x == 2 then
+	elseif y == 2 then
 		text("hazure", 10, 10)
 		text("minus time", 10, 10)
 		player.time_limit = player.time_limit * (2 / 3)
-	elseif x == 3 then
-		text("tokuninasi", 10, 10)
+	elseif y == 3 then
+		text("tokuninasi", 10, 10)	
 	end
+		box[x] = 0
 end
 
 -- 入力されたコマンドの取得
