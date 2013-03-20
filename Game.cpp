@@ -89,7 +89,7 @@ void Game_Update(Game *self)
 	else if(self->game_state  == 1)
 	{
 		game_play_Update(self);
-		if(Player_get_time(self->player) < 0)
+		if(Player_get_time(self->player) < 0 || Player_get_end(self->player))
 		{
 			game_play_Finalize(self);
 			self->game_state++;

@@ -22,8 +22,14 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room)
 	self->count = 30;
 	self->time_limit = 60000;
 	self->get_paper = 0;
+	self->game_end = false;
 
 	return self;
+}
+
+bool Player_get_end(Player *self)
+{
+	return self->game_end;
 }
 
 int Player_get_area(Player *self)

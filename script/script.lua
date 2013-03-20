@@ -2,13 +2,13 @@ require "script/lib"
 
 --[[ 変数宣言 ]]--
 local door_open = 1.658064
+local game_start = false
 local slide_unlocked = false
 local slide_opened = false
 local get_paper0 = false
 local get_paper1 = false
 local get_hammer = false
 local break_pot = false 
-
 
 shuffle_box()
 
@@ -34,16 +34,19 @@ function on_move()
 		end)
 	end
 	
-	if area_hougaku(1, 0) then
+	if game_start == true  and  player.area == 0 then
+			player.game_end = true
+		end
+	
+	if player.area == 1 then
 		only_once(function()
 			text("気の利いたコメントが出るはず。", 10, 10)
 		end)
 	end
-	
-	
-	
+
 	if area_hougaku(2, 0) then
 		only_once(function()
+		game_start = true
 		room.swit = -1
 		end)
 	end

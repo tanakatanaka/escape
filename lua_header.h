@@ -90,14 +90,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Sound");
- tolua_usertype(tolua_S,"VECTOR");
- tolua_usertype(tolua_S,"Console");
- tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Mess");
- tolua_usertype(tolua_S,"Twod");
  tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Room");
  tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"VECTOR");
+ tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Mess");
+ tolua_usertype(tolua_S,"Sound");
 }
 
 /* get function: x of class  VECTOR */
@@ -2042,6 +2042,58 @@ static int tolua_set_Player_Player_get_paper(lua_State* tolua_S)
  return 0;
 }
 
+/* get function: game_end of class  Player */
+static int tolua_get_Player_Player_game_end(lua_State* tolua_S)
+{
+  Player* self = (Player*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'game_end'",NULL);
+#endif
+ tolua_pushboolean(tolua_S,(bool)self->game_end);
+ return 1;
+}
+
+/* set function: game_end of class  Player */
+static int tolua_set_Player_Player_game_end(lua_State* tolua_S)
+{
+  Player* self = (Player*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'game_end'",NULL);
+ if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->game_end = ((bool)  tolua_toboolean(tolua_S,2,0));
+ return 0;
+}
+
+/* function: Player_get_end */
+static int tolua_lua_header_Player_get_end00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+ !tolua_isusertype(tolua_S,1,"Player",0,&tolua_err) || 
+ !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+ goto tolua_lerror;
+ else
+#endif
+ {
+  Player* self = ((Player*)  tolua_tousertype(tolua_S,1,0));
+ {
+  bool tolua_ret = (bool)  Player_get_end(self);
+ tolua_pushboolean(tolua_S,(bool)tolua_ret);
+ }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Player_get_end'.",&tolua_err);
+ return 0;
+#endif
+}
+
 /* function: Player_get_area */
 static int tolua_lua_header_Player_get_area00(lua_State* tolua_S)
 {
@@ -2407,7 +2459,9 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_variable(tolua_S,"count",tolua_get_Player_Player_count,tolua_set_Player_Player_count);
  tolua_variable(tolua_S,"time_limit",tolua_get_Player_Player_time_limit,tolua_set_Player_Player_time_limit);
  tolua_variable(tolua_S,"get_paper",tolua_get_Player_Player_get_paper,tolua_set_Player_Player_get_paper);
+ tolua_variable(tolua_S,"game_end",tolua_get_Player_Player_game_end,tolua_set_Player_Player_game_end);
  tolua_endmodule(tolua_S);
+ tolua_function(tolua_S,"Player_get_end",tolua_lua_header_Player_get_end00);
  tolua_function(tolua_S,"Player_get_area",tolua_lua_header_Player_get_area00);
  tolua_function(tolua_S,"Player_get_hougaku",tolua_lua_header_Player_get_hougaku00);
  tolua_function(tolua_S,"Player_get_time",tolua_lua_header_Player_get_time00);

@@ -48,7 +48,6 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->twod = Twod_Initialize( self->player );
 	self->console = console;
 	self->sound = sound;
-	
 	self->area = -100;
 	self->lua_script = LuaScript_Initialize();
 	
@@ -57,6 +56,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	LuaScript_Set(self->lua_script, "Mess", "mess", self->mess);
 	LuaScript_Set(self->lua_script, "Room", "room", self->room);
 	LuaScript_Set(self->lua_script, "Console", "console", self->console);
+	LuaScript_Set(self->lua_script, "Script", "script", self);
 	LuaScript_Set(self->lua_script, "Sound", "sound", self->sound);
 
 	if (!LuaScript_Load(self->lua_script, "script/script.lua"))
@@ -66,6 +66,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	
 	return self;
 }
+
 
 void decode_command(Script *self)
 {
