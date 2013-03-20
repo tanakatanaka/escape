@@ -42,6 +42,7 @@ struct Console
 	std::string d_bag; ///< カーソルより前の入力中の文字列。
 	std::string after_cursor; ///< カーソルより後の入力中の文字列。反転されて入っている。
 	std::deque<std::string> log;
+	int enter_time_count;
 }; 
 
 // 初期化をする
@@ -55,6 +56,7 @@ Console *Console_Initialize(Sound *sound)
 	self->y = 420;
 	self->signal = 0;
 	self->back_count = 0;
+	self->enter_time_count = 0;
 	return self;
 }
 
@@ -130,62 +132,62 @@ static int get_chara()
 	// アルファベット入力
 	for (int i = 0; i < 26; i++)
 	{
-		if (Pad_Get( KEYCODES[i] ) == -1) { return (shift ? 'A' : 'a') + i; }
+		if (Pad_Get( KEYCODES[i] ) == 1) { return (shift ? 'A' : 'a') + i; }
 	}
 
 	//数値入力があった場合
 	for (int i = 0; i < 10; i++)
 	{
-		if (Pad_Get( KEYNUM[i] ) == -1 || Pad_Get(NUMKEY_NUM[i]) == -1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
+		if (Pad_Get( KEYNUM[i] ) == 1 || Pad_Get(NUMKEY_NUM[i]) == 1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
 	}
 
 	// リターンキーを押した時の処理はここではなくScriptにある
 
 	//スペース入力があった場合
-	if(Pad_Get( KEY_INPUT_SPACE ) == -1) { return ' '; }
+	if(Pad_Get( KEY_INPUT_SPACE ) == 1) { return ' '; }
 	//バックスペース入力があった場合
-	if(Pad_Get( KEY_INPUT_BACK ) == -1) { return -2; }
+	if(Pad_Get( KEY_INPUT_BACK ) == 1) { return -2; }
 	//上矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_UP ) == -1) { return -3; }
+	if(Pad_Get( KEY_INPUT_UP ) == 1) { return -3; }
 	//下矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_DOWN ) == -1) { return -4; }
+	if(Pad_Get( KEY_INPUT_DOWN ) == 1) { return -4; }
 	
 	//Deleteキー
-	if(Pad_Get( KEY_INPUT_DELETE ) == -1) { return -5; }
+	if(Pad_Get( KEY_INPUT_DELETE ) == 1) { return -5; }
 
 	//左矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_LEFT ) == -1) { return -6; }
+	if(Pad_Get( KEY_INPUT_LEFT ) == 1) { return -6; }
 	//右矢印入力があった場合
-	if(Pad_Get( KEY_INPUT_RIGHT ) == -1) { return -7; }
+	if(Pad_Get( KEY_INPUT_RIGHT ) == 1) { return -7; }
 	//Home
-	if(Pad_Get( KEY_INPUT_HOME ) == -1) { return -8; }
+	if(Pad_Get( KEY_INPUT_HOME ) == 1) { return -8; }
 	//End
-	if(Pad_Get( KEY_INPUT_END ) == -1) { return -9; }
+	if(Pad_Get( KEY_INPUT_END ) == 1) { return -9; }
 
-	if (Pad_Get(KEY_INPUT_RETURN) == -1) { return -10; }
+	if (Pad_Get(KEY_INPUT_RETURN) == 1) { return -10; }
 
 	// 記号類 (106)
-	if (Pad_Get(KEY_INPUT_MINUS) == -1) { return shift ? '=' : '-'; }
-	if (Pad_Get(KEY_INPUT_PREVTRACK) == -1) { return shift ? '~' : '^'; }
-	if (Pad_Get(KEY_INPUT_YEN) == -1) { return shift ? '|' : '\\'; }
+	if (Pad_Get(KEY_INPUT_MINUS) == 1) { return shift ? '=' : '-'; }
+	if (Pad_Get(KEY_INPUT_PREVTRACK) == 1) { return shift ? '~' : '^'; }
+	if (Pad_Get(KEY_INPUT_YEN) == 1) { return shift ? '|' : '\\'; }
 	
-	if (Pad_Get(KEY_INPUT_AT) == -1) { return shift ? '`' : '@'; }
-	if (Pad_Get(KEY_INPUT_LBRACKET) == -1) { return shift ? '{' : '['; }
+	if (Pad_Get(KEY_INPUT_AT) == 1) { return shift ? '`' : '@'; }
+	if (Pad_Get(KEY_INPUT_LBRACKET) == 1) { return shift ? '{' : '['; }
 
-	if (Pad_Get(KEY_INPUT_SEMICOLON) == -1) { return shift ? '+' : ';'; }
-	if (Pad_Get(KEY_INPUT_COLON) == -1) { return shift ? '*' : ':'; }
-	if (Pad_Get(KEY_INPUT_RBRACKET) == -1) { return shift ? ' }' : ']'; }
+	if (Pad_Get(KEY_INPUT_SEMICOLON) == 1) { return shift ? '+' : ';'; }
+	if (Pad_Get(KEY_INPUT_COLON) == 1) { return shift ? '*' : ':'; }
+	if (Pad_Get(KEY_INPUT_RBRACKET) == 1) { return shift ? ' }' : ']'; }
 
-	if (Pad_Get(KEY_INPUT_COMMA) == -1) { return shift ? '<' : ','; }
-	if (Pad_Get(KEY_INPUT_PERIOD) == -1) { return shift ? '>' : '.'; }
-	if (Pad_Get(KEY_INPUT_SLASH) == -1) { return shift ? '?' : '/'; }
-	if (Pad_Get(KEY_INPUT_BACKSLASH) == -1) { return '_'; } // my preference
+	if (Pad_Get(KEY_INPUT_COMMA) == 1) { return shift ? '<' : ','; }
+	if (Pad_Get(KEY_INPUT_PERIOD) == 1) { return shift ? '>' : '.'; }
+	if (Pad_Get(KEY_INPUT_SLASH) == 1) { return shift ? '?' : '/'; }
+	if (Pad_Get(KEY_INPUT_BACKSLASH) == 1) { return '_'; } // my preference
 	
-	if (Pad_Get(KEY_INPUT_MULTIPLY) == -1) { return '*'; }
-	if (Pad_Get(KEY_INPUT_DIVIDE) == -1) { return '/'; }
-	if (Pad_Get(KEY_INPUT_ADD) == -1) { return '+'; }
-	if (Pad_Get(KEY_INPUT_SUBTRACT) == -1) { return '-'; }
-	if (Pad_Get(KEY_INPUT_DECIMAL) == -1) { return '.'; }
+	if (Pad_Get(KEY_INPUT_MULTIPLY) == 1) { return '*'; }
+	if (Pad_Get(KEY_INPUT_DIVIDE) == 1) { return '/'; }
+	if (Pad_Get(KEY_INPUT_ADD) == 1) { return '+'; }
+	if (Pad_Get(KEY_INPUT_SUBTRACT) == 1) { return '-'; }
+	if (Pad_Get(KEY_INPUT_DECIMAL) == 1) { return '.'; }
 
 	//入力がなかった場合
 	return -1;
@@ -281,9 +283,16 @@ void Console_Update( Console *self )
 	//入力モード以外
 	else{self->back_count = 0;}
 
-	if(Pad_Get( KEY_INPUT_RETURN  ) == -1){self->is_input++;}
+	if(Pad_Get( KEY_INPUT_RETURN  ) == -1)
+	{
+		if(self->enter_time_count < 30)
+		{
+			self->is_input++;
+		}
+		self->enter_time_count = 0;
+	}
 	
-
+	self->enter_time_count++;
 }
 
 // 描画する

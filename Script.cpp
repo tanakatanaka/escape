@@ -32,6 +32,9 @@ struct Script
 	int area;
 };
 
+
+
+
 // ‰Šú‰»‚ğ‚·‚é
 Script *Script_Initialize(Camera *camera, Console *console , Player *player, Room *room, Sound *sound)
 {
