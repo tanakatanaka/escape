@@ -1,6 +1,7 @@
 require "script/lib"
 
 --[[ 変数宣言 ]]--
+local door_open = 1.658064
 local slide_unlocked = false
 local slide_opened = false
 local get_paper0 = false
@@ -28,10 +29,18 @@ function on_move()
 	
 	if area_hougaku(0, 0) then
 		only_once(function()
-			text("Esc keyをおしてください。", 10, 10)
+			text("Enter keyをすばやく２回おしてください。", 10, 10)
 			text("check doorと入力してください。", 10, 26)
 		end)
 	end
+	
+	if area_hougaku(1, 0) then
+		only_once(function()
+			text("気の利いたコメントが出るはず。", 10, 10)
+		end)
+	end
+	
+	
 	
 	if area_hougaku(2, 0) then
 		only_once(function()
@@ -53,15 +62,16 @@ function on_command()
 	  return
 	end
   	
-  	if area_hougaku(0, 0) then
+  	if area_hougaku(0, 0) or area_hougaku(1, 2) then
   		objects = {"door"}
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
-	  	elseif command == "open door" and room.swit ~= 1 then
-	  		only_once(function()
-	  	 		room.swit = 1
-	  	 	end)
-	  	end
+	  	elseif command == "open door" and room.rotY ~= door_open then
+	  		room.swit = 1
+	  	 	if area_hougaku(1, 2) then
+	  	 		text("部屋を出るとゲームが終了します。", 10, 10)
+	  		end
+	  	end	
 	end
 	
 	if command == "check pict" then
@@ -92,7 +102,7 @@ function on_command()
 			    text("hint  X = pict1 + pict2 + pict3", 10, 10 + 16)
 	  		elseif command == "15" then
 		  		slide_unlocked = true
-		  		text("正解です", 10, 10)
+		  		text("正解です。", 10, 10)
 		    	text("ドアが開きました。", 10, 10 + 16)
 		   	   	room.s_swit = 1
 	  		end 

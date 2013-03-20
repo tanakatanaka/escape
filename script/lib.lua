@@ -45,16 +45,16 @@ function box_eff(x)
 	local y = box[x]
 	
 	if y == 0 then
-		text("すでに開いてる", 10, 10)
+		text("すでに開いてます。", 10, 10)
 	elseif y == 1 then
-		text("you got paper", 10, 10)
+		text("書類を手に入れました。", 10, 10)
 		player.get_paper = player.get_paper + 1
 	elseif y == 2 then
-		text("hazure", 10, 10)
-		text("minus time", 10, 10)
+		text("ハズレ。", 10, 10)
+		text("時間が減ります。", 10, 10)
 		player.time_limit = player.time_limit * (2 / 3)
 	elseif y == 3 then
-		text("tokuninasi", 10, 10)	
+		text("特になし。", 10, 10)	
 	end
 		box[x] = 0
 end
