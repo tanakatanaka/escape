@@ -8,8 +8,8 @@
 
 struct Sound
 {
-	int se[100];
-	int music[100];
+	std::vector<int> se;
+	std::vector<int> music;
 };
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -18,8 +18,8 @@ Sound *Sound_Initialize()
 	Sound *self;
 	self = new Sound();
 
-	self->se[0] = LoadSoundMem( "sound/se/type1.mp3" ) ;
-	self->se[1] = LoadSoundMem( "sound/se/enter.mp3" ) ;
+	self->se.push_back( LoadSoundMem( "sound/se/type1.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/enter.mp3" ) );
 
 	return self;
 }
@@ -31,7 +31,7 @@ void Sound_type( Sound *self, int type)
 
 int num_combert(std::string name)
 {
-	if(name == "enter"){return 4;}
+	if(name == "enter"){return 1;}
 
 
 	return -1;

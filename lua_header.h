@@ -90,14 +90,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"VECTOR");
- tolua_usertype(tolua_S,"Camera");
- tolua_usertype(tolua_S,"Twod");
- tolua_usertype(tolua_S,"Sound");
- tolua_usertype(tolua_S,"Mess");
- tolua_usertype(tolua_S,"Player");
  tolua_usertype(tolua_S,"Room");
+ tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Sound");
+ tolua_usertype(tolua_S,"VECTOR");
 }
 
 /* get function: x of class  VECTOR */
@@ -2418,34 +2418,6 @@ static int tolua_lua_header_Mess_erase_word00(lua_State* tolua_S)
 #endif
 }
 
-/* function: Sound_type */
-static int tolua_lua_header_Sound_type00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
- !tolua_isusertype(tolua_S,1,"Sound",0,&tolua_err) || 
- !tolua_isnumber(tolua_S,2,0,&tolua_err) || 
- !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
- goto tolua_lerror;
- else
-#endif
- {
-  Sound* self = ((Sound*)  tolua_tousertype(tolua_S,1,0));
-  int type = ((int)  tolua_tonumber(tolua_S,2,0));
- {
-  Sound_type(self,type);
- }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'Sound_type'.",&tolua_err);
- return 0;
-#endif
-}
-
 /* function: Sound_se */
 static int tolua_lua_header_Sound_se00(lua_State* tolua_S)
 {
@@ -2575,7 +2547,6 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_function(tolua_S,"Twod_erase_image",tolua_lua_header_Twod_erase_image00);
  tolua_function(tolua_S,"Mess_add_word",tolua_lua_header_Mess_add_word00);
  tolua_function(tolua_S,"Mess_erase_word",tolua_lua_header_Mess_erase_word00);
- tolua_function(tolua_S,"Sound_type",tolua_lua_header_Sound_type00);
  tolua_function(tolua_S,"Sound_se",tolua_lua_header_Sound_se00);
  tolua_endmodule(tolua_S);
  return 1;

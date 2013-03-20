@@ -23,8 +23,8 @@ function on_move()
 	
 	if area_hougaku(0, 0) then
 		only_once(function()
-			text('"Esc keyをおしてください"', 10, 10)
-			text('"check door"と入力してください', 10, 26)
+			text("Esc keyをおしてください。", 10, 10)
+			text("check doorと入力してください。", 10, 26)
 		end)
 	end
 end
@@ -44,7 +44,7 @@ function on_command()
   	if area_hougaku(0, 0) then
   		objects = {"door"}
 	  	if command == "check door" then
-	    	text("please open door", 10, 10)
+	    	text("open door と入力してください。", 10, 10)
 	  	elseif command == "open door" and room.swit ~= 1 then
 	  	 	room.swit = 1
 	  	end
@@ -53,15 +53,15 @@ function on_command()
 	if command == "check pict" then
 	  if area_hougaku(1, 3) then
 	  	text("pict1", 10, 10)
-	    text("title : the O", 10, 26)
+	    text("タイトル : the O", 10, 26)
 	    draw("o", 50 , 10)
 	  elseif area_hougaku(2, 3) then
 	  	text("pict2", 10, 10)
-	    text("title : the V", 10, 26)
+	    text("タイトル : the V", 10, 26)
 	    draw("v", 50 , 10)
 	  elseif area_hougaku(3, 3) then
 	  	 text("pict3", 10, 10)
-	     text("title : the X", 10, 26)
+	     text("タイトル : the X", 10, 26)
 	     draw("x", 50 , 10)
 	  end
 	end
@@ -74,13 +74,11 @@ function on_command()
 		objects = {"slide"}
 		if not slide_unlocked then
 			if command == "check slide" then
-			    text("plead enter the code", 10, 10)
-			    text("please 'input code X'", 10, 26)
-			    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16 * 2)
+			    text("コード(数値)を入力してください。", 10, 10)
+			    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16)
 	  		elseif command == "15" then
 		  		slide_unlocked = true
-		    	text("", 10, 10)
-		    	text("スライドを開きます", 10, 26)
+		    	text("開きました。", 10, 26)
 		   	   	room.s_swit = 1
 	  		end 
 		end
@@ -93,7 +91,7 @@ function on_command()
 				text("paper1", 10, 10)
 			elseif command == "get paper" then
 				room.get_paper0 = true
-				text("you got paper", 10, 10)
+				text("書類を手に入れました。", 10, 10)
 				player.get_paper = player.get_paper + 1
 			end
 		end
@@ -103,7 +101,7 @@ function on_command()
 		objects = {"pot"}
 		if not room.break_pot then
 			if command == "check pot" then
-		   		text("pot sugoi", 10, 10)
+		   		text("壺があります。", 10, 10)
 			elseif room.get_hammer and command == "break pot" then
 		   		room.break_pot = true
 			end
@@ -121,7 +119,7 @@ function on_command()
 	if area_hougaku(6, 1) then
 		objects = {"black box", "green box", "yellow box"}
 		if command == "check box" then
-		   text("There is a box of green yellow black", 10, 10)
+		   text("3つの箱があります。", 10, 10)
 		elseif command == "open black box" then 
 			box_eff(1)
 		elseif command == "open green box" then
@@ -135,21 +133,21 @@ function on_command()
 		objects = {"table", "hammer", "cup"}
 		if not room.get_hammer then
 	  		if command == "check table"  then
-	    		text("cup and hammer on the table", 10, 10)
+	    		text("テーブルの上にコップとハンマーがあります。", 10, 10)
 	  		elseif command == "check hammer" then
-	    		text("hammer sugoi", 10, 10)
+	    		text("ハンマーがあります。", 10, 10)
 	  		elseif command == "get hammer" then
-	    		text("you got a hammer", 10, 10)
+	    		text("ハンマーを入手しました。", 10, 10)
 	    		room.get_hammer = true
 	    		MV1SetFrameVisible(room.table, room.black_cap, 0);
 	    	end
 	    elseif room.get_hammer then
 	    	objects = {"table", "cup"}
 	    	if command == "check table"  then
-	    		text("cup on the table", 10, 10)
+	    		text("テーブルの上にコップがあります。", 10, 10)
 	    	end
 	 	elseif command == "check cup" then
-	    	text("cup sugoi", 10, 10)
+	    	text("カップがあります。", 10, 10)
 	  	end
 	end
 
@@ -158,7 +156,7 @@ function on_command()
 			text(encode_to_c("not found"), 10, 10)
 		else
 			for i = 1, #objects do
-	  			text_val(objects[i] .. encode_to_c("が見える"), 10, 10 + 26 * i)
+	  			text("objects[i] .. が見えます", 10, 10 + 26 * i)
 			end
 		end
 	end	

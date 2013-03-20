@@ -18,7 +18,7 @@ struct Twod
 {
 	Player *player;
 	std::vector<Image> image;
-	int dx[100];
+	std::vector<int> dx;
 };
 
 // ‰Šú‰»‚ð‚·‚é
@@ -28,10 +28,11 @@ Twod *Twod_Initialize(Player *player)
 	self = new Twod();
 	self->player = player;
 
-	self->dx[0] = LoadGraph( "‰æ‘œ/test.jpg" ) ;
-	self->dx[1] = LoadGraph( "meta/o.png" ) ;
-	self->dx[2] = LoadGraph( "meta/v.png" ) ;
-	self->dx[3] = LoadGraph( "meta/x.png" ) ;
+	self->dx.push_back( LoadGraph( "‰æ‘œ/test.jpg" ) );
+	self->dx.push_back( LoadGraph( "meta/o.png" ) );
+	self->dx.push_back( LoadGraph( "meta/v.png" ) );
+	self->dx.push_back( LoadGraph( "meta/x.png" ) );
+
 	return self;
 }
 

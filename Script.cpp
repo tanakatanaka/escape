@@ -44,6 +44,7 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 	self->mess = Mess_Initialize( );
 	self->twod = Twod_Initialize( self->player );
 	self->console = console;
+	self->sound = sound;
 	
 	self->area = -100;
 	self->lua_script = LuaScript_Initialize();

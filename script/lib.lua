@@ -8,14 +8,8 @@ require "script/setup/debug_command"
 
 -- テキストのみ表示
 function text(msg, x, y)
-	Mess_add_word(encode_to_c(mess), x, y, msg)
+	Mess_add_word(mess, x, y, encode_to_c(msg))
 end
-
---テキストや数値などの表示
-function text_val(msg, x, y)
-	Mess_add_word(mess, x, y, msg)
-end
-
 
 -- 画像の表示
 function draw(name, x, y)
