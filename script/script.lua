@@ -75,10 +75,11 @@ function on_command()
 		if not slide_unlocked then
 			if command == "check slide" then
 			    text("コード(数値)を入力してください。", 10, 10)
-			    text("hint  X = pict1 + pict2 + pict3", 10, 10+ 16)
+			    text("hint  X = pict1 + pict2 + pict3", 10, 10 + 16)
 	  		elseif command == "15" then
 		  		slide_unlocked = true
-		    	text("開きました。", 10, 26)
+		  		text("正解です", 10, 10)
+		    	text("ドアが開きました。", 10, 10 + 16)
 		   	   	room.s_swit = 1
 	  		end 
 		end
@@ -108,8 +109,9 @@ function on_command()
 		elseif not room.get_paper1 then
 			objects = {"paper"}
 		 	if command == "get paper" then
-			   room.get_paper1 = true
-			   player.get_paper = player.get_paper + 1
+		 		text("書類を手に入れました。", 10, 10)
+			   	room.get_paper1 = true
+			   	player.get_paper = player.get_paper + 1
 			end
 		elseif room.break_pot and room.get_paper1 then
 			objects = {}

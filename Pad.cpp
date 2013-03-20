@@ -2,6 +2,8 @@
 #include "Pad.h"
 
 static char m_Key[256];    // キーの入力状態格納用変数
+int time_count;
+
 
 // 動きを計算する
 void Pad_Update()
@@ -33,6 +35,8 @@ void Pad_Update()
             m_Key[i] = 0;            // 0にする
         }
     }
+
+	time++;
 }
 
 // KeyCodeのキーの入力状態を取得する
