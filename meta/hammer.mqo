@@ -32,7 +32,7 @@ Material 13 {
 	"hantoumei" col(0.992 1.000 0.949 0.660) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"toumei" col(1.000 1.000 1.000 0.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 }
-Object "hanmmer" {
+Object "hammer" {
 	visible 15
 	locking 0
 	shading 1

@@ -90,14 +90,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Twod");
- tolua_usertype(tolua_S,"Player");
- tolua_usertype(tolua_S,"Mess");
- tolua_usertype(tolua_S,"Console");
- tolua_usertype(tolua_S,"Camera");
  tolua_usertype(tolua_S,"Sound");
  tolua_usertype(tolua_S,"VECTOR");
+ tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Room");
+ tolua_usertype(tolua_S,"Mess");
+ tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Player");
 }
 
 /* get function: x of class  VECTOR */
@@ -1367,31 +1367,6 @@ static int tolua_lua_header_MV1ResetFrameTextureAddressTransform00(lua_State* to
 #endif
 }
 
-/* get function: area of class  Room */
-static int tolua_get_Room_Room_area(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'area'",NULL);
-#endif
- tolua_pushnumber(tolua_S,(lua_Number)self->area);
- return 1;
-}
-
-/* set function: area of class  Room */
-static int tolua_set_Room_Room_area(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'area'",NULL);
- if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
- tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->area = ((int)  tolua_tonumber(tolua_S,2,0));
- return 0;
-}
-
 /* get function: room of class  Room */
 static int tolua_get_Room_Room_room(lua_State* tolua_S)
 {
@@ -1839,106 +1814,6 @@ static int tolua_set_Room_Room_role(lua_State* tolua_S)
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
   self->role = ((int)  tolua_tonumber(tolua_S,2,0));
- return 0;
-}
-
-/* get function: get_hammer of class  Room */
-static int tolua_get_Room_Room_get_hammer(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_hammer'",NULL);
-#endif
- tolua_pushboolean(tolua_S,(bool)self->get_hammer);
- return 1;
-}
-
-/* set function: get_hammer of class  Room */
-static int tolua_set_Room_Room_get_hammer(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_hammer'",NULL);
- if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
- tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->get_hammer = ((bool)  tolua_toboolean(tolua_S,2,0));
- return 0;
-}
-
-/* get function: break_pot of class  Room */
-static int tolua_get_Room_Room_break_pot(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'break_pot'",NULL);
-#endif
- tolua_pushboolean(tolua_S,(bool)self->break_pot);
- return 1;
-}
-
-/* set function: break_pot of class  Room */
-static int tolua_set_Room_Room_break_pot(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'break_pot'",NULL);
- if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
- tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->break_pot = ((bool)  tolua_toboolean(tolua_S,2,0));
- return 0;
-}
-
-/* get function: get_paper0 of class  Room */
-static int tolua_get_Room_Room_get_paper0(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_paper0'",NULL);
-#endif
- tolua_pushboolean(tolua_S,(bool)self->get_paper0);
- return 1;
-}
-
-/* set function: get_paper0 of class  Room */
-static int tolua_set_Room_Room_get_paper0(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_paper0'",NULL);
- if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
- tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->get_paper0 = ((bool)  tolua_toboolean(tolua_S,2,0));
- return 0;
-}
-
-/* get function: get_paper1 of class  Room */
-static int tolua_get_Room_Room_get_paper1(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_paper1'",NULL);
-#endif
- tolua_pushboolean(tolua_S,(bool)self->get_paper1);
- return 1;
-}
-
-/* set function: get_paper1 of class  Room */
-static int tolua_set_Room_Room_get_paper1(lua_State* tolua_S)
-{
-  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'get_paper1'",NULL);
- if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
- tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->get_paper1 = ((bool)  tolua_toboolean(tolua_S,2,0));
  return 0;
 }
 
@@ -2502,7 +2377,6 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_function(tolua_S,"MV1ResetFrameTextureAddressTransform",tolua_lua_header_MV1ResetFrameTextureAddressTransform00);
  tolua_cclass(tolua_S,"Room","Room","",NULL);
  tolua_beginmodule(tolua_S,"Room");
- tolua_variable(tolua_S,"area",tolua_get_Room_Room_area,tolua_set_Room_Room_area);
  tolua_variable(tolua_S,"room",tolua_get_Room_Room_room,tolua_set_Room_Room_room);
  tolua_variable(tolua_S,"door",tolua_get_Room_Room_door,tolua_set_Room_Room_door);
  tolua_variable(tolua_S,"glass",tolua_get_Room_Room_glass,tolua_set_Room_Room_glass);
@@ -2521,10 +2395,6 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_variable(tolua_S,"s_count",tolua_get_Room_Room_s_count,tolua_set_Room_Room_s_count);
  tolua_variable(tolua_S,"slide",tolua_get_Room_Room_slide,tolua_set_Room_Room_slide);
  tolua_variable(tolua_S,"role",tolua_get_Room_Room_role,tolua_set_Room_Room_role);
- tolua_variable(tolua_S,"get_hammer",tolua_get_Room_Room_get_hammer,tolua_set_Room_Room_get_hammer);
- tolua_variable(tolua_S,"break_pot",tolua_get_Room_Room_break_pot,tolua_set_Room_Room_break_pot);
- tolua_variable(tolua_S,"get_paper0",tolua_get_Room_Room_get_paper0,tolua_set_Room_Room_get_paper0);
- tolua_variable(tolua_S,"get_paper1",tolua_get_Room_Room_get_paper1,tolua_set_Room_Room_get_paper1);
  tolua_variable(tolua_S,"x",tolua_get_Room_Room_x,tolua_set_Room_Room_x);
  tolua_variable(tolua_S,"y",tolua_get_Room_Room_y,tolua_set_Room_Room_y);
  tolua_endmodule(tolua_S);

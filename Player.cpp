@@ -99,7 +99,6 @@ void Player_Update( Player *self )
 
 	if(self->area > 0){ Room_get_door(self->room) == false; }
 
-	Room_set_area(self->room, self->area);
 	self->count++;
 	self->time_limit--;
 }

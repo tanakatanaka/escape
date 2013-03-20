@@ -3,6 +3,11 @@ require "script/lib"
 --[[ 変数宣言 ]]--
 local slide_unlocked = false
 local slide_opened = false
+local get_paper0 = false
+local get_paper1 = false
+local get_hammer = false
+local break_pot = false 
+
 
 shuffle_box()
 
@@ -27,6 +32,13 @@ function on_move()
 			text("check doorと入力してください。", 10, 26)
 		end)
 	end
+	
+	if area_hougaku(2, 0) then
+		only_once(function()
+		room.swit = -1
+		end)
+	end
+	
 end
 
 function on_command()
@@ -46,7 +58,9 @@ function on_command()
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
 	  	elseif command == "open door" and room.swit ~= 1 then
-	  	 	room.swit = 1
+	  		only_once(function()
+	  	 		room.swit = 1
+	  	 	end)
 	  	end
 	end
 	
@@ -87,11 +101,12 @@ function on_command()
 	
 	if area_hougaku(4, 0) then
 		objects = {"paper"}
-		if not room.get_paper0 then
+		if not get_paper0 then
 			if command == "check paper" then
 				text("paper1", 10, 10)
 			elseif command == "get paper" then
-				room.get_paper0 = true
+				MV1SetVisible(room.paper0, 0);
+				get_paper0 = true
 				text("書類を手に入れました。", 10, 10)
 				player.get_paper = player.get_paper + 1
 			end
@@ -100,20 +115,22 @@ function on_command()
 
 	if area_hougaku(5, 1) then
 		objects = {"pot"}
-		if not room.break_pot then
+		if not break_pot then
 			if command == "check pot" then
 		   		text("壺があります。", 10, 10)
-			elseif room.get_hammer and command == "break pot" then
-		   		room.break_pot = true
+			elseif get_hammer and command == "break pot" then
+		   		break_pot = true
+		   		MV1SetVisible(room.pot, 0);
 			end
-		elseif not room.get_paper1 then
+		elseif not get_paper1 then
 			objects = {"paper"}
 		 	if command == "get paper" then
+		 		MV1SetVisible(room.paper1, 0);
 		 		text("書類を手に入れました。", 10, 10)
-			   	room.get_paper1 = true
+			   	get_paper1 = true
 			   	player.get_paper = player.get_paper + 1
 			end
-		elseif room.break_pot and room.get_paper1 then
+		elseif break_pot and get_paper1 then
 			objects = {}
 		end
 	end
@@ -124,26 +141,29 @@ function on_command()
 		   text("3つの箱があります。", 10, 10)
 		elseif command == "open black box" then 
 			box_eff(1)
+			MV1SetFrameVisible(room.table, room.black_cap, 0);
 		elseif command == "open green box" then
 			box_eff(2)
+			MV1SetFrameVisible(room.table, room.green_cap, 0);
 		elseif command == "open yellow box" then 
 			box_eff(3)
+			MV1SetFrameVisible(room.table, room.yellow_cap, 0);
 		end 
 	end
 	
 	if area_hougaku(6, 3) then
 		objects = {"table", "hammer", "cup"}
-		if not room.get_hammer then
+		if not get_hammer then
 	  		if command == "check table"  then
 	    		text("テーブルの上にコップとハンマーがあります。", 10, 10)
 	  		elseif command == "check hammer" then
 	    		text("ハンマーがあります。", 10, 10)
 	  		elseif command == "get hammer" then
 	    		text("ハンマーを入手しました。", 10, 10)
-	    		room.get_hammer = true
-	    		MV1SetFrameVisible(room.table, room.black_cap, 0);
+	    		MV1SetVisible(room.hammer, 0);
+	    		get_hammer = true
 	    	end
-	    elseif room.get_hammer then
+	    elseif get_hammer then
 	    	objects = {"table", "cup"}
 	    	if command == "check table"  then
 	    		text("テーブルの上にコップがあります。", 10, 10)

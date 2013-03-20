@@ -13,8 +13,6 @@ Room *Room_Initialize()
 	Room *self;
 	self = (Room *)malloc(sizeof(Room));
 
-	self->area = 0;
-
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->glass = MV1LoadModel("meta/glass.mqo") ;  
@@ -24,6 +22,8 @@ Room *Room_Initialize()
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
 	self->table = MV1LoadModel("meta/table.mqo") ;
 	self->black_cap = MV1SearchFrame(self->table, "black_futa");
+	self->yellow_cap = MV1SearchFrame(self->table, "yellow_futa");
+	self->green_cap = MV1SearchFrame(self->table, "green_futa");
 	
 	self->rotY = 0.0f;
 	self->swit = 0;
@@ -31,10 +31,6 @@ Room *Room_Initialize()
 	self->s_swit = 0;
 	self->s_count = 0;
 	self->slide = 0;
-	self->get_hammer = false;
-	self->break_pot = false;
-	self->get_paper0 = false;
-	self->get_paper1 = false;
 	self->x = 0;
 	self->y = 0;
 	self->role = 0;
@@ -96,11 +92,6 @@ void slide_glass(Room *self)
 	}
 }
 
-void Room_set_area(Room *self, int area)
-{
-	self->area = area;
-}
-
 // “®‚«‚ğŒvZ‚·‚é
 void Room_Update( Room *self )
 {
@@ -109,34 +100,15 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
 	MV1SetPosition(self->table, VGet( 200 - 43, 0, 300 + 721) );
-	MV1SetFrameVisible(self->table, self->black_cap, 0);
+	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
+	MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
+	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
 
 	//ŠJ‚­
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
-	// •Â‚¶‚é
-	if(self->area > 0 && self->rotY == OPEN) { self->swit = -1; }
-	
-	
-	if(!self->get_hammer)
-	{
-		MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
-	}
-
-	if(!self->get_paper0)
-	{
-		MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
-	}
-
-	if(!self->break_pot)
-	{
-		MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
-	}
-	else if(self->break_pot && !self->get_paper1)
-	{
-		MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
-		MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
-	}
 
 	self->role++;
 
@@ -157,26 +129,10 @@ void Room_Draw( Room *self)
 	MV1DrawModel(self->room);
 	MV1DrawModel(self->door);
 	MV1DrawModel(self->glass);
-
-	if(!self->get_hammer)
-	{
-		MV1DrawModel(self->hammer); 
-	}
-
-	if(!self->get_paper0)
-	{
-		MV1DrawModel(self->paper0);  
-	}
-
-	if(!self->break_pot)
-	{
-		MV1DrawModel(self->pot); 
-	}
-	else if(self->break_pot && !self->get_paper1)
-	{
-		MV1DrawModel(self->paper1); 
-	}
-
+	MV1DrawModel(self->hammer); 
+	MV1DrawModel(self->paper0);  
+	MV1DrawModel(self->pot); 
+	MV1DrawModel(self->paper1); 
 	MV1DrawModel(self->table); 
 	
 }

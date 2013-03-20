@@ -9,7 +9,6 @@
 
 struct Room
 {
-	int area;
     int room;
 	int door;
 	int glass;
@@ -28,10 +27,6 @@ struct Room
 	int s_count;
 	double slide;
 	int role;
-	bool get_hammer;
-	bool break_pot;
-	bool get_paper0;
-	bool get_paper1;
 	int x;
 	int y;
 };
@@ -41,7 +36,6 @@ struct Room
 // ‰Šú‰»‚ğ‚·‚é
 Room *Room_Initialize();
 
-void Room_set_area(Room *self, int area);
 bool Room_get_door(Room *self);
 bool Room_get_slide(Room *self);
 
