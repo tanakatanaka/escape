@@ -29,7 +29,7 @@ Game *Game_Initialize()
 	Game *self;
 	self = new Game();
 	//gameisŠÖŒW
-	self->game_state = 0;
+	self->game_state = -1;
 	return self;
 }
 
@@ -70,6 +70,7 @@ void Game_Update(Game *self)
 		{
 			Game_play_Finalize(self->game_play );
 			Ending_Finalize( self->ending );
+			self->game_state = -1;
 		}
 
 	}

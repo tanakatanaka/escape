@@ -236,10 +236,6 @@ void Camera_Draw(Camera *self)
 
     SetCameraPositionAndAngle(cam, self->pt.x, yaw, 0.0f);
 
-    //霧描画on:についてcolorで色・st～始終
-    SetFogEnable(TRUE);
-    SetFogColor(0, 0, 0);
-    SetFogStartEnd(500,  1500) ;
 }
 
 // 終了処理をする
