@@ -4,8 +4,12 @@
 
 struct Ending;
 
+#include "Player.h"
+
 // ‰Šú‰»‚ğ‚·‚é
-Ending *Ending_Initialize();
+Ending *Ending_Initialize(Player *player);
+
+int Ending_get_next( Ending *self );
 
 // “®‚«‚ğŒvZ‚·‚é
 void Ending_Update( Ending *Ending );

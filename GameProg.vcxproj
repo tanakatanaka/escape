@@ -91,6 +91,7 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Ending.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Game_play.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mess.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Ending.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Game_play.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mess.h" />
     <ClInclude Include="Opening.h" />
@@ -126,10 +128,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="Make Lua Header"
-    Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h"
-    Outputs="lua_header.h"
-    BeforeTargets="ClCompile">
+  <Target Name="Make Lua Header" Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h" Outputs="lua_header.h" BeforeTargets="ClCompile">
     <Exec Command="$(SolutionDir)make_lua_header.bat" />
   </Target>
 </Project>
