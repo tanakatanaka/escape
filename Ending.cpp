@@ -38,7 +38,7 @@ void Ending_Update( Ending *self )
 // •`‰æ‚·‚é
 void Ending_Draw( Ending *self)
 {
-	
+	DrawFormatString( 0, 0, GetColor( 255, 20, 255 ), "%s", "RESULT");
 }
 
 // I—¹ˆ—‚ğ‚·‚é

@@ -8,7 +8,7 @@ struct Opening;
 Opening *Opening_Initialize();
 
 //opening‚Ìó‘Ô‚ğ•Ô‚·
-int Opening_get_game_state(Opening *self);
+int Opening_get_game_mode(Opening *self);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Opening_Update( Opening *Opening );

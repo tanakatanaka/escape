@@ -11,7 +11,7 @@
 Room *Room_Initialize()
 {
 	Room *self;
-	self = (Room *)malloc(sizeof(Room));
+	self = new Room();
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
@@ -147,4 +147,12 @@ void Room_Draw( Room *self)
 void Room_Finalize( Room *self )
 {
 	SetFogEnable(FALSE);
+	MV1DeleteModel(self->room);
+	MV1DeleteModel(self->door);
+	MV1DeleteModel(self->glass);
+	MV1DeleteModel(self->hammer); 
+	MV1DeleteModel(self->paper0);  
+	MV1DeleteModel(self->pot); 
+	MV1DeleteModel(self->paper1); 
+	MV1DeleteModel(self->table); 
 }

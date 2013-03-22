@@ -6,6 +6,10 @@
 #include "Game_play.h"
 #include "Ending.h"
 
+#define LOAD -1
+#define OPEN 0
+#define GAME_PLAY 1
+#define END 2
 
 struct Game
 {
@@ -29,30 +33,31 @@ Game *Game_Initialize()
 	Game *self;
 	self = new Game();
 	//gameisŠÖŒW
-	self->game_state = -1;
+	self->game_state = LOAD;
 	return self;
 }
 
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
-	if(self->game_state  == -1)
+	if(self->game_state  == LOAD)
 	{
 		self->opening = Opening_Initialize();
 		self->game_state++;
 	}
-	else if(self->game_state  == 0)
+	else if(self->game_state  == OPEN)
 	{
 		Opening_Update(self->opening);
-		self->game_state = Opening_get_game_state(self->opening);
+		int opening_end = Opening_get_game_mode(self->opening);
 		
-		if(self->game_state  == 1)
+		if(opening_end  == GAME_PLAY)
 		{
 			Opening_Finalize( self->opening );
+			self->game_state  = GAME_PLAY;
 			self->game_play = Game_play_Initialize(); 
 		}
 	}
-	else if(self->game_state  == 1)
+	else if(self->game_state  == GAME_PLAY)
 	{
 		Game_play_Update(self->game_play);
 		Player *player = Game_play_get_result(self->game_play);
@@ -63,14 +68,14 @@ void Game_Update(Game *self)
 			self->ending = Ending_Initialize(player);
 		}
 	}
-	else if(self->game_state  == 2)
+	else if(self->game_state  == END)
 	{
 		Ending_Update( self->ending );
 		if(Ending_get_next( self->ending ) == 1 )
 		{
 			Game_play_Finalize(self->game_play );
 			Ending_Finalize( self->ending );
-			self->game_state = -1;
+			self->game_state = LOAD;
 		}
 
 	}
@@ -79,15 +84,15 @@ void Game_Update(Game *self)
 // •`‰æ‚·‚é
 void Game_Draw(Game *self)
 {
-	if(self->game_state  == 0)
+	if(self->game_state  == OPEN)
 	{
 		Opening_Draw(self->opening);
 	}
-	else if(self->game_state  == 1)	
+	else if(self->game_state  == GAME_PLAY)	
 	{
 		Game_play_Draw(self->game_play);
 	}
-	else if(self->game_state  == 2)
+	else if(self->game_state  == END)
 	{
 		Ending_Draw( self->ending );
 	}
