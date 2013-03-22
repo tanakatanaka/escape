@@ -21,9 +21,13 @@ Room *Room_Initialize()
 	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
 	self->table = MV1LoadModel("meta/table.mqo") ;
+	self->bed = MV1LoadModel("meta/bed.mqo") ;
+	self->makura = MV1SearchFrame(self->bed, "makura");
+	self->huton = MV1SearchFrame(self->bed, "huton");
 	self->black_cap = MV1SearchFrame(self->table, "black_futa");
 	self->yellow_cap = MV1SearchFrame(self->table, "yellow_futa");
 	self->green_cap = MV1SearchFrame(self->table, "green_futa");
+
 	
 	self->rotY = 0.0f;
 	self->swit = 0;
@@ -106,6 +110,7 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->door, VGet( 1250, 0, -540 ) );
 	MV1SetPosition(self->glass, VGet( 200 + self->slide, 0, 300) );
 	MV1SetPosition(self->table, VGet( 200 - 43, 0, 300 + 721) );
+	MV1SetPosition(self->bed, VGet( 200 + 668, 0, 300 + 632) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
@@ -140,7 +145,7 @@ void Room_Draw( Room *self)
 	MV1DrawModel(self->pot); 
 	MV1DrawModel(self->paper1); 
 	MV1DrawModel(self->table); 
-	
+	MV1DrawModel(self->bed); 
 }
 
 // I—¹ˆ—‚ğ‚·‚é
@@ -155,4 +160,5 @@ void Room_Finalize( Room *self )
 	MV1DeleteModel(self->pot); 
 	MV1DeleteModel(self->paper1); 
 	MV1DeleteModel(self->table); 
+	MV1DeleteModel(self->bed); 
 }

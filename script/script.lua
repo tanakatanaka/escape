@@ -185,13 +185,20 @@ function on_command()
 	    	text("カップがあります。", 10, 10)
 	  	end
 	end
-
+	
+	if area_hougaku(7, 1) then
+		objects = {"standard lamp", "bed", "pillow", "bedclothes"}
+		if command == "check bed"  then
+			text("布団はまだ暖かい。", 10, 10)
+		end
+	end
+	
 	if  command == "check" then			
 		if #objects == 0 then
-			text(encode_to_c("not found"), 10, 10)
+			text(encode_to_c("特に見当たるものはありません。"), 10, 10)
 		else
 			for i = 1, #objects do
-	  			text("objects[i] .. が見えます", 10, 10 + 26 * i)
+	  			text(objects[i]"が見えます", 10, 10 + 26 * i)
 			end
 		end
 	end	

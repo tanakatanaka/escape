@@ -18,6 +18,9 @@ struct Room
 	int black_cap;
 	int green_cap;
 	int yellow_cap;
+	int bed;
+	int makura;
+	int huton;
 	int paper0;
 	int paper1;
 	double rotY;
