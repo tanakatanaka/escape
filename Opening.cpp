@@ -31,39 +31,39 @@ int Opening_get_game_mode(Opening *self)
 {
 	//1:ゲームプレイ
 	//0:ゲーム終了 -
-	//1：何もしない 
+	//1：何もしない
 
-	if(self->state == 3 && self->game_mode % 2 == 0)
+	if(self->state == 3 )
 	{
-		return 1;
+		if(self->game_mode % 2 == 0)
+		{
+			return 1;
+		}
+		else if( self->game_mode % 2 == 1)
+		{
+			return 0;
+		}
 	}
-	else if((self->state == 3 && self->game_mode % 2 == 1))
-	{
-		return 0;
-	}
-	
 	return -1;
 }
 
-int senter_x(std::string &src, int size)
+static int senter_x(std::string &src, int size)
 {
 	int x = src.size() * size * 0.5;
 	return (640 - x) / 2; 
 }
 
-void enter_display(Opening *self)
+static void enter_display(Opening *self)
 { 
-	
 	std::string src = "Enter key を押してください";
-
-
+	
 	if(self->blink % 100 < 80)
 	{ 
 		DrawFormatString( senter_x(src, 30), 400, GetColor( 255, 20, 255 ), "%s", src.c_str()); 
 	}
 }
 
-void mode_display(Opening *self)
+static void mode_display(Opening *self)
 { 
 	std::string src1 = "ゲームをはじめる";
 	std::string src2 = "ゲームをやめる";
@@ -78,14 +78,12 @@ void mode_display(Opening *self)
 		DrawFormatString(  senter_x(src1, 30), 380, GetColor( 255, 255, 255 ), "%s", src1.c_str()); 
 		DrawFormatString( senter_x(src2, 30), 410, GetColor( 20, 20, 255 ), "%s", src2.c_str()); 
 	}
-
 }
 
 void load_display(Opening *self)
 { 
 	std::string src = "ロードしています";
-	DrawFormatString( senter_x(src, 30), 400, GetColor( 20, 20, 255 ), "%s", "ロードしています"); 
-		
+	DrawFormatString( senter_x(src, 30), 400, GetColor( 20, 20, 255 ), "%s", "ロードしています"); 	
 }
 
 // 動きを計算する

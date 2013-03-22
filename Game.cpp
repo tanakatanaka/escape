@@ -48,9 +48,8 @@ void Game_Update(Game *self)
 	else if(self->game_state  == OPEN)
 	{
 		Opening_Update(self->opening);
-		int opening_end = Opening_get_game_mode(self->opening);
 		
-		if(opening_end  == GAME_PLAY)
+		if(Opening_get_game_mode(self->opening)  == 1)
 		{
 			Opening_Finalize( self->opening );
 			self->game_state  = GAME_PLAY;
@@ -71,7 +70,7 @@ void Game_Update(Game *self)
 	else if(self->game_state  == END)
 	{
 		Ending_Update( self->ending );
-		if(Ending_get_next( self->ending ) == 1 )
+		if(Ending_get_next( self->ending ) ==  1)
 		{
 			Game_play_Finalize(self->game_play );
 			Ending_Finalize( self->ending );
