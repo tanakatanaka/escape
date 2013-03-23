@@ -244,7 +244,7 @@ function on_command()
 			text(encode_to_c("特に見当たるものはありません。"), 10, 10)
 		else
 			for i = 1, #objects do
-	  			text(objects[i]"が見えます。", 10, 10 + 26 * i)
+	  			text(objects[i].." が見えます。", 10, 10 + 16 * i - 1)
 			end
 		end
 	end	
