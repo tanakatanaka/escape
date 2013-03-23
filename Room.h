@@ -21,8 +21,10 @@ struct Room
 	int bed;
 	int makura;
 	int huton;
+	int stand;
 	int paper0;
 	int paper1;
+	int paper2;
 	double rotY;
 	int swit;
 	int count;

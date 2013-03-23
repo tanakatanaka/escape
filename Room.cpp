@@ -20,10 +20,12 @@ Room *Room_Initialize()
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
 	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
+	self->paper2 = MV1LoadModel("meta/paper.mqo") ;
 	self->table = MV1LoadModel("meta/table.mqo") ;
 	self->bed = MV1LoadModel("meta/bed.mqo") ;
 	self->makura = MV1SearchFrame(self->bed, "makura");
 	self->huton = MV1SearchFrame(self->bed, "huton");
+	self->stand = MV1SearchFrame(self->bed, "cover");
 	self->black_cap = MV1SearchFrame(self->table, "black_futa");
 	self->yellow_cap = MV1SearchFrame(self->table, "yellow_futa");
 	self->green_cap = MV1SearchFrame(self->table, "green_futa");
@@ -117,6 +119,9 @@ void Room_Update( Room *self )
 	MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
 	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
 
+	MV1SetRotationXYZ( self->paper2, VGet( 0, self->role * PHI / 360, 0 ) ); 
+	MV1SetPosition(self->paper2, VGet( 200 + 519, 22 + 34, 300 + 738) );
+
 	//ŠJ‚­
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
 	if( self->s_swit == 1 || self->s_swit == -1 ){ slide_glass(self); }
@@ -146,6 +151,7 @@ void Room_Draw( Room *self)
 	MV1DrawModel(self->paper1); 
 	MV1DrawModel(self->table); 
 	MV1DrawModel(self->bed); 
+	MV1DrawModel(self->paper2); 
 }
 
 // I—¹ˆ—‚ğ‚·‚é
@@ -161,4 +167,5 @@ void Room_Finalize( Room *self )
 	MV1DeleteModel(self->paper1); 
 	MV1DeleteModel(self->table); 
 	MV1DeleteModel(self->bed); 
+	MV1DeleteModel(self->paper2);
 }

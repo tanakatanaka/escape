@@ -7,8 +7,14 @@ local slide_unlocked = false
 local slide_opened = false
 local get_paper0 = false
 local get_paper1 = false
+local get_paper2 = false
 local get_hammer = false
 local break_pot = false 
+local break_lamp = false
+
+--[モデルの描画設定]--
+MV1SetVisible(room.paper1, 0);
+MV1SetVisible(room.paper2, 0);
 
 shuffle_box()
 
@@ -132,8 +138,9 @@ function on_command()
 			if command == "check pot" then
 		   		text("壺があります。", 10, 10)
 			elseif get_hammer and command == "break pot" then
-		   		break_pot = true
 		   		MV1SetVisible(room.pot, 0);
+		   		MV1SetVisible(room.paper1, 1);
+		   		break_pot = true
 			end
 		elseif not get_paper1 then
 			objects = {"paper"}
@@ -173,6 +180,7 @@ function on_command()
 	    		text("ハンマーがあります。", 10, 10)
 	  		elseif command == "get hammer" then
 	    		text("ハンマーを入手しました。", 10, 10)
+	    		text("break コマンドが使えます。", 10, 10 + 16)
 	    		MV1SetVisible(room.hammer, 0);
 	    		get_hammer = true
 	    	end
@@ -187,13 +195,29 @@ function on_command()
 	end
 	
 	if area_hougaku(7, 1) then
-		objects = {"standard lamp", "bed", "pillow", "clothes"}
+		objects = {"lamp", "bed", "pillow", "clothes"}
 		if command == "check bed"  then
 			text("硬そうなベッドです。", 10, 10)
 		elseif command == "get pillow"  then
-			MV1SetVisible(room.makura, 0);
+			text("マクラを手に入れました。", 10, 10);
+			MV1SetFrameVisible(room.bed, room.makura, 0);
 		elseif command == "get clothes"  then
-			MV1SetVisible(room.huton, 0);
+			text("フトンを手に入れました。", 10, 10);
+			MV1SetFrameVisible(room.bed, room.huton, 0);
+		end
+		if	not break_lamp then
+			if  get_hammer and command == "break lamp"  then
+				MV1SetFrameVisible(room.bed, room.stand, 0);
+				MV1SetVisible(room.paper2, 1);
+				break_lamp = true
+			end
+		else 
+			if command == "get paper"  and not get_paper2 then
+				MV1SetVisible(room.paper2, 0);
+	 			text("書類を手に入れました。", 10, 10)
+		   		get_paper2 = true
+		   		player.get_paper = player.get_paper + 1
+			end
 		end
 	end
 	
