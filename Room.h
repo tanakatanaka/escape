@@ -25,6 +25,7 @@ struct Room
 	int paper0;
 	int paper1;
 	int paper2;
+	int paper3;
 	double rotY;
 	int swit;
 	int count;

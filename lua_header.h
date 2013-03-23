@@ -90,13 +90,13 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
+ tolua_usertype(tolua_S,"Camera");
  tolua_usertype(tolua_S,"Sound");
+ tolua_usertype(tolua_S,"Room");
  tolua_usertype(tolua_S,"Console");
+ tolua_usertype(tolua_S,"Twod");
  tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"VECTOR");
- tolua_usertype(tolua_S,"Camera");
- tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Twod");
  tolua_usertype(tolua_S,"Player");
 }
 
@@ -1767,6 +1767,31 @@ static int tolua_set_Room_Room_paper2(lua_State* tolua_S)
  return 0;
 }
 
+/* get function: paper3 of class  Room */
+static int tolua_get_Room_Room_paper3(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper3'",NULL);
+#endif
+ tolua_pushnumber(tolua_S,(lua_Number)self->paper3);
+ return 1;
+}
+
+/* set function: paper3 of class  Room */
+static int tolua_set_Room_Room_paper3(lua_State* tolua_S)
+{
+  Room* self = (Room*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper3'",NULL);
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+ tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->paper3 = ((int)  tolua_tonumber(tolua_S,2,0));
+ return 0;
+}
+
 /* get function: rotY of class  Room */
 static int tolua_get_Room_Room_rotY(lua_State* tolua_S)
 {
@@ -2570,6 +2595,7 @@ LUALIB_API int luaopen_lua_header (lua_State* tolua_S)
  tolua_variable(tolua_S,"paper0",tolua_get_Room_Room_paper0,tolua_set_Room_Room_paper0);
  tolua_variable(tolua_S,"paper1",tolua_get_Room_Room_paper1,tolua_set_Room_Room_paper1);
  tolua_variable(tolua_S,"paper2",tolua_get_Room_Room_paper2,tolua_set_Room_Room_paper2);
+ tolua_variable(tolua_S,"paper3",tolua_get_Room_Room_paper3,tolua_set_Room_Room_paper3);
  tolua_variable(tolua_S,"rotY",tolua_get_Room_Room_rotY,tolua_set_Room_Room_rotY);
  tolua_variable(tolua_S,"swit",tolua_get_Room_Room_swit,tolua_set_Room_Room_swit);
  tolua_variable(tolua_S,"count",tolua_get_Room_Room_count,tolua_set_Room_Room_count);
