@@ -20,6 +20,9 @@ Ending *Ending_Initialize(Player *player)
 	self->state = 0;
 	self->game_mode = 0;
 	self->blink = 0; 
+
+	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 255 ) ;
+
 	return self;
 }
 
