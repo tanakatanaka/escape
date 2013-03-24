@@ -155,6 +155,9 @@ void Room_Draw( Room *self)
 	MV1DrawModel(self->bed); 
 	MV1DrawModel(self->paper2);
 	MV1DrawModel(self->paper3);
+
+	DrawSphere3D( VGet( 200, 0, 300 ), 1, 32, GetColor( 255,0,0 ), GetColor( 255, 255, 255 ), TRUE ) ;
+
 }
 
 // I—¹ˆ—‚ğ‚·‚é
