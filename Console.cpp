@@ -51,7 +51,7 @@ Console *Console_Initialize(Sound *sound)
 	Console *self;
 	self =  new Console();
 	self->sound = sound;
-	self->is_input = 0;
+	self->is_input = 1;
 	self->x = 0;
 	self->y = 420;
 	self->signal = 0;
@@ -226,14 +226,13 @@ void open_and_shut( Console *self )
 	
 	if(Pad_Get( KEY_INPUT_RETURN  ) == -1 && self->is_input % 2 == 1)
 	{
-		if(self->enter_time_count < 20)
+		if(self->enter_time_count < 15)
 		{
 			self->is_input++;
 		}
 		self->enter_time_count = 0;
 	}
-	else if(Pad_Get( KEY_INPUT_RETURN  ) == -1){self->is_input++;}
-	else if(Pad_Get( KEY_INPUT_ESCAPE  ) == -1){self->is_input++;}
+	else if(Pad_Get( KEY_INPUT_RETURN  ) == -1 || Pad_Get( KEY_INPUT_ESCAPE  ) == -1){self->is_input++;}
 
 	
 	self->enter_time_count++;
