@@ -47,43 +47,54 @@ int Opening_get_game_mode(Opening *self)
 	return -1;
 }
 
-static int senter_x(std::string &src, int size)
+static int center_x(const char *src)
 {
-	int x = src.size() * size * 0.5;
+	int x = GetDrawStringWidth( src , strlen( src ) ) ;
 	return (640 - x) / 2; 
 }
 
 static void enter_display(Opening *self)
 { 
-	std::string src = "Enter key ‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢";
+	const char *src = "Enter key ‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢";
 	
+	int size = GetDrawStringWidth( src , strlen( src ) );
+	DrawBox( center_x(src) - 5, 360 , center_x(src) + size + 5 , 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
+
 	if(self->blink % 100 < 80)
 	{ 
-		DrawFormatString( senter_x(src, 30), 400, GetColor( 255, 20, 255 ), "%s", src.c_str()); 
+		DrawFormatString( center_x(src), 400, GetColor( 255, 20, 255 ), "%s", src); 
 	}
 }
 
 static void mode_display(Opening *self)
 { 
-	std::string src1 = "ƒQ[ƒ€‚ğ‚Í‚¶‚ß‚é";
-	std::string src2 = "ƒQ[ƒ€‚ğ‚â‚ß‚é";
+	const char *src1 = "ƒQ[ƒ€‚ğ‚Í‚¶‚ß‚é";
+	const char *src2 = "ƒQ[ƒ€‚ğ‚â‚ß‚é";
+
+	int size = GetDrawStringWidth( src1 , strlen( src1 ) );
+	DrawBox( center_x(src1) - 5, 360 , center_x(src1) + size + 5, 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
+
 
 	if(self->game_mode % 2 == 0)
 	{
-		DrawFormatString( senter_x(src1, 30), 380, GetColor( 20, 20, 255 ), "%s", src1.c_str()); 
-		DrawFormatString(senter_x(src2, 30), 410, GetColor( 255, 255, 255 ), "%s", src2.c_str()); 
+		DrawFormatString( center_x(src1), 380, GetColor( 20, 20, 255 ), "%s", src1); 
+		DrawFormatString(center_x(src2), 410, GetColor( 255, 255, 255 ), "%s", src2); 
 	}
 	else
 	{
-		DrawFormatString(  senter_x(src1, 30), 380, GetColor( 255, 255, 255 ), "%s", src1.c_str()); 
-		DrawFormatString( senter_x(src2, 30), 410, GetColor( 20, 20, 255 ), "%s", src2.c_str()); 
+		DrawFormatString(  center_x(src1), 380, GetColor( 255, 255, 255 ), "%s", src1); 
+		DrawFormatString( center_x(src2), 410, GetColor( 20, 20, 255 ), "%s", src2); 
 	}
 }
 
 void load_display(Opening *self)
 { 
-	std::string src = "ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·";
-	DrawFormatString( senter_x(src, 30), 400, GetColor( 20, 20, 255 ), "%s", "ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·"); 	
+	const char * src = "ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·";
+	
+	int size = GetDrawStringWidth( src , strlen( src ) );
+	DrawBox( center_x(src) - 5, 360 , center_x(src) + size + 5, 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
+	
+	DrawFormatString( center_x(src), 400, GetColor( 20, 20, 255 ), "%s", "ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·"); 	
 }
 
 // “®‚«‚ğŒvZ‚·‚é
@@ -117,8 +128,6 @@ void Opening_Draw( Opening *self)
 	//ƒ‚ƒfƒ‹ŠÖŒW
 	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 	MV1DrawModel(self->room);
-
-	DrawBox( 120 , 360 , 540 , 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
 
 	if(self->state == 0){ enter_display(self);}
 	else if(self->state == 1){ mode_display(self);}

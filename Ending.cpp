@@ -20,7 +20,6 @@ Ending *Ending_Initialize(Player *player)
 	self->state = 0;
 	self->game_mode = 0;
 	self->blink = 0; 
-
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 255 ) ;
 
 	return self;
@@ -46,29 +45,49 @@ int Ending_get_next( Ending *self )
 	return -1;
 }
 
-static int senter_x(std::string &src, int size)
+static int center_x(const char *src)
 {
-	int x = src.size() * size * 0.5;
+	int x = GetDrawStringWidth( src , strlen( src ) ) ;
 	return (640 - x) / 2; 
 }
 
-void result_moji_display(Ending *self)
+void score_moji_display(Ending *self)
 { 
 	SetFontSize( 30 ) ;
-	std::string src = "リザルト";
+	const char *src = "スコア";
 
-	DrawFormatString( senter_x(src, 30), 50, GetColor( 255, 20, 255 ), "%s", src.c_str()); 
+	DrawFormatString( center_x(src), 50, GetColor( 255, 20, 255 ), "%s", src); 
+}
+
+void result_display(Ending *self)
+{
+	int all_score = 0;
+	int score = 0;
+
+	SetFontSize( 20 ) ;
+
+	score = Player_get_paper(self->player) * 1000;
+	all_score += score;
+	const char *src = "しょるい × %d : %d";
+	DrawFormatString( center_x(src), 100, GetColor( 255, 20, 255 ), src, score / 1000, score); 
+
+	score = Player_get_time(self->player) * 100;
+	all_score += score;
+	src = "のこりじかん × %d : %d";
+	DrawFormatString( center_x(src), 130, GetColor( 255, 20, 255 ), src, score / 100, score); 
+	src = "スコア : %d";
+	DrawFormatString( center_x(src), 160, GetColor( 255, 20, 255 ), src, all_score); 
 }
 
 static void enter_display(Ending *self)
 { 
 	int size = 20;
 	SetFontSize( size ) ;
-	std::string src = "Enter key を押してください";
+	const char *src = "Enter key を押してください";
 	
 	if(self->blink % 100 < 80)
 	{ 
-		DrawFormatString( senter_x(src, size), 400, GetColor( 255, 20, 255 ), "%s", src.c_str()); 
+		DrawFormatString( center_x(src), 400, GetColor( 255, 20, 255 ), "%s", src); 
 	}
 }
 
@@ -77,18 +96,18 @@ static void mode_display(Ending *self)
 	int size = 20;
 	SetFontSize( size ) ;
 
-	std::string src1 = "タイトルにもどる";
-	std::string src2 = "ゲームをやめる";
+	const char *src1 = "タイトルにもどる";
+	const char *src2 = "ゲームをやめる";
 
 	if(self->game_mode % 2 == 0)
 	{
-		DrawFormatString( senter_x(src1, size), 380, GetColor( 20, 20, 255 ), "%s", src1.c_str()); 
-		DrawFormatString(senter_x(src2, size), 410, GetColor( 255, 255, 255 ), "%s", src2.c_str()); 
+		DrawFormatString( center_x(src1), 380, GetColor( 20, 20, 255 ), "%s", src1); 
+		DrawFormatString(center_x(src2), 410, GetColor( 255, 255, 255 ), "%s", src2); 
 	}
 	else
 	{
-		DrawFormatString(  senter_x(src1, size), 380, GetColor( 255, 255, 255 ), "%s", src1.c_str()); 
-		DrawFormatString( senter_x(src2, size), 410, GetColor( 20, 20, 255 ), "%s", src2.c_str()); 
+		DrawFormatString(  center_x(src1), 380, GetColor( 255, 255, 255 ), "%s", src1); 
+		DrawFormatString( center_x(src2), 410, GetColor( 20, 20, 255 ), "%s", src2); 
 	}
 }
 
@@ -113,8 +132,9 @@ void Ending_Update( Ending *self )
 // 描画する
 void Ending_Draw( Ending *self)
 {
-	result_moji_display(self);
-	
+	score_moji_display(self);
+	result_display(self);
+
 	if(self->state == 0)
 	{
 		enter_display(self);
