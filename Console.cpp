@@ -51,7 +51,7 @@ Console *Console_Initialize(Sound *sound)
 	Console *self;
 	self =  new Console();
 	self->sound = sound;
-	self->is_input = 1;
+	self->is_input = 0;
 	self->x = 0;
 	self->y = 420;
 	self->signal = 0;
@@ -220,6 +220,26 @@ static bool move_cursor(Console *self, int input)
 	return true;
 }
 
+//コンソールの開閉
+void open_and_shut( Console *self )
+{
+	
+	if(Pad_Get( KEY_INPUT_RETURN  ) == -1 && self->is_input % 2 == 1)
+	{
+		if(self->enter_time_count < 20)
+		{
+			self->is_input++;
+		}
+		self->enter_time_count = 0;
+	}
+	else if(Pad_Get( KEY_INPUT_RETURN  ) == -1){self->is_input++;}
+	else if(Pad_Get( KEY_INPUT_ESCAPE  ) == -1){self->is_input++;}
+
+	
+	self->enter_time_count++;
+}
+
+
 // 動きを計算する
 void Console_Update( Console *self )
 {
@@ -282,17 +302,8 @@ void Console_Update( Console *self )
 	}
 	//入力モード以外
 	else{self->back_count = 0;}
+	open_and_shut( self );
 
-	if(Pad_Get( KEY_INPUT_RETURN  ) == -1)
-	{
-		if(self->enter_time_count < 20)
-		{
-			self->is_input++;
-		}
-		self->enter_time_count = 0;
-	}
-	
-	self->enter_time_count++;
 }
 
 // 描画する
