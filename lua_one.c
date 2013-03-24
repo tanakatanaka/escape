@@ -2,6 +2,14 @@
 
 #define ltable_c
 
+/* do not export internal symbols */
+#undef LUAI_FUNC
+#undef LUAI_DDEC
+#undef LUAI_DDEF
+#define LUAI_FUNC	static
+#define LUAI_DDEC	static
+#define LUAI_DDEF	static
+
 #include "lobject.c"
 #include "lapi.c"
 #include "lcode.c"

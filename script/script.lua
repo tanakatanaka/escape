@@ -30,7 +30,23 @@ shuffle_box()
   操作する関数
     text("文字", X, Y)
     draw(画像番号, X, Y)
-]]--
+--]]
+
+do
+	local o = map.show
+
+	o(0, 0, "door")
+	o(1, 2, "door")
+	o(1, 3, "pict")
+	o(2, 3, "pict")
+	o(3, 3, "pict")
+	o(3, 1, "slide")
+	o(4, 0, "paper")
+	o(5, 1, "pot")
+	o(6, 1, "black box", "green box", "yellow box")
+	o(6, 3, "table", "hammer", "cup")
+	o(7, 1, "lamp", "bed", "pillow", "clothes")
+end
 
 function on_move()
 	
@@ -63,20 +79,19 @@ function on_move()
 	
 end
 
+
 function on_command()
 	
 	Twod_erase_image(twod)
 	Mess_erase_word(mess)
 	
 	local command = get_command()
-	local objects = {}
 	
 	if not command then
 	  return
 	end
   	
   	if area_hougaku(0, 0) or area_hougaku(1, 2) then
-  		objects = {"door"}
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
 	  	elseif command == "open door" and room.rotY ~= door_open then
@@ -102,13 +117,8 @@ function on_command()
 	     draw("x", 50 , 10)
 	  end
 	end
-	--pict保存用
-	if area_hougaku(1, 3) or area_hougaku(2, 3) or area_hougaku(3, 3) then
-       objects = {"pict"}
-	end
-	
+
 	if area_hougaku(3, 1) then
-		objects = {"slide"}
 		if not slide_unlocked then
 			if command == "check slide" then
 			    text("コード(数値)を入力してください。", 10, 10)
@@ -123,7 +133,6 @@ function on_command()
 	end
 	
 	if area_hougaku(4, 0) then
-		objects = {"paper"}
 		if not get_paper0 then
 			if command == "check paper" then
 				text("paper1", 10, 10)
@@ -132,12 +141,12 @@ function on_command()
 				get_paper0 = true
 				text("書類を手に入れました。", 10, 10)
 				player.get_paper = player.get_paper + 1
+				hide("paper")
 			end
 		end
 	end
 
 	if area_hougaku(5, 1) then
-		objects = {"pot"}
 		if not break_pot then
 			if command == "check pot" then
 		   		text("壺があります。", 10, 10)
@@ -145,22 +154,20 @@ function on_command()
 		   		MV1SetVisible(room.pot, 0);
 		   		MV1SetVisible(room.paper1, 1);
 		   		break_pot = true
+		   		hide("pot")
 			end
 		elseif not get_paper1 then
-			objects = {"paper"}
 		 	if command == "get paper" then
 		 		MV1SetVisible(room.paper1, 0);
 		 		text("書類を手に入れました。", 10, 10)
 			   	get_paper1 = true
 			   	player.get_paper = player.get_paper + 1
+				hide("paper")
 			end
-		elseif break_pot and get_paper1 then
-			objects = {}
 		end
 	end
 	
 	if area_hougaku(6, 1) then
-		objects = {"black box", "green box", "yellow box"}
 		if command == "check box" then
 		   text("3つの箱があります。", 10, 10)
 		elseif command == "open black box" then 
@@ -176,35 +183,32 @@ function on_command()
 	end
 	
 	if area_hougaku(6, 3) then
-		objects = {"table", "hammer", "cup"}
-		if not get_hammer then
-	  		if command == "check table"  then
-	    		text("テーブルの上にコップとハンマーがあります。", 10, 10)
-	  		elseif command == "check hammer" then
+  		if command == "check table" then
+  			local list = check_all()
+    		text("テーブルの上に " .. table.concat(list, " と ") .. " があります。", 10, 10)
+	 	elseif command == "check cup" then
+	    	text("カップがあります。", 10, 10)
+		elseif not get_hammer then
+	  		if command == "check hammer" then
 	    		text("ハンマーがあります。", 10, 10)
 	  		elseif command == "get hammer" then
 	    		text("ハンマーを入手しました。", 10, 10)
 	    		text("break コマンドが使えます。", 10, 10 + 16)
 	    		MV1SetVisible(room.hammer, 0);
 	    		get_hammer = true
+				hide("hammer")
 	    	end
-	    elseif get_hammer then
-	    	if command == "check table"  then
-	    		text("テーブルの上にコップがあります。", 10, 10)
-	    	end
-	 	elseif command == "check cup" then
-	    	text("カップがあります。", 10, 10)
 	  	end
 	end
 	
 	if area_hougaku(7, 1) then
-		objects = {"lamp", "bed", "pillow", "clothes"}
-		if command == "check bed"  then
+		if command == "check bed" then
 			text("硬そうなベッドです。", 10, 10)
 		elseif command == "get pillow" and not get_makura  then
 			text("マクラを手に入れました。", 10, 10);
 			MV1SetFrameVisible(room.bed, room.makura, 0);
 			get_makura = true
+			hide("pillow")
 		end
 			
 		if get_huton then
@@ -213,20 +217,26 @@ function on_command()
 	 			text("書類を手に入れました。", 10, 10)
 		   		get_paper3 = true
 		   		player.get_paper = player.get_paper + 1
+				hide("paper")
 			end
 		else 
 			if command == "get clothes" then
-			text("フトンを手に入れました。", 10, 10);
-			MV1SetFrameVisible(room.bed, room.huton, 0);
-			MV1SetVisible(room.paper3, 1);
-			get_huton = true
+				text("フトンを手に入れました。", 10, 10);
+				MV1SetFrameVisible(room.bed, room.huton, 0);
+				MV1SetVisible(room.paper3, 1);
+				get_huton = true
+				show("paper")
+				hide("clothes")
 			end
 		end
+
 		if not break_lamp then
 			if  get_hammer and command == "break lamp" then
 				MV1SetFrameVisible(room.bed, room.stand, 0);
 				MV1SetVisible(room.paper2, 1);
 				break_lamp = true
+				show("paper")
+				hide("lamp")
 			end
 		else 
 			if  not get_paper2 and command == "get paper" then
@@ -234,16 +244,19 @@ function on_command()
 	 			text("書類を手に入れました。", 10, 10)
 		   		get_paper2 = true
 		   		player.get_paper = player.get_paper + 1
+				hide("paper")
 			end
 		end
 	end
 	
-	if  command == "check" then			
+	if command == "check" then			
+		local objects = check_all()
+
 		if #objects == 0 then
-			text(encode_to_c("特に見当たるものはありません。"), 10, 10)
+			text("特に見当たるものはありません。", 10, 10)
 		else
 			for i = 1, #objects do
-	  			text(objects[i].." が見えます。", 10, 10 + 16 * i - 1)
+	  			text(objects[i] .. " が見えます。", 10, 10 + 16 * i - 1)
 			end
 		end
 	end	

@@ -5,6 +5,7 @@
 require "script/setup/std"
 require "script/setup/strict"
 require "script/setup/debug_command"
+require "script/map"
 
 -- テキストのみ表示
 function text(msg, x, y)
@@ -19,9 +20,31 @@ end
 -- エリアと方角の判断 (bool値を返す)
 function area_hougaku(x, y)
 	local area = Player_get_area(player)
-  local hougaku = Player_get_hougaku(player)
+	local hougaku = Player_get_hougaku(player)
 
-  return area == x and hougaku == y
+	return area == x and hougaku == y
+end
+
+-- checkで見える一覧から隠す
+function hide(name)
+	local area = Player_get_area(player)
+	local hougaku = Player_get_hougaku(player)
+	
+	return map.hide(area, hougaku, name)
+end
+
+function show(name)
+	local area = Player_get_area(player)
+	local hougaku = Player_get_hougaku(player)
+	
+	return map.show(area, hougaku, name)
+end
+
+function check_all(name)
+	local area = Player_get_area(player)
+	local hougaku = Player_get_hougaku(player)
+	
+	return map.check_all(area, hougaku, name)
 end
 
 local box = {1, 2, 3}

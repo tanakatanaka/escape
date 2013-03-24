@@ -17,7 +17,7 @@ static const int KEYCODES[] =
 
 static const int KEYNUM[] =
 {
-	D_DIK_0, D_DIK_1, D_DIK_2, D_DIK_3, D_DIK_4, 
+	D_DIK_0, D_DIK_1, D_DIK_2, D_DIK_3, D_DIK_4,
 	D_DIK_5, D_DIK_6, D_DIK_7, D_DIK_8, D_DIK_9
 };
 
@@ -43,7 +43,7 @@ struct Console
 	std::string after_cursor; ///< カーソルより後の入力中の文字列。反転されて入っている。
 	std::deque<std::string> log;
 	int enter_time_count;
-}; 
+};
 
 // 初期化をする
 Console *Console_Initialize(Sound *sound)
@@ -132,37 +132,37 @@ static int get_chara()
 	// アルファベット入力
 	for (int i = 0; i < 26; i++)
 	{
-		if (Pad_Get( KEYCODES[i] ) == 1) { return (shift ? 'A' : 'a') + i; }
+		if (Pad_Get(KEYCODES[i]) == 1) { return (shift ? 'A' : 'a') + i; }
 	}
 
 	//数値入力があった場合
 	for (int i = 0; i < 10; i++)
 	{
-		if (Pad_Get( KEYNUM[i] ) == 1 || Pad_Get(NUMKEY_NUM[i]) == 1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
+		if (Pad_Get(KEYNUM[i]) == 1 || Pad_Get(NUMKEY_NUM[i]) == 1) { return shift ? NUM_SYMBOLS[i] : '0' + i; }
 	}
 
 	// リターンキーを押した時の処理はここではなくScriptにある
 
 	//スペース入力があった場合
-	if(Pad_Get( KEY_INPUT_SPACE ) == 1) { return ' '; }
+	if (Pad_Get(KEY_INPUT_SPACE) == 1) { return ' '; }
 	//バックスペース入力があった場合
-	if(Pad_Get( KEY_INPUT_BACK ) == 1) { return -2; }
+	if (Pad_Get(KEY_INPUT_BACK) == 1) { return -2; }
 	//上矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_UP ) == 1) { return -3; }
+	if (Pad_Get(KEY_INPUT_UP) == 1) { return -3; }
 	//下矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_DOWN ) == 1) { return -4; }
-	
+	if (Pad_Get(KEY_INPUT_DOWN) == 1) { return -4; }
+
 	//Deleteキー
-	if(Pad_Get( KEY_INPUT_DELETE ) == 1) { return -5; }
+	if (Pad_Get(KEY_INPUT_DELETE) == 1) { return -5; }
 
 	//左矢印キー入力があった場合
-	if(Pad_Get( KEY_INPUT_LEFT ) == 1) { return -6; }
+	if (Pad_Get(KEY_INPUT_LEFT) == 1) { return -6; }
 	//右矢印入力があった場合
-	if(Pad_Get( KEY_INPUT_RIGHT ) == 1) { return -7; }
+	if (Pad_Get(KEY_INPUT_RIGHT) == 1) { return -7; }
 	//Home
-	if(Pad_Get( KEY_INPUT_HOME ) == 1) { return -8; }
+	if (Pad_Get(KEY_INPUT_HOME) == 1) { return -8; }
 	//End
-	if(Pad_Get( KEY_INPUT_END ) == 1) { return -9; }
+	if (Pad_Get(KEY_INPUT_END) == 1) { return -9; }
 
 	if (Pad_Get(KEY_INPUT_RETURN) == 1) { return -10; }
 
@@ -170,7 +170,7 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_MINUS) == 1) { return shift ? '=' : '-'; }
 	if (Pad_Get(KEY_INPUT_PREVTRACK) == 1) { return shift ? '~' : '^'; }
 	if (Pad_Get(KEY_INPUT_YEN) == 1) { return shift ? '|' : '\\'; }
-	
+
 	if (Pad_Get(KEY_INPUT_AT) == 1) { return shift ? '`' : '@'; }
 	if (Pad_Get(KEY_INPUT_LBRACKET) == 1) { return shift ? '{' : '['; }
 
@@ -182,7 +182,7 @@ static int get_chara()
 	if (Pad_Get(KEY_INPUT_PERIOD) == 1) { return shift ? '>' : '.'; }
 	if (Pad_Get(KEY_INPUT_SLASH) == 1) { return shift ? '?' : '/'; }
 	if (Pad_Get(KEY_INPUT_BACKSLASH) == 1) { return '_'; } // my preference
-	
+
 	if (Pad_Get(KEY_INPUT_MULTIPLY) == 1) { return '*'; }
 	if (Pad_Get(KEY_INPUT_DIVIDE) == 1) { return '/'; }
 	if (Pad_Get(KEY_INPUT_ADD) == 1) { return '+'; }
@@ -221,33 +221,34 @@ static bool move_cursor(Console *self, int input)
 }
 
 //コンソールの開閉
-void open_and_shut( Console *self )
+void open_and_shut(Console *self)
 {
-	
-	if(Pad_Get( KEY_INPUT_RETURN  ) == -1 && self->is_input % 2 == 1)
+	if (Pad_Get(KEY_INPUT_RETURN) == -1 && self->is_input % 2 == 1)
 	{
-		if(self->enter_time_count < 15)
+		if (self->enter_time_count < 15)
 		{
 			self->is_input++;
 		}
 		self->enter_time_count = 0;
 	}
-	else if(Pad_Get( KEY_INPUT_RETURN  ) == -1 || Pad_Get( KEY_INPUT_ESCAPE  ) == -1){self->is_input++;}
+	else if (Pad_Get(KEY_INPUT_RETURN) == -1 || Pad_Get(KEY_INPUT_ESCAPE) == -1)
+	{
+		self->is_input++;
+	}
 
-	
 	self->enter_time_count++;
 }
 
 
 // 動きを計算する
-void Console_Update( Console *self )
+void Console_Update(Console *self)
 {
 	//入力モード時
-	if(self->is_input % 2 == 1)
+	if (self->is_input % 2 == 1)
 	{
 		int bag = get_chara();
-		
-		if(bag == -1)
+
+		if (bag == -1)
 		{
 			//入力がない場合
 		}
@@ -255,42 +256,45 @@ void Console_Update( Console *self )
 		{
 			Sound_type(self->sound, 0);
 
-			if(bag == -2)
+			if (bag == -2)
 			{
 				//バックスペース入力があった場合
 				//最後の文字を消去
-				if(!self->d_bag.empty()){self->d_bag.erase(self->d_bag.size() - 1);}
+				if (!self->d_bag.empty()) {self->d_bag.erase(self->d_bag.size() - 1);}
 			}
-			else if(bag == -3)
+			else if (bag == -3)
 			{
 				//上キー入力があった場合
-				int in = self->log.size()- 1 - self->back_count;
-				if(self->log.size() > self->back_count)
+				int in = self->log.size() - 1 - self->back_count;
+				if (self->log.size() > self->back_count)
 				{
 					self->after_cursor.erase();
 					self->d_bag.assign(self->log[in]);
-					if(in > 0){self->back_count++;}
+					if (in > 0) {self->back_count++;}
 				}
-			
+
 			}
-			else if(bag == -4)
+			else if (bag == -4)
 			{
 				//下キー入力があった場合
-				int in = self->log.size()- 1 - self->back_count;
-				if(in > -1)
+				int in = self->log.size() - 1 - self->back_count;
+				if (in > -1)
 				{
 					self->after_cursor.erase();
 					self->d_bag.assign(self->log[in]);
-					if(self->back_count > 0){self->back_count--;}
+					if (self->back_count > 0) {self->back_count--;}
 				}
 			}
-			else if(bag == -5)
+			else if (bag == -5)
 			{
 				// Deleteキー入力があった場合
 				// カーソル直後の文字を消去
-				if(!self->after_cursor.empty()){self->after_cursor.erase(self->after_cursor.size() - 1);}
+				if (!self->after_cursor.empty()) {self->after_cursor.erase(self->after_cursor.size() - 1);}
 			}
-			else if(bag == -10){ Sound_type(self->sound, 1); }
+			else if (bag == -10)
+			{
+				Sound_type(self->sound, 1);
+			}
 			else if (!move_cursor(self, bag))
 			{
 				//文字・数値入力があった場合追加
@@ -300,53 +304,56 @@ void Console_Update( Console *self )
 		}
 	}
 	//入力モード以外
-	else{self->back_count = 0;}
-	open_and_shut( self );
+	else
+	{
+		self->back_count = 0;
+	}
 
+	open_and_shut(self);
 }
 
 // 描画する
-void Console_Draw( Console *self)
+void Console_Draw(Console *self)
 {
-	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 ) ;
-	
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128) ;
+
 	int plus;
-	if(self->is_input % 2 == 1){plus = -40;}
-	else{plus = 0;}
+	if (self->is_input % 2 == 1) {plus = -40;}
+	else {plus = 0;}
 
-	DrawBox( 0, 420 +  plus, 640 , 480, GetColor( 0 , 0 , 200 ), TRUE) ;
-	
-	SetFontSize( 16 ) ;
+	DrawBox(0, 420 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
 
-	if(self->is_input % 2 == 1)
+	SetFontSize(16) ;
+
+	if (self->is_input % 2 == 1)
 	{
 		int cursor_x = self->x + self->d_bag.size() * 9;
 
 		for (int i = 0; i < self->log.size() ; i++)
 		{
-			DrawFormatString( self->x, 433 - i * 15, GetColor( 255, 255, 0 ), "%s", self->log[self->log.size()-1 - i].c_str()); //ログを描画する
-			if(i == 3){break;}
+			DrawFormatString(self->x, 433 - i * 15, GetColor(255, 255, 0), "%s", self->log[self->log.size() - 1 - i].c_str());  //ログを描画する
+			if (i == 3) {break;}
 		}
-		if(self->signal % 100 < 90)
-		{	
+		if (self->signal % 100 < 90)
+		{
 			//カーソル位置
-			DrawFormatString(cursor_x, 463, GetColor( 0, 255, 0 ), "%s", "■"); 
+			DrawFormatString(cursor_x, 463, GetColor(0, 255, 0), "%s", "■");
 		}
 
-		// 現在の文字を描画する 
-		DrawFormatString( self->x, 463, GetColor( 0, 255, 0 ), "%s", self->d_bag.c_str()); 
+		// 現在の文字を描画する
+		DrawFormatString(self->x, 463, GetColor(0, 255, 0), "%s", self->d_bag.c_str());
 
-		// カーソルのあとの文字を描画する 
+		// カーソルのあとの文字を描画する
 		for (int i = 0; i < self->after_cursor.size(); i++)
 		{
 			char c = self->after_cursor[self->after_cursor.size() - i - 1];
-			DrawFormatString(cursor_x + 9 * (i + 2), 463, GetColor( 0, 255, 0 ), "%c", c); 
+			DrawFormatString(cursor_x + 9 * (i + 2), 463, GetColor(0, 255, 0), "%c", c);
 		}
 	}
 }
 
 // 終了処理をする
-void Console_Finalize( Console *self )
+void Console_Finalize(Console *self)
 {
-	
+
 }
