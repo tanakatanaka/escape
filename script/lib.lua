@@ -24,6 +24,17 @@ function area_hougaku(x, y)
   return area == x and hougaku == y
 end
 
+--配列内に引数の文字があった場合削除する
+function del_word(objects ,word)
+	if #objects > 0 then
+		for i = 1, #objects do
+			if objects[i] == word then
+				table.remove(objects, i)
+			end
+		end
+	end
+end
+
 local box = {1, 2, 3}
 
 -- 箱の中身をシャッフル
