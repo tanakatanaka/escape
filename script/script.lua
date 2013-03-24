@@ -189,7 +189,7 @@ function on_command()
 	    		get_hammer = true
 	    	end
 	    elseif get_hammer then
-	    	objects = {"table", "cup"}
+	    	del_word(objects ,"hammer")
 	    	if command == "check table"  then
 	    		text("テーブルの上にコップがあります。", 10, 10)
 	    	end
