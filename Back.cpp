@@ -28,6 +28,7 @@ void Back_Update( Back *self )
 // •`‰æ‚·‚é
 void Back_Draw( Back *self)
 {
+	SetFogEnable(FALSE);
 	MV1DrawModel(self->sphere);
 
 }

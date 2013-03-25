@@ -156,8 +156,6 @@ void Room_Draw( Room *self)
 	MV1DrawModel(self->paper2);
 	MV1DrawModel(self->paper3);
 
-	
-
 }
 
 // I—¹ˆ—‚ğ‚·‚é
