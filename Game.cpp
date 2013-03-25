@@ -25,11 +25,6 @@ struct Game
 // ‰Šú‰»‚ğ‚·‚é
 Game *Game_Initialize()
 {
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout); 
-	freopen("CONOUT$", "w", stderr);
-	freopen("CONIN$", "r", stdin);
-
 	Game *self;
 	self = new Game();
 	//gameisŠÖŒW

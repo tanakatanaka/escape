@@ -4,6 +4,11 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+    AllocConsole();
+    freopen("CONOUT$", "w", stdout); 
+    freopen("CONOUT$", "w", stderr);
+    freopen("CONIN$", "r", stdin);
+
     ChangeWindowMode(TRUE), DxLib_Init(), SetDrawScreen(DX_SCREEN_BACK);
 
     Game *game = Game_Initialize();
