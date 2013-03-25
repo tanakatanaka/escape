@@ -4,9 +4,10 @@
 
 struct Back;
 
+#include "Camera.h"
 
 // ‰Šú‰»‚ğ‚·‚é
-Back *Back_Initialize();
+Back *Back_Initialize(Camera *camera);
 
 // “®‚«‚ğŒvZ‚·‚é
 void Back_Update( Back *Back );

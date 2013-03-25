@@ -42,12 +42,6 @@ Room *Room_Initialize()
 	self->y = 0;
 	self->role = 0;
 
-	//霧描画on:についてcolorで色・st～始終
-    SetFogEnable(TRUE);
-    SetFogColor(0, 0, 0);
-    SetFogStartEnd(500,  1500) ;
-
-
 	return self;
 }
 
@@ -161,7 +155,6 @@ void Room_Draw( Room *self)
 // 終了処理をする
 void Room_Finalize( Room *self )
 {
-	SetFogEnable(FALSE);
 	MV1DeleteModel(self->room);
 	MV1DeleteModel(self->door);
 	MV1DeleteModel(self->glass);

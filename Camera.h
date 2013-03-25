@@ -13,6 +13,8 @@ Camera *Camera_Initialize( Console *console );
 void Camera_set_area(Camera *self, int area);
 //左右回転を返す関数(player_cameraによって返り値が変化)
 int Camera_get_hougaku(Camera *self);
+//カメラのyprを返す
+VECTOR Camera_get_angle(Camera *self);
 //カメラの視点モードの有無を返す
 int Camera_is_look_at(Camera *self);
 

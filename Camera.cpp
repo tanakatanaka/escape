@@ -68,6 +68,11 @@ void Camera_set_area(Camera *self, int area)
     self->area = area;
 }
 
+VECTOR Camera_get_angle(Camera *self)
+{
+	return self->pt;
+}
+
 /** •ûŠp‚ÌŒvŽZ */
 static int round_hougaku(float y)
 {
@@ -228,6 +233,17 @@ static VECTOR calc_cam_pos(Camera *self)
 
 // •`‰æ‚·‚é
 void Camera_Draw(Camera *self)
+{
+	VECTOR cam = calc_cam_pos(self);
+
+    // •ûŠp‚ðƒJƒƒ‰‚Ìyaw‚ÉŠ·ŽZ
+    float yaw = calc_yaw(self);
+
+    SetCameraPositionAndAngle(cam, self->pt.x, yaw, 0.0f);
+
+}
+
+void Camera_back_Draw(Camera *self)
 {
 	VECTOR cam = calc_cam_pos(self);
 

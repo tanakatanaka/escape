@@ -92,11 +92,11 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"Sound");
  tolua_usertype(tolua_S,"Mess");
- tolua_usertype(tolua_S,"VECTOR");
  tolua_usertype(tolua_S,"Console");
- tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Camera");
  tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Room");
+ tolua_usertype(tolua_S,"VECTOR");
  tolua_usertype(tolua_S,"Twod");
 }
 
