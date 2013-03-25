@@ -17,34 +17,20 @@ function draw(name, x, y)
 	Twod_add_image(twod, x, y, name)
 end
 
+function get_area()
+	return Player_get_area(player)
+end
+
+function get_hougaku()
+	return Player_get_hougaku(player)
+end
+
 -- エリアと方角の判断 (bool値を返す)
 function area_hougaku(x, y)
-	local area = Player_get_area(player)
-	local hougaku = Player_get_hougaku(player)
+	local area = get_area()
+	local hougaku = get_hougaku()
 
 	return area == x and hougaku == y
-end
-
--- checkで見える一覧から隠す
-function hide(name)
-	local area = Player_get_area(player)
-	local hougaku = Player_get_hougaku(player)
-	
-	return map.hide(area, hougaku, name)
-end
-
-function show(name)
-	local area = Player_get_area(player)
-	local hougaku = Player_get_hougaku(player)
-	
-	return map.show(area, hougaku, name)
-end
-
-function check_all(name)
-	local area = Player_get_area(player)
-	local hougaku = Player_get_hougaku(player)
-	
-	return map.check_all(area, hougaku, name)
 end
 
 local box = {1, 2, 3}
@@ -61,7 +47,6 @@ end
 function show_box()
   return box
 end
-
 
 function box_eff(x)
 	
@@ -116,3 +101,20 @@ function only_once(func)
     func()
   end
 end
+
+-- mapの各関数の短縮版
+do
+	local function wrap(fun)
+		return function(...)
+			local area = get_area()
+			local hougaku = get_hougaku()
+			return fun(area, hougaku, ...)
+		end
+	end
+
+	hide = wrap(map.hide)
+	show = wrap(map.show)
+	check_all = wrap(map.check_all)
+	check = wrap(map.check)
+end
+

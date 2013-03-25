@@ -72,8 +72,8 @@ function on_move()
 
 	if area_hougaku(2, 0) then
 		only_once(function()
-		game_start = true
-		room.swit = -1
+			game_start = true
+			room.swit = -1
 		end)
 	end
 	
@@ -90,7 +90,7 @@ function on_command()
 	if not command then
 	  return
 	end
-  	
+
   	if area_hougaku(0, 0) or area_hougaku(1, 2) then
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
@@ -184,8 +184,20 @@ function on_command()
 	
 	if area_hougaku(6, 3) then
   		if command == "check table" then
-  			local list = check_all()
-    		text("テーブルの上に " .. table.concat(list, " と ") .. " があります。", 10, 10)
+  			local list = {}
+
+  			if check("cup") then table.insert(list, "カップ") end
+  			if check("hammer") then table.insert(list, "ハンマー") end
+
+  			local msg = "テーブルの上に"
+
+  			if #list == 0 then
+  				msg = msg .. "はなにもありません。"
+  			else
+  				msg = msg .. table.concat(list, "と") .. "があります。"
+  			end
+    		
+    		text(msg, 10, 10)
 	 	elseif command == "check cup" then
 	    	text("カップがあります。", 10, 10)
 		elseif not get_hammer then
@@ -256,7 +268,7 @@ function on_command()
 			text("特に見当たるものはありません。", 10, 10)
 		else
 			for i = 1, #objects do
-	  			text(objects[i] .. " が見えます。", 10, 10 + 16 * i - 1)
+	  			text(objects[i] .. " が見えます。", 10, 10 + 16 * (i - 1))
 			end
 		end
 	end	
