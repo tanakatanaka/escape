@@ -39,9 +39,6 @@ int Player_get_paper(Player *self);
 // “®‚«‚ğŒvZ‚·‚é
 void Player_Update( Player *Player );
 
-// •`‰æ‚·‚é
-void Player_Draw( Player *Player );
-
 // I—¹ˆ—‚ğ‚·‚é
 void Player_Finalize( Player *Player );
 

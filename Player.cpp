@@ -109,12 +109,6 @@ void Player_Update( Player *self )
 	self->time_limit--;
 }
 
-// •`‰æ‚·‚é
-void Player_Draw( Player *self)
-{
-    
-}
-
 // I—¹ˆ—‚ğ‚·‚é
 void Player_Finalize( Player *self )
 {

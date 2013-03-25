@@ -8,10 +8,12 @@
 #include "Room.h"
 #include "Sound.h"
 #include "Ending.h"
+#include "Back.h"
 
 
 struct Game_play
 {
+	Back *back;
 	Script *script;
 	Camera *camera;
 	Console *console;
@@ -26,6 +28,7 @@ Game_play *Game_play_Initialize()
 	Game_play *self;
 	self = new Game_play();
 
+	self->back = Back_Initialize();
 	self->sound = Sound_Initialize();
 	self->console = Console_Initialize(self->sound);
 	self->camera = Camera_Initialize(self->console);
@@ -45,6 +48,7 @@ Player *Game_play_get_result(Game_play *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_play_Update(Game_play *self)
 {
+	Back_Update( self->back );
 	Player_Update( self->player );
 	Room_Update( self->room );
 	Script_Update( self->script );
@@ -55,7 +59,7 @@ void Game_play_Update(Game_play *self)
 // •`‰æ‚·‚é
 void Game_play_Draw(Game_play *self)
 {
-	Player_Draw( self->player);
+	Back_Draw( self->back );
 	Room_Draw(self->room);
 	Script_Draw( self->script );
 	Camera_Draw(self->camera);
@@ -65,6 +69,8 @@ void Game_play_Draw(Game_play *self)
 // I—¹ˆ—‚ð‚·‚é
 void Game_play_Finalize(Game_play *self )
 {
+	Back_Finalize(self->back);
+	Player_Finalize(self->player);
 	Room_Finalize(self->room);
 	Script_Finalize( self->script );
 	Camera_Finalize(self->camera);
