@@ -243,9 +243,9 @@ void Camera_Draw(Camera *self)
 
 }
 
-void Camera_back_Draw(Camera *self)
+void Camera_Draw_back(Camera *self)
 {
-	VECTOR cam = calc_cam_pos(self);
+	VECTOR cam = {0, 0, 0};
 
     // •ûŠp‚ğƒJƒƒ‰‚Ìyaw‚ÉŠ·Z
     float yaw = calc_yaw(self);

@@ -16,6 +16,8 @@ Back *Back_Initialize( Camera *camera)
 	self = new Back();
 	self->camera = camera;
 	self->sphere = MV1LoadModel("meta/back/sphere.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
+	MV1SetUseZBuffer(self->sphere, FALSE);
+	MV1SetPosition(self->sphere, VGet( 0, 0, 0 ) );
 
 	return self;
 }
@@ -24,15 +26,13 @@ Back *Back_Initialize( Camera *camera)
 // “®‚«‚ğŒvZ‚·‚é
 void Back_Update( Back *self )
 {
-	VECTOR pt = Camera_get_angle(self->camera);
-
-	SetCameraPositionAndTarget_UpVecY(VGet( 0.0f, 0.0f, 0.0f ),pt);
-	MV1SetPosition(self->sphere, VGet( 200, 0, 300 ) );
 }
 
 // •`‰æ‚·‚é
 void Back_Draw( Back *self)
 {
+	Camera_Draw_back(self->camera);
+
 	SetFogEnable(FALSE);
 	MV1DrawModel(self->sphere);
 	

@@ -60,9 +60,9 @@ void Game_play_Update(Game_play *self)
 void Game_play_Draw(Game_play *self)
 {
 	Back_Draw( self->back );
+	Camera_Draw(self->camera);
 	Room_Draw(self->room);
 	Script_Draw( self->script );
-	Camera_Draw(self->camera);
 	Console_Draw( self->console );
 }
 
