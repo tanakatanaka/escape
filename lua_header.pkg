@@ -1,4 +1,8 @@
 
+$ #define DEF_ModelID_H
+$ typedef int ModelID;
+typedef int ModelID;
+
 $pfile "lua_header_dx.pkg"
 
 $#include "Console.h"
