@@ -2,6 +2,7 @@
 #include "Pad.h"
 #include <string>
 #include "Opening.h"
+#define PHI DX_PI_F
 
 struct Opening
 {

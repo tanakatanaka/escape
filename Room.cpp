@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 
-
-
+#define PHI DX_PI_F
 #define OPEN 1.658064
 #define SLIDE 505
 
