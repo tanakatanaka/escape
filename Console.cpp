@@ -355,5 +355,5 @@ void Console_Draw(Console *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Console_Finalize(Console *self)
 {
-
+	delete self;
 }

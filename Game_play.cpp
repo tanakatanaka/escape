@@ -75,4 +75,7 @@ void Game_play_Finalize(Game_play *self )
 	Script_Finalize( self->script );
 	Camera_Finalize(self->camera);
 	Console_Finalize( self->console );
+	Sound_Finalize( self->sound );
+
+	delete self;
 }

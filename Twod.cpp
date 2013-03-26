@@ -114,5 +114,6 @@ void Twod_Draw( Twod *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Twod_Finalize( Twod *self )
 {
-    
+    InitGraph( ) ;
+	delete self;
 }

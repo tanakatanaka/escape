@@ -89,5 +89,5 @@ void Mess_Draw( Mess *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Mess_Finalize( Mess *self )
 {
-    
+    delete self;
 }

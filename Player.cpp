@@ -112,5 +112,5 @@ void Player_Update( Player *self )
 // I—¹ˆ—‚ğ‚·‚é
 void Player_Finalize( Player *self )
 {
-    
+    delete self;
 }

@@ -257,5 +257,5 @@ void Camera_Draw_back(Camera *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Camera_Finalize(Camera *self)
 {
-
+	delete self;
 }

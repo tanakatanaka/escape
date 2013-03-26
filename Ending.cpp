@@ -148,5 +148,5 @@ void Ending_Draw( Ending *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Ending_Finalize( Ending *self )
 {
-	
+	delete self;
 }

@@ -119,4 +119,5 @@ void Script_Draw( Script *self)
 void Script_Finalize( Script *self )
 {
     LuaScript_Finalize(self->lua_script);
+	delete self;
 }

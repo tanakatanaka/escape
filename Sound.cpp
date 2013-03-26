@@ -62,5 +62,5 @@ void Sound_music( Sound *self, const char *name)
 // I—¹ˆ—‚ğ‚·‚é
 void Sound_Finalize( Sound *self )
 {
-    
+    delete self;
 }

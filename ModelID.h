@@ -1,7 +1,10 @@
 #ifndef DEF_ModelID_H
 #define DEF_ModelID_H
 
-/** モデルのdeleteを楽にするためのラッパ */
+#include "DxLib.h"
+
+
+/** ���f����delete���y�ɂ��邽�߂̃��b�p */
 class ModelID
 {
 	int id;

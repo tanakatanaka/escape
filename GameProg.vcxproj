@@ -93,7 +93,6 @@
     <ClCompile Include="Ending.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game_play.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mess.cpp" />
     <ClCompile Include="Opening.cpp" />
@@ -116,6 +115,7 @@
     <ClInclude Include="Game_play.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mess.h" />
+    <ClInclude Include="ModelID.h" />
     <ClInclude Include="Opening.h" />
     <ClInclude Include="Pad.h" />
     <ClInclude Include="Player.h" />

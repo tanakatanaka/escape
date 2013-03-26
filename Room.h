@@ -4,28 +4,29 @@
 
 #include <string>
 #include <vector>
+#include "ModelID.h"
 
 // TOLUA_BEGIN
 
 struct Room
 {
-    int room;
-	int door;
-	int glass;
-	int hammer;
-	int pot;
-	int table;
+    ModelID room;
+	ModelID door;
+	ModelID glass;
+	ModelID hammer;
+	ModelID pot;
+	ModelID table;
 	int black_cap;
 	int green_cap;
 	int yellow_cap;
-	int bed;
+	ModelID bed;
 	int makura;
 	int huton;
 	int stand;
-	int paper0;
-	int paper1;
-	int paper2;
-	int paper3;
+	ModelID paper0;
+	ModelID paper1;
+	ModelID paper2;
+	ModelID paper3;
 	double rotY;
 	int swit;
 	int count;

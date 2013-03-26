@@ -139,5 +139,5 @@ void Opening_Finalize( Opening *self )
 {
 	SetFontSize( 16 );
 	MV1DeleteModel(self->room);
-    free(self);
+    delete self;
 }

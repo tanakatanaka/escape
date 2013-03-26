@@ -96,5 +96,5 @@ void Game_Draw(Game *self)
 // I—¹ˆ—‚ğ‚·‚é
 void Game_Finalize(Game *self )
 {
-	free(self);
+	delete self;
 }
