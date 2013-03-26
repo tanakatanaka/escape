@@ -22,8 +22,8 @@ Room *Room_Initialize()
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
 	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
 	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
-	self->paper2 = MV1LoadModel("meta/paper.mqo") ;
-	self->paper3 = MV1LoadModel("meta/paper.mqo") ;
+	self->paper2 = MV1DuplicateModel(self->paper1) ;
+	self->paper3 = MV1DuplicateModel(self->paper1) ;
 	self->table = MV1LoadModel("meta/table.mqo") ;
 	self->bed = MV1LoadModel("meta/bed.mqo") ;
 	self->makura = MV1SearchFrame(self->bed, "makura");
