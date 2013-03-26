@@ -5,9 +5,10 @@
 struct Game_play;
 
 #include "Player.h"
+#include "Sound.h"
 
 // ‰Šú‰»‚ğ‚·‚é
-Game_play *Game_play_Initialize();
+Game_play *Game_play_Initialize(Sound *sound);
 
 //Game_playI—¹ğŒ‚ğ“¾‚é
 Player *Game_play_get_result(Game_play *game_play);

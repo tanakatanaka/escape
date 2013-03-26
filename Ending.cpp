@@ -2,21 +2,24 @@
 #include "Pad.h"
 #include "Player.h"
 #include "Ending.h"
+#include "Sound.h"
 
 struct Ending
 {
 	Player *player;
+	Sound *sound;
 	int state;
 	int game_mode;
 	int blink;
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
-Ending *Ending_Initialize(Player *player)
+Ending *Ending_Initialize(Player *player, Sound *sound)
 {
 	Ending *self;
 	self = new Ending();
 	self->player = player;
+	self->sound = sound;
 	self->state = 0;
 	self->game_mode = 0;
 	self->blink = 0; 

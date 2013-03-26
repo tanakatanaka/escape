@@ -169,6 +169,5 @@ void Room_Finalize( Room *self )
 	MV1DeleteModel(self->bed); 
 	MV1DeleteModel(self->paper2);
 	MV1DeleteModel(self->paper3);
-
 	delete self;
 }

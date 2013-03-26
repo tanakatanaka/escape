@@ -23,12 +23,11 @@ struct Game_play
 };
 
 // ‰Šú‰»‚ð‚·‚é
-Game_play *Game_play_Initialize()
+Game_play *Game_play_Initialize(Sound *sound)
 {
 	Game_play *self;
 	self = new Game_play();
-
-	self->sound = Sound_Initialize();
+	self->sound = sound;
 	self->console = Console_Initialize(self->sound);
 	self->camera = Camera_Initialize(self->console);
 	self->back = Back_Initialize(self->camera);
@@ -75,7 +74,5 @@ void Game_play_Finalize(Game_play *self )
 	Script_Finalize( self->script );
 	Camera_Finalize(self->camera);
 	Console_Finalize( self->console );
-	Sound_Finalize( self->sound );
-
 	delete self;
 }

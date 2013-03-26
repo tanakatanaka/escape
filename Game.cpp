@@ -5,6 +5,7 @@
 #include "Opening.h"
 #include "Game_play.h"
 #include "Ending.h"
+#include "Sound.h"
 
 #define LOAD -1
 #define OPEN 0
@@ -16,6 +17,8 @@ struct Game
 	Opening *opening;
 	Game_play *game_play;
 	Ending *ending;
+	Sound *sound;
+
 
 	//gameisŠÖŒW
 	int game_state;
@@ -27,6 +30,7 @@ Game *Game_Initialize()
 {
 	Game *self;
 	self = new Game();
+	self->sound = Sound_Initialize();
 	//gameisŠÖŒW
 	self->game_state = LOAD;
 	return self;
@@ -35,9 +39,11 @@ Game *Game_Initialize()
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
+
+
 	if(self->game_state  == LOAD)
 	{
-		self->opening = Opening_Initialize();
+		self->opening = Opening_Initialize(self->sound);
 		self->game_state++;
 	}
 	else if(self->game_state  == OPEN)
@@ -48,7 +54,7 @@ void Game_Update(Game *self)
 		{
 			Opening_Finalize( self->opening );
 			self->game_state  = GAME_PLAY;
-			self->game_play = Game_play_Initialize(); 
+			self->game_play = Game_play_Initialize(self->sound); 
 		}
 	}
 	else if(self->game_state  == GAME_PLAY)
@@ -59,7 +65,7 @@ void Game_Update(Game *self)
 		if( player != NULL)
 		{
 			self->game_state++;
-			self->ending = Ending_Initialize(player);
+			self->ending = Ending_Initialize(player, self->sound);
 		}
 	}
 	else if(self->game_state  == END)
@@ -96,5 +102,6 @@ void Game_Draw(Game *self)
 // I—¹ˆ—‚ð‚·‚é
 void Game_Finalize(Game *self )
 {
+	Sound_Finalize( self->sound );
 	delete self;
 }

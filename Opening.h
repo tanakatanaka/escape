@@ -4,8 +4,10 @@
 
 struct Opening;
 
+#include "Sound.h"
+
 // ‰Šú‰»‚ğ‚·‚é
-Opening *Opening_Initialize();
+Opening *Opening_Initialize(Sound *sound);
 
 //opening‚Ìó‘Ô‚ğ•Ô‚·
 int Opening_get_game_mode(Opening *self);

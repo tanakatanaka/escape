@@ -2,10 +2,13 @@
 #include "Pad.h"
 #include <string>
 #include "Opening.h"
+#include "Sound.h"
+
 #define PHI DX_PI_F
 
 struct Opening
 {
+	 Sound *sound;
      int room;
 	 double plus;
 	 int state;
@@ -14,11 +17,12 @@ struct Opening
 }; 
 
 // ‰Šú‰»‚ğ‚·‚é
-Opening *Opening_Initialize( )
+Opening *Opening_Initialize( Sound *sound )
 {
 	Opening *self;
 	self = new Opening();
 	self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
+	self->sound = sound;
 	self->plus = 0;
 	self->state = 0;
 	self->game_mode = 0;
@@ -109,13 +113,18 @@ void Opening_Update( Opening *self )
 	{
 		if(Pad_Get( KEY_INPUT_UP ) == -1){self->game_mode++;}
 		else if(Pad_Get( KEY_INPUT_DOWN ) == -1){self->game_mode--;}
-		else if(Pad_Get( KEY_INPUT_BACK ) == -1){self->state--;}
+		else if(Pad_Get( KEY_INPUT_BACK ) == -1)
+		{
+			Sound_se( self->sound, "cancel");
+			self->state--;
+		}
 
 	}
 	else if(self->state == 2){self->state++;}
 
 	if(self->state < 2 && Pad_Get(KEY_INPUT_RETURN) == 1)
 	{
+		Sound_se( self->sound, "decide");
 		self->state++;
 	}
 	

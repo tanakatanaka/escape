@@ -5,9 +5,10 @@
 struct Ending;
 
 #include "Player.h"
+#include "Sound.h"
 
 // ‰Šú‰»‚ğ‚·‚é
-Ending *Ending_Initialize(Player *player);
+Ending *Ending_Initialize(Player *player, Sound *sound);
 
 int Ending_get_next( Ending *self );
 
