@@ -3,6 +3,7 @@
 
 Lua 5.2.1
 Tolua 5.2.0
+DXライブラリ 3.10a (DxLibNoneSoftDrawCode_VC_3_10a.exe)
 
 luaからC言語の構造体をいじる手順
 =================================
