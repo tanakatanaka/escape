@@ -18,6 +18,8 @@
 TOLUA_API int tolua_lua_header_open (lua_State* tolua_S);
 LUALIB_API int luaopen_lua_header (lua_State* tolua_S);
 
+ #define DEF_ModelID_H
+ typedef int ModelID;
  namespace DxLib {
  typedef struct tagVECTOR VECTOR; 
  struct tagVECTOR
@@ -90,15 +92,14 @@ static int tolua_collect_VECTOR (lua_State* tolua_S)
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Player");
- tolua_usertype(tolua_S,"VECTOR");
- tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"Console");
- tolua_usertype(tolua_S,"ModelID");
  tolua_usertype(tolua_S,"Room");
- tolua_usertype(tolua_S,"Sound");
+ tolua_usertype(tolua_S,"VECTOR");
  tolua_usertype(tolua_S,"Camera");
+ tolua_usertype(tolua_S,"Mess");
  tolua_usertype(tolua_S,"Twod");
+ tolua_usertype(tolua_S,"Player");
+ tolua_usertype(tolua_S,"Sound");
 }
 
 /* get function: x of class  VECTOR */
@@ -1375,7 +1376,7 @@ static int tolua_get_Room_Room_room(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'room'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->room,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->room);
  return 1;
 }
 
@@ -1386,10 +1387,10 @@ static int tolua_set_Room_Room_room(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'room'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->room = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->room = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1400,7 +1401,7 @@ static int tolua_get_Room_Room_door(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'door'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->door,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->door);
  return 1;
 }
 
@@ -1411,10 +1412,10 @@ static int tolua_set_Room_Room_door(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'door'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->door = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->door = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1425,7 +1426,7 @@ static int tolua_get_Room_Room_glass(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'glass'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->glass,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->glass);
  return 1;
 }
 
@@ -1436,10 +1437,10 @@ static int tolua_set_Room_Room_glass(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'glass'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->glass = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->glass = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1450,7 +1451,7 @@ static int tolua_get_Room_Room_hammer(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'hammer'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->hammer,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->hammer);
  return 1;
 }
 
@@ -1461,10 +1462,10 @@ static int tolua_set_Room_Room_hammer(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'hammer'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->hammer = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->hammer = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1475,7 +1476,7 @@ static int tolua_get_Room_Room_pot(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'pot'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->pot,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->pot);
  return 1;
 }
 
@@ -1486,10 +1487,10 @@ static int tolua_set_Room_Room_pot(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'pot'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->pot = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->pot = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1500,7 +1501,7 @@ static int tolua_get_Room_Room_table(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'table'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->table,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->table);
  return 1;
 }
 
@@ -1511,10 +1512,10 @@ static int tolua_set_Room_Room_table(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'table'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->table = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->table = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1600,7 +1601,7 @@ static int tolua_get_Room_Room_bed(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'bed'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->bed,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->bed);
  return 1;
 }
 
@@ -1611,10 +1612,10 @@ static int tolua_set_Room_Room_bed(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'bed'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->bed = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->bed = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1700,7 +1701,7 @@ static int tolua_get_Room_Room_paper0(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper0'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->paper0,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->paper0);
  return 1;
 }
 
@@ -1711,10 +1712,10 @@ static int tolua_set_Room_Room_paper0(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper0'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->paper0 = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->paper0 = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1725,7 +1726,7 @@ static int tolua_get_Room_Room_paper1(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper1'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->paper1,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->paper1);
  return 1;
 }
 
@@ -1736,10 +1737,10 @@ static int tolua_set_Room_Room_paper1(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper1'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->paper1 = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->paper1 = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1750,7 +1751,7 @@ static int tolua_get_Room_Room_paper2(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper2'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->paper2,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->paper2);
  return 1;
 }
 
@@ -1761,10 +1762,10 @@ static int tolua_set_Room_Room_paper2(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper2'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->paper2 = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->paper2 = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
@@ -1775,7 +1776,7 @@ static int tolua_get_Room_Room_paper3(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper3'",NULL);
 #endif
- tolua_pushusertype(tolua_S,(void*)&self->paper3,"ModelID");
+ tolua_pushnumber(tolua_S,(lua_Number)self->paper3);
  return 1;
 }
 
@@ -1786,10 +1787,10 @@ static int tolua_set_Room_Room_paper3(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'paper3'",NULL);
- if (!tolua_isusertype(tolua_S,2,"ModelID",0,&tolua_err))
+ if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
  tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->paper3 = *((ModelID*)  tolua_tousertype(tolua_S,2,0));
+  self->paper3 = ((ModelID)  tolua_tonumber(tolua_S,2,0));
  return 0;
 }
 
