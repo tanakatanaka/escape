@@ -123,6 +123,8 @@ function on_command()
 	if area_hougaku(3, 0) then
 		if get_hammer and not break_window and command == "break window" then
 			MV1SetFrameVisible(room.room, room.window, 0);
+			hide("window")
+			break_window = true
 		end
 	end
 	
