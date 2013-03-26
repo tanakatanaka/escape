@@ -14,6 +14,7 @@ local break_pot = false
 local break_lamp = false
 local get_huton = false
 local get_makura = false
+local break_window = false
 
 --[モデルの描画設定]--
 MV1SetVisible(room.paper1, 0);
@@ -40,6 +41,7 @@ do
 	o(1, 3, "pict")
 	o(2, 3, "pict")
 	o(3, 3, "pict")
+	o(3, 0, "window")
 	o(3, 1, "slide")
 	o(4, 0, "paper")
 	o(5, 1, "pot")
@@ -117,11 +119,17 @@ function on_command()
 	     draw("x", 50 , 10)
 	  end
 	end
-
+	
+	if area_hougaku(3, 0) then
+		if get_hammer and not break_window and command == "break window" then
+			MV1SetFrameVisible(room.room, room.window, 0);
+		end
+	end
+	
 	if area_hougaku(3, 1) then
 		if not slide_unlocked then
 			if command == "check slide" then
-			    text("コード(数値)を入力してください。", 10, 10)
+			    text("コード(数値 X)を入力してください。", 10, 10)
 			    text("hint  X = pict1 + pict2 + pict3", 10, 10 + 16)
 	  		elseif command == "15" then
 		  		slide_unlocked = true

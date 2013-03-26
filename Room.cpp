@@ -15,6 +15,7 @@ Room *Room_Initialize()
 	self = new Room();
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
+	self->window = MV1SearchFrame(self->room, "window");
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->glass = MV1LoadModel("meta/glass.mqo") ;  
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
@@ -31,6 +32,7 @@ Room *Room_Initialize()
 	self->black_cap = MV1SearchFrame(self->table, "black_futa");
 	self->yellow_cap = MV1SearchFrame(self->table, "yellow_futa");
 	self->green_cap = MV1SearchFrame(self->table, "green_futa");
+	
 
 	
 	self->rotY = 0.0f;
