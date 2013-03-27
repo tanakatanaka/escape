@@ -37,7 +37,7 @@ Game *Game_Initialize()
 }
 
 // “®‚«‚ğŒvZ‚·‚é
-void Game_Update(Game *self)
+bool Game_Update(Game *self)
 {
 	if(self->game_state  == LOAD)
 	{
@@ -57,7 +57,7 @@ void Game_Update(Game *self)
 		else if(Opening_get_game_mode(self->opening)  == 0)
 		{
 			Opening_Finalize( self->opening );
-			break;
+			return false;
 		}
 	}
 	else if(self->game_state  == GAME_PLAY)
@@ -80,8 +80,13 @@ void Game_Update(Game *self)
 			Ending_Finalize( self->ending );
 			self->game_state = LOAD;
 		}
-
+		else if(Ending_get_next( self->ending ) ==  0)
+		{
+			Ending_Finalize( self->ending );
+			return false;
+		}
 	}
+	return true;
 }
 
 // •`‰æ‚·‚é
@@ -99,7 +104,6 @@ void Game_Draw(Game *self)
 	{
 		Ending_Draw( self->ending );
 	}
-
 }
 
 // I—¹ˆ—‚ğ‚·‚é

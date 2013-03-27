@@ -8,7 +8,7 @@ struct Game;
 Game *Game_Initialize();
 
 // “®‚«‚ðŒvŽZ‚·‚é
-void Game_Update(Game *game );
+bool Game_Update(Game *game );
 
 // •`‰æ‚·‚é
 void Game_Draw(Game *game );

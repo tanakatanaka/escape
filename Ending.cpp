@@ -36,14 +36,8 @@ int Ending_get_next( Ending *self )
 
 	if(self->state == 2)
 	{
-		if( self->game_mode % 2 == 0)
-		{
-			return 1;
-		}
-		else if( self->game_mode % 2 == 1)
-		{
-			return 0;
-		}
+		if( self->game_mode % 2 == 0){ return 1; }
+		return 0;
 	}
 	return -1;
 }

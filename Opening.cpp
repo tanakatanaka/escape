@@ -43,7 +43,7 @@ int Opening_get_game_mode(Opening *self)
 	if(self->state == 3 )
 	{
 		if(self->game_mode % 2 == 0){ return 1; }
-		else if( self->game_mode % 2 == 1){ return 0; }
+		return 0;
 	}
 	return -1;
 }

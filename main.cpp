@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0)
     {
         Pad_Update();
-        Game_Update(game);
+		if(Game_Update(game) == false){break;}
         Game_Draw(game);
     }
 
