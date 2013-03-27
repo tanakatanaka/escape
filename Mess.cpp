@@ -55,6 +55,9 @@ void draw_words(Word *self)
 {
 	int white = GetColor(255,255,255);
 	
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180) ;
+	SetFontSize(16) ;
+
 	DrawBox( self->x, self->y, self->x + self->line_cursor * 10, self->y + 15, GetColor( 0 , 200 , 0 ), TRUE) ;
 
 	std::string now_word = self->word.substr( 0, self->line_cursor);

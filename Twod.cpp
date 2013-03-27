@@ -59,7 +59,6 @@ void Twod_add_image(Twod *self, int x, int y, const char *name)
 	i.id = image_num(name);
 
 	printf("\n id = %d\n",i.id);
-	
 	self->image.push_back(i);
 }
 

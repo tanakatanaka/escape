@@ -323,30 +323,33 @@ void Console_Draw(Console *self)
 	else {plus = 0;}
 
 	DrawBox(0, 420 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
+	//DrawOval( 100,  200, 40 , 20 , GetColor(0 , 200 , 0) , true ) ;
 
 	if (self->is_input % 2 == 1)
 	{
 		int cursor_x = self->x + self->d_bag.size() * 9;
+		int padd_y = -5;
+		int padd_x = +10;
 
 		for (int i = 0; i < self->log.size() ; i++)
 		{
-			DrawFormatString(self->x, 433 - i * 15, GetColor(255, 255, 0), "%s", self->log[self->log.size() - 1 - i].c_str());  //ログを描画する
+			DrawFormatString(self->x + padd_x , 433 - i * 15, GetColor(255, 255, 0), "%s", self->log[self->log.size() - 1 - i].c_str());  //ログを描画する
 			if (i == 3) {break;}
 		}
 		if (self->signal % 100 < 90)
 		{
 			//カーソル位置
-			DrawFormatString(cursor_x, 463, GetColor(0, 255, 0), "%s", "■");
+			DrawFormatString(cursor_x + padd_x, 463 + padd_y, GetColor(0, 255, 0), "%s", "■");
 		}
 
 		// 現在の文字を描画する
-		DrawFormatString(self->x, 463, GetColor(0, 255, 0), "%s", self->d_bag.c_str());
+		DrawFormatString(self->x + padd_x, 463 + padd_y, GetColor(0, 255, 0), "%s", self->d_bag.c_str());
 
 		// カーソルのあとの文字を描画する
 		for (int i = 0; i < self->after_cursor.size(); i++)
 		{
 			char c = self->after_cursor[self->after_cursor.size() - i - 1];
-			DrawFormatString(cursor_x + 9 * (i + 2), 463, GetColor(0, 255, 0), "%c", c);
+			DrawFormatString(cursor_x + 9 + padd_x * (i + 2), 463 + padd_y, GetColor(0, 255, 0), "%c", c);
 		}
 	}
 }
