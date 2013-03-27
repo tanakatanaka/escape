@@ -20,8 +20,8 @@ Room *Room_Initialize()
 	self->glass = MV1LoadModel("meta/glass.mqo") ;  
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;
 	self->pot = MV1LoadModel("meta/pot.mqo") ;
-	self->paper0 = MV1LoadModel("meta/paper0.mqo") ;
-	self->paper1 = MV1LoadModel("meta/paper.mqo") ;
+	self->paper0 = MV1LoadModel("meta/paper.mqo") ;
+	self->paper1 = MV1DuplicateModel(self->paper0) ;
 	self->paper2 = MV1DuplicateModel(self->paper1) ;
 	self->paper3 = MV1DuplicateModel(self->paper1) ;
 	self->table = MV1LoadModel("meta/table.mqo") ;
@@ -43,6 +43,7 @@ Room *Room_Initialize()
 	self->slide = 0;
 	self->x = 0;
 	self->y = 0;
+	self->z = 0;
 	self->role = 0;
 
 	return self;
@@ -112,7 +113,8 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->table, VGet( 200 - 43, 0, 300 + 721) );
 	MV1SetPosition(self->bed, VGet( 200 + 668, 0, 300 + 632) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->paper0,  VGet( 200, 0, 300 ) );
+	MV1SetPosition(self->paper0,  VGet( 200 + self->x, self->y, 300 + self->y ) );
+	MV1SetRotationXYZ( self->paper0, VGet( 0, self->role * PHI / 360, 0 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
 	MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
 	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
@@ -133,7 +135,10 @@ void Room_Update( Room *self )
 	if(Pad_Get( KEY_INPUT_D ) > 0){ self->y++; }
 	else if(Pad_Get( KEY_INPUT_A ) > 0){ self->y--; }
 
-	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d \n",self->x,self->y);}
+	if(Pad_Get( KEY_INPUT_V ) > 0){ self->z++; }
+	else if(Pad_Get( KEY_INPUT_B ) > 0){ self->z--; }
+
+	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d  z = %d \n",self->x,self->y, self->z);}
 
 
 }		

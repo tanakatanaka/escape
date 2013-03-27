@@ -37,6 +37,7 @@ struct Room
 	int role;
 	int x;
 	int y;
+	int z;
 };
 
 // TOLUA_END
