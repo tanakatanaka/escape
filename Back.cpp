@@ -38,10 +38,9 @@ void Back_Draw( Back *self)
 	MV1DrawModel(self->sphere);
 	
 	SetLightEnable(TRUE);
-	//霧描画on:についてcolorで色・st～始終
     SetFogEnable(TRUE);
-    SetFogColor(0, 0, 0);
-    SetFogStartEnd(500,  1500) ;
+    SetFogColor(255, 255, 255);
+    SetFogStartEnd(600,  1400) ;
 }
 
 // 終了処理をする

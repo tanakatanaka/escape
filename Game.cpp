@@ -39,8 +39,6 @@ Game *Game_Initialize()
 // “®‚«‚ðŒvŽZ‚·‚é
 void Game_Update(Game *self)
 {
-
-
 	if(self->game_state  == LOAD)
 	{
 		self->opening = Opening_Initialize(self->sound);
@@ -55,6 +53,11 @@ void Game_Update(Game *self)
 			Opening_Finalize( self->opening );
 			self->game_state  = GAME_PLAY;
 			self->game_play = Game_play_Initialize(self->sound); 
+		}
+		else if(Opening_get_game_mode(self->opening)  == 0)
+		{
+			Opening_Finalize( self->opening );
+			break;
 		}
 	}
 	else if(self->game_state  == GAME_PLAY)

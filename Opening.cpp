@@ -26,7 +26,7 @@ Opening *Opening_Initialize( Sound *sound )
 	self->paper = LoadGraph( "meta/paper.jpg") ;
 	self->sound = sound;
 	self->plus = 0;
-	self->state = 0;
+	self->state = 1;
 	self->game_mode = 0;
 	self->blink = 0;
 
@@ -42,14 +42,8 @@ int Opening_get_game_mode(Opening *self)
 
 	if(self->state == 3 )
 	{
-		if(self->game_mode % 2 == 0)
-		{
-			return 1;
-		}
-		else if( self->game_mode % 2 == 1)
-		{
-			return 0;
-		}
+		if(self->game_mode % 2 == 0){ return 1; }
+		else if( self->game_mode % 2 == 1){ return 0; }
 	}
 	return -1;
 }
@@ -58,20 +52,6 @@ static int center_x(const char *src)
 {
 	int x = GetDrawStringWidth( src , strlen( src ) ) ;
 	return (640 - x) / 2; 
-}
-
-static void enter_display(Opening *self)
-{ 
-	const char *src = "Enter key ‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢";
-	
-	int size = GetDrawStringWidth( src , strlen( src ) );
-	DrawModiGraph( center_x(src) - 5, 360, center_x(src) + size + 5, 360, 
-		center_x(src) + size + 5, 470, center_x(src) - 5, 470,self->paper , TRUE );
-
-	if(self->blink % 100 < 80)
-	{ 
-		DrawFormatString( center_x(src), 400, GetColor( 255, 20, 255 ), "%s", src); 
-	}
 }
 
 static void mode_display(Opening *self)
@@ -110,12 +90,10 @@ void load_display(Opening *self)
 // “®‚«‚ðŒvŽZ‚·‚é
 void Opening_Update( Opening *self )
 {
-	if(self->state == 0)
+	if(self->state == 1)
 	{
 		self->plus += PHI / 180.0f;
-	}
-	else if(self->state == 1)
-	{
+
 		if(Pad_Get( KEY_INPUT_UP ) == -1){self->game_mode++;}
 		else if(Pad_Get( KEY_INPUT_DOWN ) == -1){self->game_mode--;}
 		else if(Pad_Get( KEY_INPUT_BACK ) == -1)
@@ -144,8 +122,7 @@ void Opening_Draw( Opening *self)
 	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 	MV1DrawModel(self->room);
 
-	if(self->state == 0){ enter_display(self);}
-	else if(self->state == 1){ mode_display(self);}
+	if(self->state == 1){ mode_display(self);}
 	else if(self->state == 2 && self->game_mode % 2 == 0){ load_display(self);}
 }
 
