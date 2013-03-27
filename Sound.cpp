@@ -19,18 +19,18 @@ Sound *Sound_Initialize()
 	self = new Sound();
 	
 	//システム音
-	self->se.push_back( LoadSoundMem( "sound/se/butotn6.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/cancel6.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/butotn6.wav" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/cancel6.wav" ) );
 	//タイプ音
-	self->se.push_back( LoadSoundMem( "sound/se/type1.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/enter.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/type1.wav" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/enter.wav" ) );
 	//足音
-	self->se.push_back( LoadSoundMem( "sound/se/ashioto.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/ashioto.wav" ) );
 	//部屋のギミック音
-	self->se.push_back( LoadSoundMem( "sound/se/dooropen.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/door_close.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/right2.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/glass.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/dooropen.wav" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/door_close.wav" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/right2.wav" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/glass.wav" ) );
 
 	return self;
 }
