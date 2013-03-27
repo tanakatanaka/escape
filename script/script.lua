@@ -93,6 +93,14 @@ function on_command()
 	  return
 	end
 
+	if command == "help" then
+		text("以下の項目を入力するとヒントを表示します。", 10, 10)
+		text("help ～ と入力するとヒントを表示します。", 10, 10)
+	elseif command == "help item" then
+		
+	end
+	
+
   	if area_hougaku(0, 0) or area_hougaku(1, 2) then
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
@@ -123,6 +131,7 @@ function on_command()
 	if area_hougaku(3, 0) then
 		if get_hammer and not break_window and command == "break window" then
 			MV1SetFrameVisible(room.room, room.window, 0);
+			Sound_se( sound, "glass");
 			hide("window")
 			break_window = true
 		end
@@ -135,6 +144,7 @@ function on_command()
 			    text("hint  X = pict1 + pict2 + pict3", 10, 10 + 16)
 	  		elseif command == "15" then
 		  		slide_unlocked = true
+		  		Sound_se( sound, "seikai");
 		  		text("正解です。", 10, 10)
 		    	text("ドアが開きました。", 10, 10 + 16)
 		   	   	room.s_swit = 1
@@ -161,6 +171,7 @@ function on_command()
 			if command == "check pot" then
 		   		text("壺があります。", 10, 10)
 			elseif get_hammer and command == "break pot" then
+				Sound_se( sound, "glass");
 		   		MV1SetVisible(room.pot, 0);
 		   		MV1SetVisible(room.paper1, 1);
 		   		break_pot = true

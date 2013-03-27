@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Console.h"
 #include "Room.h"
+#include "Sound.h"
 #include <string>
 #include <vector>
 
@@ -15,6 +16,7 @@ struct Player
 	Camera *camera;
 	Console *console;
 	Room *room;
+	Sound *sound;
     int area;
 	int count;
 	int time_limit;
@@ -25,7 +27,7 @@ struct Player
 // TOLUA_END
 
 // èâä˙âªÇÇ∑ÇÈ
-Player *Player_Initialize(Camera *camera, Console *console, Room *room);
+Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *sound);
 
 // TOLUA_BEGIN
 bool Player_get_end(Player *self);

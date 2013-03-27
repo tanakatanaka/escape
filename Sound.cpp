@@ -29,9 +29,8 @@ Sound *Sound_Initialize()
 	//•”‰®‚ÌƒMƒ~ƒbƒN‰¹
 	self->se.push_back( LoadSoundMem( "sound/se/dooropen.mp3" ) );
 	self->se.push_back( LoadSoundMem( "sound/se/door_close.mp3" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/autodoor.mp3" ) );
 	self->se.push_back( LoadSoundMem( "sound/se/right2.mp3" ) );
-
+	self->se.push_back( LoadSoundMem( "sound/se/glass.mp3" ) );
 
 	return self;
 }
@@ -49,7 +48,8 @@ int num_combert(std::string name)
 	else if(name == "ashioto"){return 4;}
 	else if(name == "door_open"){return 5;}
 	else if(name == "door_close"){return 6;}
-
+	else if(name == "seikai"){return 7;}
+	else if(name == "glass"){return 8;}
 
 
 	return -1;
@@ -62,6 +62,7 @@ void Sound_se( Sound *self, const char *name)
 
 	if(num != -1)
 	{
+		
 		PlaySoundMem(  self->se[num] , DX_PLAYTYPE_BACK , FALSE ) ;
 	}
 }

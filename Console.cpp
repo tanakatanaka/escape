@@ -315,15 +315,14 @@ void Console_Update(Console *self)
 // •`‰æ‚·‚é
 void Console_Draw(Console *self)
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128) ;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180) ;
+	SetFontSize(16) ;
 
 	int plus;
 	if (self->is_input % 2 == 1) {plus = -40;}
 	else {plus = 0;}
 
 	DrawBox(0, 420 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
-
-	SetFontSize(16) ;
 
 	if (self->is_input % 2 == 1)
 	{

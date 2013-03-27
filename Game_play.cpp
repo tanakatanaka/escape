@@ -32,7 +32,7 @@ Game_play *Game_play_Initialize(Sound *sound)
 	self->camera = Camera_Initialize(self->console);
 	self->back = Back_Initialize(self->camera);
 	self->room = Room_Initialize();
-	self->player = Player_Initialize(self->camera, self->console, self->room);
+	self->player = Player_Initialize(self->camera, self->console, self->room, self->sound);
 	self->script = Script_Initialize(self->camera, self->console, self->player, self->room, self->sound);
 
 	return self;

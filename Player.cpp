@@ -4,16 +4,17 @@
 #include "Console.h"
 #include "Player.h"
 #include "Room.h"
+#include "Sound.h"
 #include <string>
 #include <vector>
  
 
 // ‰Šú‰»‚ð‚·‚é
-Player *Player_Initialize(Camera *camera, Console *console, Room *room)
+Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *sound)
 {
 	Player *self;
 	self = new Player();
-	
+	self->sound = sound;
 	self->camera = camera;
 	self->console = console;
 	self->room = room;

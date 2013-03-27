@@ -73,14 +73,18 @@ void Twod_erase_image(Twod *self)
 
 void display_time(Twod *self)
 {
+	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 255 ) ;
+	SetFontSize( 30 ) ;
+
 	int time = Player_get_time(self->player);
 	int paper = Player_get_paper(self->player);
 	int area = Player_get_area(self->player);
 	int hougaku = Player_get_hougaku(self->player);
-
-	SetFontSize( 30 ) ;
+	
+	DrawFormatString( 490, 30, GetColor( 255, 0, 0 ), "%s", "Time");
 	DrawFormatString( 590, 30, GetColor( 255, 0, 0 ), "%d", time);
-	DrawFormatString( 590, 60, GetColor( 255, 255, 0 ), "%d", paper);
+	DrawFormatString( 490, 60, GetColor( 255, 255, 0 ), "%s", "Paper");
+	DrawFormatString( 625, 60, GetColor( 255, 255, 0 ), "%d", paper);
 	DrawFormatString( 560, 90, GetColor( 0, 255, 0 ), "%d", area);
 	DrawFormatString( 590, 90, GetColor( 0, 0, 255 ), "%d", hougaku);
 	SetFontSize( 16 ) ;
@@ -97,9 +101,11 @@ void Twod_Update( Twod *self )
 	
 }
 
-// •`‰æ‚·‚é
-void Twod_Draw( Twod *self)
+void mess_draw(Twod *self)
 {
+	SetFontSize(16) ;
+	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 200 );
+
 	for (int i=0; i < self->image.size(); i++)
 	{
 		if(self->image[i].id != -1)
@@ -107,7 +113,12 @@ void Twod_Draw( Twod *self)
 			DrawGraph(self->image[i].x, self->image[i].y, self->dx[self->image[i].id], TRUE );
 		}
 	}
+}
 
+// •`‰æ‚·‚é
+void Twod_Draw( Twod *self)
+{
+	mess_draw(self);
 	display_time(self);
 }
 
