@@ -10,6 +10,7 @@ struct Opening
 {
 	 Sound *sound;
      int room;
+	 int paper;
 	 double plus;
 	 int state;
 	 int game_mode;
@@ -22,6 +23,7 @@ Opening *Opening_Initialize( Sound *sound )
 	Opening *self;
 	self = new Opening();
 	self->room = MV1LoadModel("meta/room.mqo") ;    //model画像ハンドルの格納
+	self->paper = LoadGraph( "meta/paper.jpg") ;
 	self->sound = sound;
 	self->plus = 0;
 	self->state = 0;
@@ -63,7 +65,8 @@ static void enter_display(Opening *self)
 	const char *src = "Enter key を押してください";
 	
 	int size = GetDrawStringWidth( src , strlen( src ) );
-	DrawBox( center_x(src) - 5, 360 , center_x(src) + size + 5 , 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
+	DrawModiGraph( center_x(src) - 5, 360, center_x(src) + size + 5, 360, 
+		center_x(src) + size + 5, 470, center_x(src) - 5, 470,self->paper , TRUE );
 
 	if(self->blink % 100 < 80)
 	{ 
@@ -77,8 +80,9 @@ static void mode_display(Opening *self)
 	const char *src2 = "ゲームをやめる";
 
 	int size = GetDrawStringWidth( src1 , strlen( src1 ) );
-	DrawBox( center_x(src1) - 5, 360 , center_x(src1) + size + 5, 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
 
+	DrawModiGraph( center_x(src1) - 5, 360, center_x(src1) + size + 5, 360, 
+		center_x(src1) + size + 5, 470, center_x(src1) - 5, 470,self->paper , TRUE );
 
 	if(self->game_mode % 2 == 0)
 	{
@@ -97,7 +101,8 @@ void load_display(Opening *self)
 	const char * src = "ロードしています";
 	
 	int size = GetDrawStringWidth( src , strlen( src ) );
-	DrawBox( center_x(src) - 5, 360 , center_x(src) + size + 5, 470 ,GetColor( 0, 0, 0 ) , TRUE ) ;
+	DrawModiGraph( center_x(src) - 5, 360, center_x(src) + size + 5, 360, 
+		center_x(src) + size + 5, 470, center_x(src) - 5, 470,self->paper , TRUE );
 	
 	DrawFormatString( center_x(src), 400, GetColor( 20, 20, 255 ), "%s", "ロードしています"); 	
 }
@@ -148,6 +153,7 @@ void Opening_Draw( Opening *self)
 void Opening_Finalize( Opening *self )
 {
 	SetFontSize( 16 );
+	InitGraph( ) ;
 	MV1DeleteModel(self->room);
     delete self;
 }

@@ -116,15 +116,15 @@ function on_command()
 	  if area_hougaku(1, 3) then
 	  	text("pict1", 10, 10)
 	    text("タイトル : the O", 10, 26)
-	    draw("o", 50 , 10)
+	    draw("o", 150 , 110)
 	  elseif area_hougaku(2, 3) then
 	  	text("pict2", 10, 10)
 	    text("タイトル : the V", 10, 26)
-	    draw("v", 50 , 10)
+	    draw("v", 150 , 110)
 	  elseif area_hougaku(3, 3) then
 	  	 text("pict3", 10, 10)
 	     text("タイトル : the X", 10, 26)
-	     draw("x", 50 , 10)
+	     draw("x", 150 , 110)
 	  end
 	end
 	
