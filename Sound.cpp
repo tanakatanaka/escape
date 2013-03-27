@@ -38,7 +38,7 @@ Sound *Sound_Initialize()
 void Sound_type( Sound *self, int type)
 {
 	type += 2;
-	PlaySoundMem(  self->se[type] , DX_PLAYTYPE_BACK , FALSE ) ;
+	PlaySoundMem(  self->se[type] , DX_PLAYTYPE_BACK , TRUE ) ;
 }
 
 int num_combert(std::string name)
