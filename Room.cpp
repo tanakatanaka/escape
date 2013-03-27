@@ -113,15 +113,14 @@ void Room_Update( Room *self )
 	MV1SetPosition(self->table, VGet( 200 - 43, 0, 300 + 721) );
 	MV1SetPosition(self->bed, VGet( 200 + 668, 0, 300 + 632) );
 	MV1SetPosition(self->hammer, VGet( 200, 0, 300 ) );
-	MV1SetPosition(self->paper0,  VGet( 200 + self->x, self->y, 300 + self->y ) );
-	MV1SetRotationXYZ( self->paper0, VGet( 0, self->role * PHI / 360, 0 ) );
+	MV1SetPosition(self->paper0,  VGet( 200 - 1206, 275, 300 - 59 ) );
 	MV1SetPosition(self->pot, VGet( 200, 0, 300 ) ); 
 	MV1SetRotationXYZ( self->paper1, VGet( 0, self->role * PHI / 360, 0 ) ); 
-	MV1SetPosition(self->paper1, VGet( 200 - 757, 22, 300 + 747) );
+	MV1SetPosition(self->paper1, VGet( 200 - 746, 137, 300 + 741) );
 	MV1SetRotationXYZ( self->paper2, VGet( 0, self->role * PHI / 360, 0 ) ); 
-	MV1SetPosition(self->paper2, VGet( 200 + 519, 22 + 34, 300 + 738) );
+	MV1SetPosition(self->paper2, VGet( 200 + 528, 22 + 141, 300 + 724) );
 	MV1SetRotationXYZ( self->paper3, VGet( 0, self->role * PHI / 360, 0 ) ); 
-	MV1SetPosition(self->paper3, VGet( 200 + 734, 22 + 34, 300 + 450) );
+	MV1SetPosition(self->paper3, VGet( 200 + 726, 22 + 83, 300 + 582 ) );
 
 	//ŠJ‚­
 	if(self->swit == 1 || self->swit == -1){ door_open(self); }
