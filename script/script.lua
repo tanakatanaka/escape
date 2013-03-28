@@ -48,6 +48,7 @@ do
 	o(6, 1, "black box", "green box", "yellow box")
 	o(6, 3, "table", "hammer", "cup")
 	o(7, 1, "lamp", "bed", "pillow", "clothes")
+	o(7, 3, "black book", "red book", "blue book")
 end
 
 function on_move()
@@ -279,6 +280,16 @@ function on_command()
 		   		player.get_paper = player.get_paper + 1
 				hide("paper")
 			end
+		end
+	end
+	
+	if area_hougaku(7, 3) then
+		if command == "black book" then
+			text(" ", 10, 10)
+		elseif command == "red book" then
+			text(" ", 10, 10)
+		elseif command == "blue book" then
+			text(" s", 10, 10)
 		end
 	end
 	
