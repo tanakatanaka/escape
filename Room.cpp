@@ -16,6 +16,7 @@ Room *Room_Initialize()
 
     self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->window = MV1SearchFrame(self->room, "window");
+	self->coffee = MV1SearchFrame(self->room, "cofee");
 	self->door = MV1LoadModel("meta/door.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->glass = MV1LoadModel("meta/glass.mqo") ;  
 	self->hammer = MV1LoadModel("meta/hammer.mqo") ;

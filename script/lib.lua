@@ -33,6 +33,22 @@ function area_hougaku(x, y)
 	return area == x and hougaku == y
 end
 
+function drink_cup()
+	
+	local taste =  math.random(10)
+	
+	if taste <= 1 then
+		text("すごい味のコーヒーだ。", 10, 10)
+		player.game_end = true
+	elseif taste <= 7 then
+		text("時間を忘れるくらいおいしいコーヒーだ。", 10, 10)
+  		player.time_limit = player.time_limit * (4 / 5)
+	else
+		text("おいしいコーヒーだ。", 10, 10)
+  		player.time_limit = player.time_limit + player.time_limit * (1 / 5)
+	end
+end
+
 local box = {1, 2, 3}
 
 -- 箱の中身をシャッフル
@@ -62,7 +78,7 @@ function box_eff(x)
 		text("時間が減ります。", 10, 10)
 		player.time_limit = player.time_limit * (2 / 3)
 	elseif y == 3 then
-		text("特になし。", 10, 10)	
+		text("特になし。", 10, 10)
 	end
 		box[x] = 0
 end

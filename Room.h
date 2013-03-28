@@ -12,6 +12,7 @@ struct Room
 {
     ModelID room;
 	int window;
+	int coffee;
 	ModelID door;
 	ModelID glass;
 	ModelID hammer;

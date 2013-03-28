@@ -15,6 +15,7 @@ local break_lamp = false
 local get_huton = false
 local get_makura = false
 local break_window = false
+local drink_coffee = false
 
 --[モデルの描画設定]--
 MV1SetVisible(room.paper1, 0);
@@ -93,15 +94,7 @@ function on_command()
 	if not command then
 	  return
 	end
-
-	if command == "help" then
-		text("以下の項目を入力するとヒントを表示します。", 10, 10)
-		text("help ～ と入力するとヒントを表示します。", 10, 10)
-	elseif command == "help item" then
-		
-	end
 	
-
   	if area_hougaku(0, 0) or area_hougaku(1, 2) then
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
@@ -135,6 +128,10 @@ function on_command()
 			Sound_se( sound, "glass");
 			hide("window")
 			break_window = true
+		
+		elseif break_window and command == "get out" then
+			text("この窓から脱出だ。", 10, 10)
+			player.game_end = true
 		end
 	end
 	
@@ -222,6 +219,10 @@ function on_command()
     		text(msg, 10, 10)
 	 	elseif command == "check cup" then
 	    	text("カップがあります。", 10, 10)
+	    elseif not drink_coffee and command == "drink cup" then
+	    	drink_coffee = true
+	    	drink_cup()
+	    	MV1SetFrameVisible(room.room, room.coffee, 0);
 		elseif not get_hammer then
 	  		if command == "check hammer" then
 	    		text("ハンマーがあります。", 10, 10)
@@ -284,12 +285,15 @@ function on_command()
 	end
 	
 	if area_hougaku(7, 3) then
-		if command == "black book" then
-			text(" ", 10, 10)
-		elseif command == "red book" then
-			text(" ", 10, 10)
-		elseif command == "blue book" then
-			text(" s", 10, 10)
+		if command == "check black book" then
+			text("黒い本", 10, 10)
+			text("hint : 脱出法はドア以外にもあるらしい。", 10, 10 + 16)
+		elseif command == "check red book" then
+			text("赤い本", 10, 10)
+			text("hint : ハンマーで壊せる家具は複数ある。", 10, 10 + 16)
+		elseif command == "check blue book" then
+			text("青い本", 10, 10)
+			text("hint : コーヒーは飲まないほうがいい。", 10, 10 + 16)
 		end
 	end
 	
