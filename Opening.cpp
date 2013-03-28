@@ -22,7 +22,7 @@ Opening *Opening_Initialize( Sound *sound )
 {
 	Opening *self;
 	self = new Opening();
-	self->room = MV1LoadModel("meta/room.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
+	self->room = MV1LoadModel("meta/op.mqo") ;    //model‰æ‘œƒnƒ“ƒhƒ‹‚ÌŠi”[
 	self->paper = LoadGraph( "meta/paper.png") ;
 	self->sound = sound;
 	self->plus = 0;

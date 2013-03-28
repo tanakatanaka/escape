@@ -43,6 +43,7 @@ struct Console
 	std::string after_cursor; ///< カーソルより後の入力中の文字列。反転されて入っている。
 	std::deque<std::string> log;
 	int enter_time_count;
+	int enter_pict;
 	int ax;
 	int ay;
 };
@@ -59,6 +60,7 @@ Console *Console_Initialize(Sound *sound)
 	self->signal = 0;
 	self->back_count = 0;
 	self->enter_time_count = 0;
+	self->enter_pict = LoadGraph("meta/enterkey.png");
 	self->ax = 0;
 	self->ay = 0;
 	return self;
@@ -327,13 +329,7 @@ void Console_Update(Console *self)
 
 void mark_enter(Console *self)
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 250) ;
-	SetFontSize(38) ;
-	DrawOval( 535,  451, 70 , 20 , GetColor(200 , 0 , 0) , true ) ;
-	DrawFormatString( 497 + self->ax, 432 + self->ay, GetColor( 200, 200, 255 ), "%s", "Enter");
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180) ;
-	SetFontSize(16) ;
+	DrawGraph(500 + self->x, 400 + self->y, self->enter_pict, TRUE );
 }
 
 
@@ -344,10 +340,11 @@ void Console_Draw(Console *self)
 	SetFontSize(16) ;
 
 	int plus;
-	if (self->is_input % 2 == 1) {plus = -40;}
+	if (self->is_input % 2 == 1) {plus = -80;}
 	else {plus = 0;}
 
-	DrawBox(0, 420 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
+	DrawBox(0, 495 +  plus, 640 , 500 + plus, GetColor(255 , 255 , 255), TRUE) ;
+	DrawBox(0, 500 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
 	mark_enter(self);
 
 	if (self->is_input % 2 == 1)
@@ -382,5 +379,6 @@ void Console_Draw(Console *self)
 // 終了処理をする
 void Console_Finalize(Console *self)
 {
+	InitGraph( ) ;
 	delete self;
 }

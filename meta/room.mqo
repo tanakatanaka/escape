@@ -23,7 +23,7 @@ Material 19 {
 	"wall_paper" col(1.000 1.000 1.000 1.000) dif(0.930) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("wall_paper.jpg")
 	"o" col(1.000 0.984 0.984 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("o.png")
 	"v" col(0.996 0.965 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("v.png")
-	"X" col(0.988 0.914 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("x.png")
+	"X" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("x.png")
 	"glass" col(0.667 0.984 1.000 0.350) dif(0.800) amb(1.000) emi(0.000) spc(0.000) power(5.00)
 	"woody" col(1.000 0.776 0.682 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("wood.jpg")
 	"yuka" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("yuka.jpg") proj_type(1) proj_pos(0.000 0.000 0.000) proj_scale(100.000 100.000 100.000) proj_angle(0.000 0.000 0.000)

@@ -28,7 +28,6 @@ Twod *Twod_Initialize(Player *player)
 	self = new Twod();
 	self->player = player;
 
-	self->dx.push_back( LoadGraph( "‰æ‘œ/test.jpg" ) );
 	self->dx.push_back( LoadGraph( "meta/o.png" ) );
 	self->dx.push_back( LoadGraph( "meta/v.png" ) );
 	self->dx.push_back( LoadGraph( "meta/x.png" ) );
@@ -40,10 +39,9 @@ int image_num(std::string name)
 {
 	printf("\n name = %s \n",name.c_str());
 
-	if(name == "test"){return 0;}
-	else if(name == "o"){return 1;}
-	else if(name == "v"){return 2;}
-	else if(name == "x"){return 3;}
+	if(name == "o"){return 0;}
+	else if(name == "v"){return 1;}
+	else if(name == "x"){return 2;}
 
 	return -1;
 }
