@@ -44,15 +44,13 @@ struct Console
 	std::deque<std::string> log;
 	int enter_time_count;
 	int enter_pict;
-	int ax;
-	int ay;
 };
 
 // ‰Šú‰»‚ð‚·‚é
 Console *Console_Initialize(Sound *sound)
 {
 	Console *self;
-	self =  new Console();
+	self = new Console();
 	self->sound = sound;
 	self->is_input = 1;
 	self->x = 0;
@@ -61,8 +59,6 @@ Console *Console_Initialize(Sound *sound)
 	self->back_count = 0;
 	self->enter_time_count = 0;
 	self->enter_pict = LoadGraph("meta/enterkey.png");
-	self->ax = 0;
-	self->ay = 0;
 	return self;
 }
 
@@ -315,15 +311,6 @@ void Console_Update(Console *self)
 		self->back_count = 0;
 	}
 
-	
-	if(Pad_Get( KEY_INPUT_W ) > 0){ self->ay--; }
-	else if(Pad_Get( KEY_INPUT_S ) > 0){ self->ay++; }
-
-	if(Pad_Get( KEY_INPUT_D ) > 0){ self->ax++; }
-	else if(Pad_Get( KEY_INPUT_A ) > 0){ self->ax--; }
-
-	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d \n",self->ax,self->ay);}
-
 	open_and_shut(self);
 }
 
@@ -334,25 +321,12 @@ static void mark_enter(Console *self)
 	int w = 8;
 	int h = 16;
 
-	if (Pad_Get(KEY_INPUT_RETURN) > 0)
-	{
-		y += 2;
-	}
-
-	if (Console_is_input(self))
-	{
-		y += -64;
-	}
-	else
-	{
-		y += 16;
-	}
+	y += Pad_Get(KEY_INPUT_RETURN) > 0 ? 2 : 0;
+	y += Console_is_input(self) ? -64 : 16;
 
 	DrawGraph(x, y, self->enter_pict, TRUE);
 
-	x += self->ax + 15;
-	y += self->ay;
-
+	x += 15;
 
 	if (Console_is_input(self))
 	{
@@ -415,6 +389,6 @@ void Console_Draw(Console *self)
 // I—¹ˆ—‚ð‚·‚é
 void Console_Finalize(Console *self)
 {
-	InitGraph( ) ;
+	DeleteGraph(self->enter_pict);
 	delete self;
 }
