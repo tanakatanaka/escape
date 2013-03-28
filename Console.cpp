@@ -327,9 +327,45 @@ void Console_Update(Console *self)
 	open_and_shut(self);
 }
 
-void mark_enter(Console *self)
+static void mark_enter(Console *self)
 {
-	DrawGraph(300 + 288, 300 + 128, self->enter_pict, TRUE );
+	int x = 300 + 288;
+	int y = 300 + 128;
+	int w = 8;
+	int h = 16;
+
+	if (Pad_Get(KEY_INPUT_RETURN) > 0)
+	{
+		y += 2;
+	}
+
+	if (Console_is_input(self))
+	{
+		y += -64;
+	}
+	else
+	{
+		y += 16;
+	}
+
+	DrawGraph(x, y, self->enter_pict, TRUE);
+
+	x += self->ax + 15;
+	y += self->ay;
+
+
+	if (Console_is_input(self))
+	{
+		y += 47;
+		DrawBox(x, y, x + w, y + h, GetColor(255, 255, 255), TRUE);
+		DrawTriangle(x - w / 2, y + h, x + w * 3 / 2, y + h, x + w / 2, y + h * 3 / 2, GetColor(255, 255, 255), TRUE);
+	}
+	else
+	{
+		y -= h;
+		DrawBox(x, y, x + w, y + h, GetColor(255, 255, 255), TRUE);
+		DrawTriangle(x - w / 2, y, x + w * 3 / 2, y, x + w / 2, y - h / 2, GetColor(255, 255, 255), TRUE);
+	}
 }
 
 
