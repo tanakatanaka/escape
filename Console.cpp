@@ -329,7 +329,7 @@ void Console_Update(Console *self)
 
 void mark_enter(Console *self)
 {
-	DrawGraph(500 + self->x, 400 + self->y, self->enter_pict, TRUE );
+	DrawGraph(300 + 288, 300 + 128, self->enter_pict, TRUE );
 }
 
 
@@ -343,8 +343,8 @@ void Console_Draw(Console *self)
 	if (self->is_input % 2 == 1) {plus = -80;}
 	else {plus = 0;}
 
-	DrawBox(0, 495 +  plus, 640 , 500 + plus, GetColor(255 , 255 , 255), TRUE) ;
-	DrawBox(0, 500 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
+	DrawBox(0, 465 +  plus, 640 , 470 + plus, GetColor(255 , 255 , 255), TRUE) ;
+	DrawBox(0, 470 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
 	mark_enter(self);
 
 	if (self->is_input % 2 == 1)
