@@ -43,6 +43,8 @@ struct Console
 	std::string after_cursor; ///< カーソルより後の入力中の文字列。反転されて入っている。
 	std::deque<std::string> log;
 	int enter_time_count;
+	int ax;
+	int ay;
 };
 
 // 初期化をする
@@ -57,6 +59,8 @@ Console *Console_Initialize(Sound *sound)
 	self->signal = 0;
 	self->back_count = 0;
 	self->enter_time_count = 0;
+	self->ax = 0;
+	self->ay = 0;
 	return self;
 }
 
@@ -309,8 +313,29 @@ void Console_Update(Console *self)
 		self->back_count = 0;
 	}
 
+	
+	if(Pad_Get( KEY_INPUT_W ) > 0){ self->ay--; }
+	else if(Pad_Get( KEY_INPUT_S ) > 0){ self->ay++; }
+
+	if(Pad_Get( KEY_INPUT_D ) > 0){ self->ax++; }
+	else if(Pad_Get( KEY_INPUT_A ) > 0){ self->ax--; }
+
+	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d \n",self->ax,self->ay);}
+
 	open_and_shut(self);
 }
+
+void mark_enter(Console *self)
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 250) ;
+	SetFontSize(38) ;
+	DrawOval( 535,  451, 70 , 20 , GetColor(200 , 0 , 0) , true ) ;
+	DrawFormatString( 497 + self->ax, 432 + self->ay, GetColor( 200, 200, 255 ), "%s", "Enter");
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180) ;
+	SetFontSize(16) ;
+}
+
 
 // 描画する
 void Console_Draw(Console *self)
@@ -323,7 +348,7 @@ void Console_Draw(Console *self)
 	else {plus = 0;}
 
 	DrawBox(0, 420 +  plus, 640 , 480, GetColor(0 , 0 , 200), TRUE) ;
-	//DrawOval( 100,  200, 40 , 20 , GetColor(0 , 200 , 0) , true ) ;
+	mark_enter(self);
 
 	if (self->is_input % 2 == 1)
 	{

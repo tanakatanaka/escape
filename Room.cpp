@@ -137,7 +137,7 @@ void Room_Update( Room *self )
 	if(Pad_Get( KEY_INPUT_V ) > 0){ self->z++; }
 	else if(Pad_Get( KEY_INPUT_B ) > 0){ self->z--; }
 
-	if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d  z = %d \n",self->x,self->y, self->z);}
+	//if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d  z = %d \n",self->x,self->y, self->z);}
 
 
 }		
