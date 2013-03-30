@@ -54,6 +54,7 @@ static int center_x(const char *src)
 	return (640 - x) / 2; 
 }
 
+
 static void mode_display(Opening *self)
 { 
 	const char *src1 = "ゲームをはじめる";
@@ -61,7 +62,7 @@ static void mode_display(Opening *self)
 
 	int size = GetDrawStringWidth( src1 , strlen( src1 ) );
 
-	DrawModiGraph( center_x(src1) - 5, 360, center_x(src1) + size + 5, 360, 
+	DrawModiGraph( center_x(src1) - 20, 360, center_x(src1) + size + 20, 360, 
 		center_x(src1) + size + 5, 470, center_x(src1) - 5, 470,self->paper , TRUE );
 
 	if(self->game_mode % 2 == 0)
@@ -76,15 +77,16 @@ static void mode_display(Opening *self)
 	}
 }
 
-void load_display(Opening *self)
+static void moji_display(Opening *self, const char *src, int y, int moji_size = 30)
 { 
-	const char * src = "ロードしています";
-	
+	SetFontSize( moji_size ) ;
+
 	int size = GetDrawStringWidth( src , strlen( src ) );
-	DrawModiGraph( center_x(src) - 5, 360, center_x(src) + size + 5, 360, 
-		center_x(src) + size + 5, 470, center_x(src) - 5, 470,self->paper , TRUE );
+	DrawModiGraph( center_x(src) - 5, y - 40, center_x(src) + size + 5, y - 40, 
+		center_x(src) + size + 20, y + 70, center_x(src) - 20, y + 70,self->paper , TRUE );
+	DrawFormatString( center_x(src), y, GetColor( 20, 20, 255 ), "%s", src); 	
 	
-	DrawFormatString( center_x(src), 400, GetColor( 20, 20, 255 ), "%s", "ロードしています"); 	
+	SetFontSize( 30 ) ;
 }
 
 // 動きを計算する
@@ -121,9 +123,10 @@ void Opening_Draw( Opening *self)
 	//モデル関係
 	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 	MV1DrawModel(self->room);
-
+	
+	moji_display(self, "脱出ゲーム的な", 100, 40);
 	if(self->state == 1){ mode_display(self);}
-	else if(self->state == 2 && self->game_mode % 2 == 0){ load_display(self);}
+	else if(self->state == 2 && self->game_mode % 2 == 0){ moji_display(self, "ロードしています", 400);}
 }
 
 // 終了処理をする

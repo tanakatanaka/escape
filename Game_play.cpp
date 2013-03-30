@@ -40,7 +40,7 @@ Game_play *Game_play_Initialize(Sound *sound)
 
 Player *Game_play_get_result(Game_play *self)
 {
-	if (Player_get_time(self->player) < 0 || Player_get_end(self->player)) {return self->player;}
+	if (Player_get_time(self->player) == 0 || Player_get_end(self->player)) {return self->player;}
 	else{return NULL;}
 }
 

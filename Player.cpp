@@ -107,7 +107,7 @@ void Player_Update( Player *self )
 	if(self->area > 0){ Room_get_door(self->room) == false; }
 
 	self->count++;
-	self->time_limit--;
+	if(self->time_limit > 0 || !self->game_end ){ self->time_limit--;}
 }
 
 // I—¹ˆ—‚ğ‚·‚é

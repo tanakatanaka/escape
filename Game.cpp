@@ -22,7 +22,7 @@ struct Game
 
 	//gameisŠÖŒW
 	int game_state;
-	
+	int end_count;
 };
 
 // ‰Šú‰»‚ð‚·‚é
@@ -33,6 +33,7 @@ Game *Game_Initialize()
 	self->sound = Sound_Initialize();
 	//gameisŠÖŒW
 	self->game_state = LOAD;
+	self->end_count = 0;
 	return self;
 }
 
@@ -67,8 +68,12 @@ bool Game_Update(Game *self)
 
 		if( player != NULL)
 		{
-			self->game_state++;
-			self->ending = Ending_Initialize(player, self->sound);
+			self->end_count++;
+			if(self->end_count > 180)
+			{
+				self->game_state++;
+				self->ending = Ending_Initialize(player, self->sound);
+			}
 		}
 	}
 	else if(self->game_state  == END)
