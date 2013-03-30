@@ -285,13 +285,13 @@ function on_command()
 	end
 	
 	if area_hougaku(7, 3) then
-		if command == "check black book" then
+		if command == "read black book" then
 			text("黒い本", 10, 10)
 			text("hint : 脱出法はドア以外にもあるらしい。", 10, 10 + 16)
-		elseif command == "check red book" then
+		elseif command == "read red book" then
 			text("赤い本", 10, 10)
 			text("hint : ハンマーで壊せる家具は複数ある。", 10, 10 + 16)
-		elseif command == "check blue book" then
+		elseif command == "read blue book" then
 			text("青い本", 10, 10)
 			text("hint : コーヒーは飲まないほうがいい。", 10, 10 + 16)
 		end

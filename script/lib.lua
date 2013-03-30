@@ -83,6 +83,24 @@ function box_eff(x)
 		box[x] = 0
 end
 
+local jisho = 
+{
+	check = {"look", "watch"},
+	get = {"take"},
+	["break"] = {"attack" , "crush"}
+}
+
+
+--動詞の変換関数
+function unify_verb(c)
+	for verb, words in pairs(jisho) do
+	  for i = 1, #words do
+	     c = c:gsub(words[i], verb)
+	  end
+	end
+	return c
+end
+
 -- 入力されたコマンドの取得
 function get_command()
 	local command = console_d_bag(console)
@@ -96,6 +114,8 @@ function get_command()
 	command = string.gsub(command, "%s+$", "") -- 最後の空白を消す
 	command = string.gsub(command, "%s+", " ") -- 間の空白は一個に統一
 	command = string.lower(command) -- 小文字に統一
+	
+	command = unify_verb(command)
 	
 	return command
 end
