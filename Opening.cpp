@@ -15,7 +15,7 @@ struct Opening
 	 int state;
 	 int game_mode;
 	 int blink;
-}; 
+};
 
 // ‰Šú‰»‚ğ‚·‚é
 Opening *Opening_Initialize( Sound *sound )

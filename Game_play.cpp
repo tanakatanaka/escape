@@ -10,6 +10,10 @@
 #include "Ending.h"
 #include "Back.h"
 
+#define PLAY 0
+#define END_MAE 1
+#define END 2
+
 
 struct Game_play
 {
@@ -20,6 +24,8 @@ struct Game_play
 	Player *player;
 	Room *room;
 	Sound *sound;
+	int state;
+	int end_count;
 };
 
 // ‰Šú‰»‚ğ‚·‚é
@@ -34,13 +40,15 @@ Game_play *Game_play_Initialize(Sound *sound)
 	self->room = Room_Initialize();
 	self->player = Player_Initialize(self->camera, self->console, self->room, self->sound);
 	self->script = Script_Initialize(self->camera, self->console, self->player, self->room, self->sound);
+	self->state = PLAY;
+	self->end_count = 0;
 
 	return self;
 }
 
 Player *Game_play_get_result(Game_play *self)
 {
-	if (Player_get_time(self->player) == 0 || Player_get_end(self->player)) {return self->player;}
+	if (self->state == END) {return self->player;}
 	else{return NULL;}
 }
 
@@ -53,7 +61,30 @@ void Game_play_Update(Game_play *self)
 	Script_Update( self->script );
 	Camera_Update(self->camera);
 	Console_Update( self->console );
+
+	if((Player_get_time(self->player) == 0 || Player_get_end(self->player)) && self->state == PLAY)
+	{ 
+		self->state = END_MAE;
+	}
+	else if(self->state == END_MAE)
+	{
+		self->end_count++;
+		if(self->end_count > 180) { self->state = END; }
+	}
+
 }
+
+void white_out(Game_play *self)
+{
+	int plus = 0;
+
+	if(self->end_count > 255){plus = 255;}
+	else{ plus = self->end_count * 1.5;}
+	
+	SetDrawBlendMode( DX_BLENDMODE_ALPHA, plus ) ;
+	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE);
+}
+
 
 // •`‰æ‚·‚é
 void Game_play_Draw(Game_play *self)
@@ -63,6 +94,8 @@ void Game_play_Draw(Game_play *self)
 	Room_Draw(self->room);
 	Script_Draw( self->script );
 	Console_Draw( self->console );
+
+	if(self->state == END_MAE){ white_out(self); }
 }
 
 // I—¹ˆ—‚ğ‚·‚é
