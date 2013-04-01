@@ -67,12 +67,6 @@ function on_move()
 	if game_start == true  and  player.area == 0 then
 			player.game_end = true
 		end
-	
-	if area_hougaku(2, 0) then
-		only_once(function()
-			text("前に進むと、ゲームが始まります。", 10, 10)
-		end)
-	end
 
 	if  player.area == 2 then
 		only_once(function()
