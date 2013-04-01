@@ -80,6 +80,8 @@ void result_display(Ending *self)
 	DrawFormatString( center_x(src), 160, GetColor( 0, 0, 0 ), src, all_score); 
 }
 
+
+
 static void mode_display(Ending *self)
 { 
 	int size = 20;
@@ -106,11 +108,23 @@ void Ending_Update( Ending *self )
 {
 	if(self->state == 1)
 	{
-		if(Pad_Get( KEY_INPUT_UP ) == -1){self->game_mode++;}
-		else if(Pad_Get( KEY_INPUT_DOWN ) == -1){self->game_mode--;}
+		if(Pad_Get( KEY_INPUT_UP ) == -1)
+		{
+			Sound_se( self->sound, "selection");
+			self->game_mode++;
+		}
+		else if(Pad_Get( KEY_INPUT_DOWN ) == -1)
+		{
+			Sound_se( self->sound, "selection");
+			self->game_mode--;
+		}
 	}
 
-	if( Pad_Get( KEY_INPUT_RETURN ) == -1){self->state++;}
+	if( Pad_Get( KEY_INPUT_RETURN ) == -1)
+	{
+		Sound_se( self->sound, "decide");
+		self->state++;
+	}
 	self->blink++;
 }
 

@@ -96,14 +96,16 @@ void Opening_Update( Opening *self )
 	{
 		self->plus += PHI / 180.0f;
 
-		if(Pad_Get( KEY_INPUT_UP ) == -1){self->game_mode++;}
-		else if(Pad_Get( KEY_INPUT_DOWN ) == -1){self->game_mode--;}
-		else if(Pad_Get( KEY_INPUT_BACK ) == -1)
+		if(Pad_Get( KEY_INPUT_UP ) == -1)
 		{
-			Sound_se( self->sound, "cancel");
-			self->state--;
+			Sound_se( self->sound, "selection");
+			self->game_mode++;
 		}
-
+		else if(Pad_Get( KEY_INPUT_DOWN ) == -1)
+		{
+			Sound_se( self->sound, "selectionselect");
+			self->game_mode--;
+		}
 	}
 	else if(self->state == 2){self->state++;}
 

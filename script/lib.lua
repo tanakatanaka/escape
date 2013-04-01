@@ -87,7 +87,8 @@ local jisho =
 {
 	check = {"look", "watch"},
 	get = {"take"},
-	["break"] = {"attack" , "crush"}
+	["break"] = {"attack" , "crush"},
+	["read"] = {"check"}
 }
 
 

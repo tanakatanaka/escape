@@ -59,7 +59,7 @@ function on_move()
 	
 	if area_hougaku(0, 0) then
 		only_once(function()
-			text("Enter keyをすばやく２回おしてください。", 10, 10)
+			text("Enter keyを押してください。", 10, 10)
 			text("check doorと入力してください。", 10, 26)
 		end)
 	end
@@ -68,16 +68,17 @@ function on_move()
 			player.game_end = true
 		end
 	
-	if player.area == 1 then
+	if area_hougaku(2, 0) then
 		only_once(function()
-			text("気の利いたコメントが出るはず。", 10, 10)
+			text("前に進むと、ゲームが始まります。", 10, 10)
 		end)
 	end
 
-	if area_hougaku(2, 0) then
+	if  player.area == 2 then
 		only_once(function()
 			game_start = true
 			room.swit = -1
+			Sound_se( sound, "door_close");
 		end)
 	end
 	
@@ -99,10 +100,14 @@ function on_command()
 	  	if command == "check door" then
 	    	text("open door と入力してください。", 10, 10)
 	  	elseif command == "open door" and room.rotY ~= door_open then
+	  		Sound_se( sound, "door_open");
 	  		room.swit = 1
-	  	 	if area_hougaku(1, 2) then
+	  		if area_hougaku(0, 0) then
+	  			text("エンターキーをすばやく２回押してください。", 10, 10)
+	  	 	elseif area_hougaku(1, 2) then
 	  	 		text("部屋を出るとゲームが終了します。", 10, 10)
 	  		end
+	  		
 	  	end	
 	end
 	
