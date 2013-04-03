@@ -276,6 +276,7 @@ function on_command()
 				MV1SetFrameVisible(room.bed, room.stand, 0);
 				MV1SetVisible(room.paper2, 1);
 				break_lamp = true
+				Sound_se(sound, "glass")
 				show("paper")
 				hide("lamp")
 			end
