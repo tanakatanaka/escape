@@ -62,7 +62,7 @@ void Game_play_Update(Game_play *self)
 	Camera_Update(self->camera);
 	Console_Update( self->console );
 
-	if((Player_get_time(self->player) == 0 || Player_get_end(self->player)) && self->state == PLAY)
+	if((Player_get_time(self->player) == 0 || Player_get_state(self->player) == 1) && self->state == PLAY)
 	{ 
 		self->state = END_MAE;
 	}

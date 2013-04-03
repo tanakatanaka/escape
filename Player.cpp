@@ -7,7 +7,11 @@
 #include "Sound.h"
 #include <string>
 #include <vector>
- 
+
+#define INTRO -1
+#define START 0
+#define END 1
+
 
 // ‰Šú‰»‚ğ‚·‚é
 Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *sound)
@@ -23,14 +27,14 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *s
 	self->count = 30;
 	self->time_limit = 50000;
 	self->get_paper = 0;
-	self->game_end = false;
+	self->player_state = -1;
 
 	return self;
 }
 
-bool Player_get_end(Player *self)
+int Player_get_state(Player *self)
 {
-	return self->game_end;
+	return self->player_state;
 }
 
 int Player_get_area(Player *self)
@@ -107,7 +111,8 @@ void Player_Update( Player *self )
 	if(self->area > 0){ Room_get_door(self->room) == false; }
 
 	self->count++;
-	if(self->time_limit > 0 || !self->game_end ){ self->time_limit--;}
+
+	if(self->time_limit > 0 || self->player_state == 0 ){ self->time_limit--;}
 }
 
 // I—¹ˆ—‚ğ‚·‚é

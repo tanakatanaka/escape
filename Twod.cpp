@@ -82,8 +82,8 @@ void display_time(Twod *self)
 	DrawFormatString( 590, 30, GetColor( 255, 0, 0 ), "%d", time);
 	DrawFormatString( 490, 60, GetColor( 255, 255, 0 ), "%s", "Paper");
 	DrawFormatString( 625, 60, GetColor( 255, 255, 0 ), "%d", paper);
-	DrawFormatString( 560, 90, GetColor( 0, 255, 0 ), "%d", area);
-	DrawFormatString( 590, 90, GetColor( 0, 0, 255 ), "%d", hougaku);
+	//DrawFormatString( 560, 90, GetColor( 0, 255, 0 ), "%d", area);
+	//DrawFormatString( 590, 90, GetColor( 0, 0, 255 ), "%d", hougaku);
 	SetFontSize( 16 ) ;
 }
 

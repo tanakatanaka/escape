@@ -34,11 +34,9 @@ struct Room
 	int count;
 	int s_swit;
 	int s_count;
+	int door_close_count;
 	double slide;
 	int role;
-	int x;
-	int y;
-	int z;
 };
 
 // TOLUA_END

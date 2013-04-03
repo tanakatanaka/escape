@@ -2,7 +2,6 @@ require "script/lib"
 
 --[[ 変数宣言 ]]--
 local door_open = 1.658064
-local game_start = false
 local slide_unlocked = false
 local slide_opened = false
 local get_paper0 = false
@@ -64,15 +63,16 @@ function on_move()
 		end)
 	end
 	
-	if game_start == true  and  player.area == 0 then
-			player.game_end = true
+	if player.player_state == 0  and  player.area == 0 then
+			player.player_state = 1
 		end
-
-	if  player.area == 2 then
+	
+	if  player.area == 1 then
 		only_once(function()
-			game_start = true
-			room.swit = -1
+			player.player_state = 0
+			room.door_close_count = 30
 			Sound_se( sound, "door_close");
+			text("制限時間までに書類をたくさん集めて部屋を出てください。", 10, 10)
 		end)
 	end
 	

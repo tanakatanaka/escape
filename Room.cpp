@@ -35,16 +35,13 @@ Room *Room_Initialize()
 	self->green_cap = MV1SearchFrame(self->table, "green_futa");
 	
 
-	
+	self->door_close_count = 0;
 	self->rotY = 0.0f;
 	self->swit = 0;
 	self->count = 0;
 	self->s_swit = 0;
 	self->s_count = 0;
 	self->slide = 0;
-	self->x = 0;
-	self->y = 0;
-	self->z = 0;
 	self->role = 0;
 
 	return self;
@@ -129,6 +126,15 @@ void Room_Update( Room *self )
 
 	self->role++;
 
+	if(self->door_close_count > 0)
+	{
+		if(self->door_close_count == 1){self->swit = -1;}
+		self->door_close_count--;
+	}
+
+
+
+	/*
 	if(Pad_Get( KEY_INPUT_W ) > 0){ self->x++; }
 	else if(Pad_Get( KEY_INPUT_S ) > 0){ self->x--; }
 
@@ -137,6 +143,7 @@ void Room_Update( Room *self )
 
 	if(Pad_Get( KEY_INPUT_V ) > 0){ self->z++; }
 	else if(Pad_Get( KEY_INPUT_B ) > 0){ self->z--; }
+	*/
 
 	//if(Pad_Get( KEY_INPUT_Q ) == -1){printf("\n x= %d y = %d  z = %d \n",self->x,self->y, self->z);}
 
