@@ -27,14 +27,14 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *s
 	self->count = 30;
 	self->time_limit = 50000;
 	self->get_paper = 0;
-	self->player_state = -1;
+	self->p_state = -1;
 
 	return self;
 }
 
 int Player_get_state(Player *self)
 {
-	return self->player_state;
+	return self->p_state;
 }
 
 int Player_get_area(Player *self)
@@ -112,7 +112,7 @@ void Player_Update( Player *self )
 
 	self->count++;
 
-	if(self->time_limit > 0 || self->player_state == 0 ){ self->time_limit--;}
+	if(self->time_limit > 0 || self->p_state == 0 ){ self->time_limit--;}
 }
 
 // I—¹ˆ—‚ğ‚·‚é

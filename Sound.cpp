@@ -20,7 +20,7 @@ Sound *Sound_Initialize()
 	
 	//システム音
 	self->se.push_back( LoadSoundMem( "sound/se/butotn6.wav" ) );
-	self->se.push_back( LoadSoundMem( "sound/se/select.mp3" ) );
+	self->se.push_back( LoadSoundMem( "sound/se/select.wav" ) );
 	//タイプ音
 	self->se.push_back( LoadSoundMem( "sound/se/type1.wav" ) );
 	self->se.push_back( LoadSoundMem( "sound/se/enter.wav" ) );

@@ -63,13 +63,13 @@ function on_move()
 		end)
 	end
 	
-	if player.player_state == 0  and  player.area == 0 then
-			player.player_state = 1
+	if player.p_state == 0  and  player.area == 0 then
+			player.p_state = 1
 		end
 	
 	if  player.area == 1 then
 		only_once(function()
-			player.player_state = 0
+			player.p_state = 0
 			room.door_close_count = 30
 			Sound_se( sound, "door_close");
 			text("制限時間までに書類をたくさん集めて部屋を出てください。", 10, 10)
@@ -231,6 +231,13 @@ function on_command()
 	    		MV1SetVisible(room.hammer, 0);
 	    		get_hammer = true
 				hide("hammer")
+	    	end
+	    elseif  get_hammer then
+	    	if command == "put hammer" then
+	    		text("ハンマーを戻しました。", 10, 10)
+	    		MV1SetVisible(room.hammer, 1);
+	    		get_hammer = true
+				show("hammer")
 	    	end
 	  	end
 	end

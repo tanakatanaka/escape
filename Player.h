@@ -21,7 +21,7 @@ struct Player
 	int count;
 	int time_limit;
 	int get_paper;
-	int player_state;
+	int p_state;
 };
 
 // TOLUA_END
