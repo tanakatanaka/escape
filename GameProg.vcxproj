@@ -136,4 +136,59 @@
       IgnoreExitCode="true"
       />
   </Target>
+  <UsingTask TaskName="Zip" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <ZipFileName ParameterType="System.String" Required="true" />
+      <OverwriteExistingFile ParameterType="System.Boolean" Required="false" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.IO.Compression" />
+      <Reference Include="System.IO.Compression.Filesystem" />
+      <Using Namespace="System.IO.Compression" />
+      <Code Type="Fragment" Language="cs">
+      <![CDATA[        
+        var fileMode = OverwriteExistingFile ? FileMode.Create : FileMode.CreateNew;
+ 
+        using (var outputFileStream = new FileStream(ZipFileName, fileMode))
+        {
+          using (var archive = new ZipArchive(outputFileStream, ZipArchiveMode.Create))
+          {
+            foreach (var inputItem in Files)
+            {
+              var inputFileName = inputItem.ItemSpec;
+              var archivePath = inputFileName;
+              
+              if (inputItem.GetMetadata("StripPath") == "true")
+              {
+                archivePath = Path.GetFileName(archivePath);
+              }
+              
+              archivePath = inputItem.GetMetadata("PrependPath") + archivePath;
+              
+              ZipFileExtensions.CreateEntryFromFile(archive, inputFileName, archivePath, CompressionLevel.NoCompression);
+            }
+          }
+        }        
+      ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  <Target Name="CreateZip" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PropertyGroup>
+      <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd-HH-mm-ss'))</StringDate>
+    </PropertyGroup>
+    <ItemGroup>
+        <ReleaseFiles Include="Release\*exe*">
+          <StripPath>true</StripPath>
+        </ReleaseFiles>
+        <ReleaseFiles Include="README.txt;meta\**\*;script\**\*;sound\**\*" Exclude="**\.svn\**\*"/>
+        <ReleaseFiles Include="*.cpp;*.c;*.h;*.pkg;*.vcxproj;*.sln;tolua.exe;lua\**\*;tolua\**\*" Exclude="**\.svn\**\*">
+          <PrependPath>src/</PrependPath>
+        </ReleaseFiles>
+    </ItemGroup>
+    <Message Text="Creating $(StringDate).zip" />
+    <MakeDir Directories="$(ProjectDir)zip"/>
+    <Zip Files="@(ReleaseFiles)" ZipFileName="$(ProjectDir)zip\$(StringDate).zip" />
+  </Target>
 </Project>
