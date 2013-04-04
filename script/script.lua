@@ -143,7 +143,7 @@ function on_command()
 			if command == "check slide" then
 			    text("コード(数値 X)を入力してください。", 10, 10)
 			    text("hint  Xは0以上99以下の数値です。 ", 10, 10 + 16)
-	  		elseif slide_quiz(command) then
+	  		elseif slide_quiz(tonumber(command)) then
 	  			slide_unlocked = true
 				Sound_se( sound, "seikai");
 				text("正解です。", 10, 10)
