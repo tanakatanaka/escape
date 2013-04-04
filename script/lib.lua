@@ -39,17 +39,23 @@ local answer_count = 0
 function slide_quiz(number)
 
 	if number == answer then
-		slide_unlocked = true
-		Sound_se( sound, "seikai");
-		text("正解です。", 10, 10)
-		text("ドアが開きました。", 10, 10 + 16)
-		room.s_swit = 1
+		return true
 	elseif answer_count == 5 then
-	
-	
+		text("5回間違えたので答えが変更されます。", 10, 10)
+		answer = math.random(0,99)
+	elseif math.abs(answer - number)  > 3 then
+		text("答えとの差は 3 以内です。 ", 10, 10)
+	elseif math.abs(answer - number)  > 10 then
+		text("答えとの差は 10 以内です。 ", 10, 10)
 	end
-
-
+	
+	if number < answer then
+          text("ちなみに答えは入力した数値より小さい値です。",10,16)
+    elseif number > answer then
+          text("ちなみに答えは入力した数値より大きい値です。",10,16)
+	end
+	
+	return false
 end
 
 function drink_cup()

@@ -144,6 +144,11 @@ function on_command()
 			    text("コード(数値 X)を入力してください。", 10, 10)
 			    text("hint  Xは0以上99以下の数値です。 ", 10, 10 + 16)
 	  		elseif slide_quiz(command) then
+	  			slide_unlocked = true
+				Sound_se( sound, "seikai");
+				text("正解です。", 10, 10)
+				text("ドアが開きました。", 10, 10 + 16)
+				room.s_swit = 1
 	  		end 
 		end
 	end

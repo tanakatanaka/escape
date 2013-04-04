@@ -176,7 +176,7 @@ void Ending_Update( Ending *self )
 
 	if( Pad_Get( KEY_INPUT_RETURN ) == -1)
 	{
-		if(self->state = 1){ Sound_se( self->sound, "decide"); }
+		if( 1 == self->state ){ Sound_se( self->sound, "decide"); }
 		self->state++;
 	}
 	self->blink++;
