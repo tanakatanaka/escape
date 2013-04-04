@@ -105,6 +105,7 @@
     <ClCompile Include="lua_one.c" />
     <ClCompile Include="tolua_one.c" />
     <ClCompile Include="lua_script.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Back.h" />
@@ -126,16 +127,43 @@
     <ClInclude Include="lua.h" />
     <ClInclude Include="lua_script.h" />
     <ClInclude Include="tolua.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="Make Lua Header" Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h" Outputs="lua_header.h" BeforeTargets="ClCompile">
+
+  <Target Name="MakeLuaHeader" Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h" Outputs="lua_header.h" BeforeTargets="ClCompile">
     <Exec Command="make_lua_header.bat" 
       WorkingDirectory="$(SolutionDir)"
       IgnoreExitCode="true"
       />
   </Target>
+
+  <ItemGroup>
+    <VertexShaderFiles Include="shader\*.vs.fx"/>
+    <PixelShaderFiles Include="shader\*.ps.fx"/>
+  </ItemGroup>
+  
+  <Target Name="CompileVertexShader" BeforeTargets="ClCompile"
+      Inputs="%(VertexShaderFiles.Identity)"
+      Outputs="$([System.IO.Path]::ChangeExtension(%(VertexShaderFiles.Identity), vso))">
+    <Exec
+      WorkingDirectory="$(SolutionDir)"
+      Command="dxlib\shadercompiler /Tvs_3_0 %(VertexShaderFiles.Identity)" />
+  </Target>
+    
+  <Target Name="CompilePixelShader" BeforeTargets="ClCompile"
+      Inputs="%(PixelShaderFiles.Identity)"
+      Outputs="$([System.IO.Path]::ChangeExtension(%(PixelShaderFiles.Identity), pso))">
+    <Exec
+      WorkingDirectory="$(SolutionDir)"
+      Command="dxlib\shadercompiler /Tps_3_0 %(PixelShaderFiles.Identity)" />
+  </Target>
+  
+  <Target Name="Compile Vertex Shader" Inputs="shader/vs.fx" Outputs="shader/vs.vso" BeforeTargets="ClCompile">
+  </Target>
+  
   <UsingTask TaskName="Zip" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />

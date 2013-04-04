@@ -9,11 +9,11 @@
 #include "Sound.h"
 #include "Ending.h"
 #include "Back.h"
+#include "Shader.h"
 
 #define PLAY 0
 #define END_MAE 1
 #define END 2
-
 
 struct Game_play
 {
@@ -24,6 +24,7 @@ struct Game_play
 	Player *player;
 	Room *room;
 	Sound *sound;
+	Shader *shader;
 	int state;
 	int end_count;
 };
@@ -40,6 +41,7 @@ Game_play *Game_play_Initialize(Sound *sound)
 	self->room = Room_Initialize();
 	self->player = Player_Initialize(self->camera, self->console, self->room, self->sound);
 	self->script = Script_Initialize(self->camera, self->console, self->player, self->room, self->sound);
+	self->shader = Shader_Initialize();
 	self->state = PLAY;
 	self->end_count = 0;
 
@@ -89,9 +91,17 @@ void white_out(Game_play *self)
 // •`‰æ‚·‚é
 void Game_play_Draw(Game_play *self)
 {
-	Back_Draw( self->back );
-	Camera_Draw(self->camera);
+	Shader_Begin(self->shader, 0);
 	Room_Draw(self->room);
+	Shader_End(self->shader);
+
+	Back_Draw(self->back);
+	Camera_Draw(self->camera);
+
+	Shader_Begin(self->shader, 1);
+	Room_Draw(self->room);
+	Shader_End(self->shader);
+
 	Script_Draw( self->script );
 	Console_Draw( self->console );
 
@@ -107,5 +117,7 @@ void Game_play_Finalize(Game_play *self )
 	Script_Finalize( self->script );
 	Camera_Finalize(self->camera);
 	Console_Finalize( self->console );
+	Shader_Finalize(self->shader);
+
 	delete self;
 }
