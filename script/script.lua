@@ -15,6 +15,7 @@ local get_huton = false
 local get_makura = false
 local break_window = false
 
+
 --[モデルの描画設定]--
 MV1SetVisible(room.paper1, 0);
 MV1SetVisible(room.paper2, 0);

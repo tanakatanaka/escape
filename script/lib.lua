@@ -7,6 +7,8 @@ require "script/setup/strict"
 require "script/setup/debug_command"
 require "script/map"
 
+math.randomseed(os.time())
+
 -- テキストのみ表示
 function text(msg, x, y)
 	Mess_add_word(mess, x, y, encode_to_c(msg))
@@ -35,33 +37,38 @@ end
 
 local answer = math.random(0,99)
 local answer_count = 0
- 
+
+function show_answer()
+  return answer
+end
+
+
 function slide_quiz(number)
 	
-	local y = 0
-	
-	if number ~= nil then
-		if math.abs(answer - number)  < 10 then
-			if number == answer then
-				return true
-			elseif answer_count == 5 then
-				text("5回間違えたので答えが変更されます。", 10, 10)
-				answer = math.random(0,99)
-			elseif math.abs(answer - number)  < 3 then
-				text("答えとの差は 3 以内です。 ", 10, 10)
-			else
-				text("答えとの差は 10 以内です。 ", 10, 10)
-			end
-			y = y + 16
-		end
-		
-		if number < answer then
-	          text("数字が小さいです。",10,10 + y)
-	    elseif number > answer then
-	          text("数値が大きいです。",10,10 + y)
-		end
-		answer_count = answer_count + 1
+	if number == nil then
+		return false
 	end
+	
+	if number == answer then
+		return true 
+	end
+	
+	if number < answer then
+          text("数字が小さいです。",10,10)
+    elseif number > answer then
+          text("数値が大きいです。",10,10)
+	end
+	
+	answer_count = answer_count + 1
+	if answer_count == 5 then
+		text("5回間違えたので答えが変更されます。", 10, 26)
+		answer = math.random(0,99)
+	elseif math.abs(answer - number)  < 3 then
+		text("答えとの差は 3 以内です。 ", 10, 26)
+	elseif math.abs(answer - number)  < 10 then
+		text("答えとの差は 10 以内です。 ", 10, 26)
+	end
+	
 	return false
 end
 
