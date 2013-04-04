@@ -14,7 +14,6 @@ local break_lamp = false
 local get_huton = false
 local get_makura = false
 local break_window = false
-local drink_coffee = false
 
 --[モデルの描画設定]--
 MV1SetVisible(room.paper1, 0);
@@ -78,6 +77,11 @@ function on_move()
 	
 end
 
+function on_tick()
+	if break_pot and break_pot and break_window then
+		player.break_max = true
+	end
+end
 
 function on_command()
 	
@@ -101,7 +105,6 @@ function on_command()
 	  	 	elseif area_hougaku(1, 2) then
 	  	 		text("部屋を出るとゲームが終了します。", 10, 10)
 	  		end
-	  		
 	  	end	
 	end
 	
@@ -130,7 +133,8 @@ function on_command()
 		
 		elseif break_window and command == "get out" then
 			text("この窓から脱出だ。", 10, 10)
-			player.game_end = true
+			player.out_window = true
+			player.p_state = 1
 		end
 	end
 	
@@ -138,13 +142,8 @@ function on_command()
 		if not slide_unlocked then
 			if command == "check slide" then
 			    text("コード(数値 X)を入力してください。", 10, 10)
-			    text("hint  X = pict1 + pict2 + pict3", 10, 10 + 16)
-	  		elseif command == "15" then
-		  		slide_unlocked = true
-		  		Sound_se( sound, "seikai");
-		  		text("正解です。", 10, 10)
-		    	text("ドアが開きました。", 10, 10 + 16)
-		   	   	room.s_swit = 1
+			    text("hint  Xは0以上99以下の数値です。 ", 10, 10 + 16)
+	  		elseif slide_quiz(command) then
 	  		end 
 		end
 	end
@@ -218,8 +217,8 @@ function on_command()
     		text(msg, 10, 10)
 	 	elseif command == "check cup" then
 	    	text("カップがあります。", 10, 10)
-	    elseif not drink_coffee and command == "drink cup" then
-	    	drink_coffee = true
+	    elseif not player.drink_coffee and command == "drink cup" then
+	    	player.drink_coffee = true
 	    	drink_cup()
 	    	MV1SetFrameVisible(room.room, room.coffee, 0);
 		elseif not get_hammer then
@@ -236,7 +235,7 @@ function on_command()
 	    	if command == "put hammer" then
 	    		text("ハンマーを戻しました。", 10, 10)
 	    		MV1SetVisible(room.hammer, 1);
-	    		get_hammer = true
+	    		get_hammer = false
 				show("hammer")
 	    	end
 	  	end

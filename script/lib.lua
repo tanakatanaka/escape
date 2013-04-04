@@ -33,13 +33,32 @@ function area_hougaku(x, y)
 	return area == x and hougaku == y
 end
 
+local answer = math.random(0,99)
+local answer_count = 0
+ 
+function slide_quiz(number)
+
+	if number == answer then
+		slide_unlocked = true
+		Sound_se( sound, "seikai");
+		text("正解です。", 10, 10)
+		text("ドアが開きました。", 10, 10 + 16)
+		room.s_swit = 1
+	elseif answer_count == 5 then
+	
+	
+	end
+
+
+end
+
 function drink_cup()
 	
 	local taste =  math.random(10)
 	
 	if taste <= 1 then
 		text("すごい味のコーヒーだ。", 10, 10)
-		player.game_end = true
+		player.p_state = 1
 	elseif taste <= 7 then
 		text("時間を忘れるくらいおいしいコーヒーだ。", 10, 10)
   		player.time_limit = player.time_limit * (4 / 5)

@@ -31,6 +31,7 @@ Opening *Opening_Initialize( Sound *sound )
 	self->blink = 0;
 
 	SetFontSize( 30 ) ;
+	ChangeFont( "Meiryo UI" ) ;
 	return self;
 }
 

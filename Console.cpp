@@ -346,6 +346,7 @@ static void mark_enter(Console *self)
 // •`‰æ‚·‚é
 void Console_Draw(Console *self)
 {
+	ChangeFont( "‚l‚r ƒSƒVƒbƒN" );
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180) ;
 	SetFontSize(16) ;
 

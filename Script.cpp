@@ -70,16 +70,20 @@ Script *Script_Initialize(Camera *camera, Console *console , Player *player, Roo
 
 void decode_command(Script *self)
 {
-	//単語後に分解
-	const char *command = console_d_bag(self->console);
-		
-	if(command != NULL)
+	if (Console_is_input(self->console) == 1 && (Pad_Get( KEY_INPUT_RETURN ) == -1 || Pad_Get(KEY_INPUT_NUMPADENTER) == -1))
 	{
-		//分解したwordを解読関数にかける
-		// Luaのon_command関数を呼び出す
-		LuaScript_Call(self->lua_script, "on_command");
-		//コンソールのほうにあるコマンドをログに移動
-		console_shift_log(self->console);
+
+		//単語後に分解
+		const char *command = console_d_bag(self->console);
+		
+		if(command != NULL)
+		{
+			//分解したwordを解読関数にかける
+			// Luaのon_command関数を呼び出す
+			LuaScript_Call(self->lua_script, "on_command");
+			//コンソールのほうにあるコマンドをログに移動
+			console_shift_log(self->console);
+		}
 	}
 }
 
@@ -93,18 +97,20 @@ void on_move(Script *self)
 	self->area = Player_get_area(self->player);
 }
 
+void on_tick(Script *self)
+{
+	LuaScript_Call(self->lua_script, "on_tick");
+}
+
 // 動きを計算する
 void Script_Update( Script *self )
 {
 	Mess_Update( self->mess );
 	Twod_Update( self->twod );
 
-	if (Console_is_input(self->console) == 1 && (Pad_Get( KEY_INPUT_RETURN ) == -1 || Pad_Get(KEY_INPUT_NUMPADENTER) == -1))
-	{
-		decode_command(self);
-	}
-	
+	decode_command(self);
 	on_move(self);
+	on_tick(self);
 }
 
 // 描画する

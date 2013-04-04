@@ -22,6 +22,9 @@ struct Player
 	int time_limit;
 	int get_paper;
 	int p_state;
+	bool out_window;
+	bool drink_coffee;
+	bool break_max;
 };
 
 // TOLUA_END
@@ -30,6 +33,7 @@ struct Player
 Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *sound);
 
 // TOLUA_BEGIN
+bool Player_get_achievement(Player *self, const char *name);
 int Player_get_state(Player *self);
 int Player_get_area(Player *self);
 int Player_get_hougaku(Player *self);
