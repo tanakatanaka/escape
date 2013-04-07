@@ -56,15 +56,13 @@ function on_move()
 	Twod_erase_image(twod)
 	Mess_erase_word(mess) 
 	
-	if area_hougaku(0, 0) then
-		only_once(function()
+	if player.area == 0 and player.p_state == -1 then
 			text("Enter keyを押してください。", 10, 10)
 			text("check doorと入力してください。", 10, 26)
-		end)
 	end
 	
-	if player.p_state == 0  and  player.area == 0 then
-			player.p_state = 1
+	if player.p_state == 0  and  player.area == 1 then
+			player.p_state = 0
 		end
 	
 	if  player.area == 1 then
@@ -78,7 +76,7 @@ function on_move()
 	
 end
 
-function on_tick()
+function on_update()
 	if break_pot and break_pot and break_window then
 		player.break_max = true
 	end

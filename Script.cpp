@@ -30,6 +30,7 @@ struct Script
 	Sound *sound;
 	LuaScript *lua_script;
 	int area;
+	int hougaku;
 };
 
 
@@ -89,17 +90,18 @@ void decode_command(Script *self)
 
 void on_move(Script *self)
 {
-	if(self->area != Player_get_area(self->player))
+	if(self->area != Player_get_area(self->player) || self->hougaku != Player_get_hougaku(self->player))
 	{
 		LuaScript_Call(self->lua_script, "on_move");
 	}
 
 	self->area = Player_get_area(self->player);
+	self->hougaku = Player_get_hougaku(self->player);
 }
 
-void on_tick(Script *self)
+void on_update(Script *self)
 {
-	LuaScript_Call(self->lua_script, "on_tick");
+	LuaScript_Call(self->lua_script, "on_update");
 }
 
 // “®‚«‚ðŒvŽZ‚·‚é
@@ -110,7 +112,7 @@ void Script_Update( Script *self )
 
 	decode_command(self);
 	on_move(self);
-	on_tick(self);
+	on_update(self);
 }
 
 // •`‰æ‚·‚é

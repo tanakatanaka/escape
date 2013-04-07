@@ -127,7 +127,7 @@ void Opening_Draw( Opening *self)
 	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 	MV1DrawModel(self->room);
 	
-	moji_display(self, "脱出ゲーム的な", 100, 40);
+	moji_display(self, "脱出ゲーム", 100, 40);
 	if(self->state == 1){ mode_display(self);}
 	else if(self->state == 2 && self->game_mode % 2 == 0){ moji_display(self, "ロードしています", 400);}
 }

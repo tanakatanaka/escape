@@ -124,7 +124,7 @@ end
 
 local jisho = 
 {
-	check = {"look", "watch","read"},
+	check = {"look", "watch"},
 	get = {"take"},
 	["break"] = {"attack" , "crush"},
 	["read %1"] = {"check (.+ book)"}
