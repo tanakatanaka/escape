@@ -61,8 +61,8 @@ function on_move()
 			text("check doorと入力してください。", 10, 26)
 	end
 	
-	if player.p_state == 0  and  player.area == 1 then
-			player.p_state = 0
+	if  player.area == 0 and player.p_state == 0 then
+			player.p_state = 1
 		end
 	
 	if  player.area == 1 then
