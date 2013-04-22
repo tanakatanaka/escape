@@ -10,8 +10,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     freopen("CONOUT$", "w", stderr);
     freopen("CONIN$", "r", stdin);
 	*/
-
-    ChangeWindowMode(TRUE), DxLib_Init(), SetDrawScreen(DX_SCREEN_BACK);
+	//ChangeWindowMode(TRUE)
+	DxLib_Init(), SetDrawScreen(DX_SCREEN_BACK);
 
     Game *game = Game_Initialize();
 
