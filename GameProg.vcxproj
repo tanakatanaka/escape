@@ -20,10 +20,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -62,6 +64,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,6 +87,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -132,38 +136,21 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-
   <Target Name="MakeLuaHeader" Inputs="lua_header.pkg;lua_header_dx.pkg;Console.h;Script.h;Camera.h;Room.h;Player.h;Mess.h;Twod.h;Pad.h" Outputs="lua_header.h" BeforeTargets="ClCompile">
-    <Exec Command="make_lua_header.bat" 
-      WorkingDirectory="$(SolutionDir)"
-      IgnoreExitCode="true"
-      />
+    <Exec Command="make_lua_header.bat" WorkingDirectory="$(SolutionDir)" IgnoreExitCode="true" />
   </Target>
-
   <ItemGroup>
-    <VertexShaderFiles Include="shader\*.vs.fx"/>
-    <PixelShaderFiles Include="shader\*.ps.fx"/>
+    <VertexShaderFiles Include="shader\*.vs.fx" />
+    <PixelShaderFiles Include="shader\*.ps.fx" />
   </ItemGroup>
-  
-  <Target Name="CompileVertexShader" BeforeTargets="ClCompile"
-      Inputs="%(VertexShaderFiles.Identity)"
-      Outputs="$([System.IO.Path]::ChangeExtension(%(VertexShaderFiles.Identity), vso))">
-    <Exec
-      WorkingDirectory="$(SolutionDir)"
-      Command="dxlib\shadercompiler /Tvs_3_0 %(VertexShaderFiles.Identity)" />
+  <Target Name="CompileVertexShader" BeforeTargets="ClCompile" Inputs="%(VertexShaderFiles.Identity)" Outputs="$([System.IO.Path]::ChangeExtension(%(VertexShaderFiles.Identity), vso))">
+    <Exec WorkingDirectory="$(SolutionDir)" Command="dxlib\shadercompiler /Tvs_3_0 %(VertexShaderFiles.Identity)" />
   </Target>
-    
-  <Target Name="CompilePixelShader" BeforeTargets="ClCompile"
-      Inputs="%(PixelShaderFiles.Identity)"
-      Outputs="$([System.IO.Path]::ChangeExtension(%(PixelShaderFiles.Identity), pso))">
-    <Exec
-      WorkingDirectory="$(SolutionDir)"
-      Command="dxlib\shadercompiler /Tps_3_0 %(PixelShaderFiles.Identity)" />
+  <Target Name="CompilePixelShader" BeforeTargets="ClCompile" Inputs="%(PixelShaderFiles.Identity)" Outputs="$([System.IO.Path]::ChangeExtension(%(PixelShaderFiles.Identity), pso))">
+    <Exec WorkingDirectory="$(SolutionDir)" Command="dxlib\shadercompiler /Tps_3_0 %(PixelShaderFiles.Identity)" />
   </Target>
-  
   <Target Name="Compile Vertex Shader" Inputs="shader/vs.fx" Outputs="shader/vs.vso" BeforeTargets="ClCompile">
   </Target>
-  
   <UsingTask TaskName="Zip" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
@@ -174,8 +161,7 @@
       <Reference Include="System.IO.Compression" />
       <Reference Include="System.IO.Compression.Filesystem" />
       <Using Namespace="System.IO.Compression" />
-      <Code Type="Fragment" Language="cs">
-      <![CDATA[        
+      <Code Type="Fragment" Language="cs"><![CDATA[        
         var fileMode = OverwriteExistingFile ? FileMode.Create : FileMode.CreateNew;
  
         using (var outputFileStream = new FileStream(ZipFileName, fileMode))
@@ -198,8 +184,7 @@
             }
           }
         }        
-      ]]>
-      </Code>
+      ]]></Code>
     </Task>
   </UsingTask>
   <Target Name="CreateZip" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -207,16 +192,16 @@
       <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd-HH-mm-ss'))</StringDate>
     </PropertyGroup>
     <ItemGroup>
-        <ReleaseFiles Include="Release\*exe*">
-          <StripPath>true</StripPath>
-        </ReleaseFiles>
-        <ReleaseFiles Include="README.txt;meta\**\*;script\**\*;sound\**\*" Exclude="**\.svn\**\*"/>
-        <ReleaseFiles Include="*.cpp;*.c;*.h;*.pkg;*.vcxproj;*.sln;tolua.exe;lua\**\*;tolua\**\*" Exclude="**\.svn\**\*">
-          <PrependPath>src/</PrependPath>
-        </ReleaseFiles>
+      <ReleaseFiles Include="Release\*exe*">
+        <StripPath>true</StripPath>
+      </ReleaseFiles>
+      <ReleaseFiles Include="README.txt;meta\**\*;script\**\*;sound\**\*" Exclude="**\.svn\**\*" />
+      <ReleaseFiles Include="*.cpp;*.c;*.h;*.pkg;*.vcxproj;*.sln;tolua.exe;lua\**\*;tolua\**\*" Exclude="**\.svn\**\*">
+        <PrependPath>src/</PrependPath>
+      </ReleaseFiles>
     </ItemGroup>
     <Message Text="Creating $(StringDate).zip" />
-    <MakeDir Directories="$(ProjectDir)zip"/>
+    <MakeDir Directories="$(ProjectDir)zip" />
     <Zip Files="@(ReleaseFiles)" ZipFileName="$(ProjectDir)zip\$(StringDate).zip" />
   </Target>
 </Project>
