@@ -71,6 +71,7 @@ function on_move()
 			room.door_close_count = 30
 			Sound_se( sound, "door_close");
 			text("制限時間までに書類をたくさん集めて部屋を出てください。", 10, 10)
+			text("また、check と入力すると物の名前を表示します。", 10, 26)
 		end)
 	end
 	

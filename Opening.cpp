@@ -122,14 +122,20 @@ void Opening_Update( Opening *self )
 // 描画する
 void Opening_Draw( Opening *self)
 {
-	SetCameraPositionAndTarget_UpVecY(VGet( 1000, 1600, 0 ), VGet( 0, 0, 0 ) );
-	//モデル関係
-	MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
-	MV1DrawModel(self->room);
-	
 	moji_display(self, "脱出ゲーム", 100, 40);
-	if(self->state == 1){ mode_display(self);}
-	else if(self->state == 2 && self->game_mode % 2 == 0){ moji_display(self, "ロードしています", 400);}
+	if(self->state == 1)
+	{ 
+		mode_display(self);
+		SetCameraPositionAndTarget_UpVecY(VGet( 1000, 1600, 0 ), VGet( 0, 0, 0 ) );
+		//モデル関係
+		MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
+		MV1DrawModel(self->room);
+	}
+	else if(self->state == 2 && self->game_mode % 2 == 0)
+	{
+		moji_display(self, "制限時間以内に書類を集めて部屋から出てください", 200);
+		moji_display(self, "ロードしています", 400);
+	}
 }
 
 // 終了処理をする
