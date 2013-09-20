@@ -71,7 +71,7 @@ function on_move()
 			room.door_close_count = 30
 			Sound_se( sound, "door_close");
 			text("制限時間までに書類をたくさん集めて部屋を出てください。", 10, 10)
-			text("また、check と入力すると物の名前を表示します。", 10, 26)
+			text("また、check や　help と入力するとヒントを表示します。", 10, 26)
 		end)
 	end
 	
@@ -310,13 +310,20 @@ function on_command()
 	
 	if command == "check" then			
 		local objects = check_all()
-
+		
 		if #objects == 0 then
 			text("特に見当たるものはありません。", 10, 10)
 		else
 			for i = 1, #objects do
 	  			text(objects[i] .. " が見えます。", 10, 10 + 16 * (i - 1))
 			end
-		end
+		end 
 	end	
+	
+	if command == "help" then
+		text("青い書類を多く集めて部屋を出るのこのゲームの目的です。", 10, 10)
+		text("check コマンドでは,目の前の名前を表示します。", 10, 10 + 16)
+		text("check door のように 動詞　名詞　の順で命令されます。", 10, 10 + 16 + 16)
+		text("open get break などいろいろな行動を試してください。", 10, 10 + 16 + 16 + 16)
+	end
 end
