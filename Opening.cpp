@@ -104,7 +104,7 @@ void Opening_Update( Opening *self )
 		}
 		else if(Pad_Get( KEY_INPUT_DOWN ) == -1)
 		{
-			Sound_se( self->sound, "selectionselect");
+			Sound_se( self->sound, "selection");
 			self->game_mode--;
 		}
 	}
@@ -122,20 +122,21 @@ void Opening_Update( Opening *self )
 // 描画する
 void Opening_Draw( Opening *self)
 {
-	moji_display(self, "脱出ゲーム", 100, 40);
 	if(self->state == 1)
 	{ 
-		mode_display(self);
 		SetCameraPositionAndTarget_UpVecY(VGet( 1000, 1600, 0 ), VGet( 0, 0, 0 ) );
 		//モデル関係
 		MV1SetRotationXYZ( self->room, VGet( 0.0f, self->plus / 2, 0.0f ) );
 		MV1DrawModel(self->room);
+		
+		mode_display(self);
 	}
 	else if(self->state == 2 && self->game_mode % 2 == 0)
 	{
-		moji_display(self, "制限時間以内に書類を集めて部屋から出てください", 200);
+		moji_display(self, "制限時間以内に書類を集めて部屋から出てください", 220);
 		moji_display(self, "ロードしています", 400);
 	}
+	moji_display(self, "脱出ゲーム", 100, 40);
 }
 
 // 終了処理をする
