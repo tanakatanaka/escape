@@ -133,7 +133,7 @@ void Opening_Draw( Opening *self)
 	}
 	else if(self->state == 2 && self->game_mode % 2 == 0)
 	{
-		moji_display(self, "制限時間以内に書類を集めて部屋から出てください", 220);
+		moji_display(self, "制限時間以内に書類をたくさん集めてください", 220);
 		moji_display(self, "ロードしています", 400);
 	}
 	moji_display(self, "脱出ゲーム", 100, 40);
