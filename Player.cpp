@@ -37,18 +37,19 @@ Player *Player_Initialize(Camera *camera, Console *console, Room *room, Sound *s
 
 bool Player_get_achievement(Player *self, const char *name)
 {
-	if(name == "out_window")
+	if (name == "out_window")
 	{
 		return self->out_window;
 	}
-	else if(name == "drink_coffee")
+	else if (name == "drink_coffee")
 	{
 		return self->drink_coffee;
 	}
-	else if(name == "break_max")
+	else if (name == "break_max")
 	{
 		return self->break_max;
 	}
+	return false;
 }
 
 int Player_get_state(Player *self)
@@ -126,8 +127,6 @@ void Player_Update( Player *self )
 			moving(self);//•àsó‘Ô 
 		}
 	}
-
-	if(self->area > 0){ Room_get_door(self->room) == false; }
 
 	self->count++;
 
